@@ -54,6 +54,7 @@ public class UserController {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
         }
+
         ResponseModel<UserViewModel> model = userService.login(name, password);
         if (model.state == DataState.Ava) {
             UserToken token = new UserToken(model.data.getUsername(), model.data.getPassword());
