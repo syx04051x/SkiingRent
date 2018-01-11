@@ -1,0 +1,80 @@
+buildscript {
+    ext.kotlin_version = '1.2.0'
+    repositories {
+        maven {
+            url "http://122.112.234.252:8888/nexus/content/groups/public/"
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+group 'alphaz'
+version '1.0-SNAPSHOT'
+
+allprojects {
+
+
+    ext {
+        springVersion = '4.3.3.RELEASE'
+        shiroVersion = '1.4.0'
+        shiroAuth2 = '1.0.2'
+        shiroThymleaf = '2.0.0'
+        jackson = '2.9.0.pr3'
+        okhttp = '3.8.0'
+        netty = '5.0.0.Alpha2'
+        pinyin4j = '2.5.1'
+        swagger = '2.7.0'
+        shiroRedis = '2.4.2.1-RELEASE'
+        lombok = '1.16.8'
+        mybatis = '1.3.0'
+        mybatisPageHelper = '1.1.2'
+        querydslVersion = '4.1.4'
+        dubboVersion='1.0.0'
+    }
+
+    repositories {
+        maven {
+            url "http://122.112.234.252:8888/nexus/content/groups/public/"
+        }
+
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'kotlin'
+
+
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    dependencies {
+        compile(
+                "com.fasterxml.jackson.core:jackson-databind:${jackson}",
+                "com.fasterxml.jackson.core:jackson-core:${jackson}",
+                "com.fasterxml.jackson.core:jackson-annotations:${jackson}",
+                "org.projectlombok:lombok:${lombok}",
+
+        )
+        compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        ext.jarTree = fileTree(dir: 'libs', include: ['**/*.jar', '**/*.json'])
+        compile jarTree
+    }
+}
+
+
+
+
+

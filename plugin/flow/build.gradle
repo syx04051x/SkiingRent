@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        maven {
+            url "http://122.112.234.252:8888/nexus/content/groups/public/"
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
+}
+
+
+version '1.0-SNAPSHOT'
+apply plugin: 'org.springframework.boot'
+bootRepackage {
+    enabled = false
+}
+
+dependencies {
+    compile project(':Core')
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile(
+            "org.activiti:activiti-spring-boot-starter-basic:6.0.0.RC1"
+    )
+}
+
+
+
+
+

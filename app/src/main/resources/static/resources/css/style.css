@@ -1,0 +1,405 @@
+body,html{
+    width:100%;
+    height:100%;
+    background-color:#fbfbfb;
+}
+.style_body{
+    padding:15px;
+}
+.style_report{
+    height:300px;
+}
+.border_e9e8e8{
+    color:#3c8dbc;
+    border:1px solid #e9e8e8;
+}
+.style_div{
+    padding-left:15px!important;
+    padding-right:15px!important;
+    padding-top:10px!important;
+    padding-bottom:10px!important;
+}
+.style_list img {
+    width:15px;
+}
+.style_list{
+    line-height:40px;
+}
+.style_right,.style_left,.style_middle,.style_right2{
+    float:left;
+    height:40px;
+}
+.style_list_img{
+    float:left;
+    width:100%;
+}
+.style_list_img img{
+    display:block;
+    margin:13px auto 0 auto;
+}
+.style_middle{
+    width:20%;
+}
+.style_left{
+    width:10%;
+}
+.style_right{
+    width:70%;
+    color:#d8d8d8;
+}
+.style_middle,.style_right{
+    border-bottom:1px solid #e9e8e8;
+}
+.style_border_lelft{
+    float:left;
+    margin-left:50%;
+    margin-top:5px;
+    border-left:1px solid #000000;
+    height:20px;
+}
+.style_table{
+    height:220px;
+}
+.style_table th{
+    color:#d8d8d8;
+    padding-left:15px!important;
+    font-weight: normal;
+    height:60px;
+    vertical-align: middle!important;
+}
+.style_table tr td{
+    padding-left:15px!important;
+    height:50px;
+    vertical-align: middle!important;
+}
+.style_ff5556{
+    color:#ff5556;
+}
+.style_shadow{
+    border-top:0px!important;
+    box-shadow:#c1c1c1 0 4px 10px;
+}
+.style_size11{
+    font-size:11px!important;
+
+}
+.style_size11 tr th{
+    color: #8e8e8e!important;
+}
+.style_size12{
+    font-size:12px!important;
+}
+.style_size18{
+    font-size:18px!important;
+    font-weight: bold;
+}
+#analysis{
+    height: 300px;
+    width: 100%;
+}
+.style_list2{
+    width:100%;
+    height:66px;
+}
+.style_list2 img{
+    width:15px;
+    margin-top:8px;
+}
+.style_right2_top{
+    height:33px;
+    line-height:33px;
+}
+.style_right2_bottom{
+    height:30px;
+    line-height:30px;
+    color:#d8d8d8;
+}
+.style_right2_top,.style_right2_bottom{
+    width:100%;
+}
+.style_right2{
+    width:80%;
+    height:30px;
+}
+.style_left2{
+    float:left;
+    height:30px;
+    width:10%;
+}
+.style_borderBottom{
+    border-bottom: 1px solid #f7f7f7;
+}
+.rightbtn{
+    float: right;
+}
+.rightbtn li{
+    list-style: none;
+    float: left;
+    margin-left: 10px;
+}
+.rightbtn li span{
+    background: #00c0ef;
+    width: 30px;
+    display: inline-block;
+    height: 30px;
+    text-align: center;
+    line-height: 28px;
+    border-radius: 15px;
+}
+.rightbtn li span img{
+    vertical-align: middle;
+
+}
+.rightbtn li button{
+    border: none!important;
+    height: 34px;
+    padding: 0 15px;
+}
+.with-border span{
+    float: right;
+    font-size: 12px;
+}
+.breadcrumb{
+    font-size: 12px;
+}
+.breadcrumb a{
+    color: #333!important;
+    font-size: 12px;
+}
+.bqdiv{
+    float: right;
+    width: 80%;
+}
+.bqdiv .biaoq{
+    float: left;
+    text-align: left;
+    width: 90%;
+}
+.bqdiv .biaoq span{
+    background: #5eb2ed;
+    color: #fff;
+    float: left;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 10px;
+    font-size: 12px;
+    margin: 0 3px;
+    border-radius: 10px;
+    /*margin-bottom: 5px;*/
+}
+.bqdiv .biaoq span img{
+    width: 10px;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+.bqdiv .addpng{
+    float: right;
+    width: 10%;
+}
+.basicinfotit{
+    line-height: 50px;
+    height: 50px;
+}
+.basicinfotit a{
+    background: #5eb2ed;
+    color: #fff;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 10px;
+    font-size: 12px;
+    float: right;
+    margin-top: 13px;
+    /*margin: 0 3px;*/
+    border-radius: 3px;
+}
+.basicinfocon ul{
+    width: 100%;
+    overflow: hidden;
+    padding: 0px;
+}
+.basicinfocon ul li{
+    list-style: none;
+    width: 33.3%;
+    /*padding: 10px 0;*/
+    text-align: left;
+    height: 80px;
+    float: left;
+}
+.basicinfocon ul li .typetit{
+    height: 30px;
+    line-height: 30px;
+    font-size: 15px;
+    color: #989898;
+}
+.basicinfocon ul li .txt{
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    color: #424242;
+}
+.basicinfocon ul li img{
+    width: 18px;
+}
+.layui-layer-content{
+    overflow-x: hidden!important;
+    height: 410px!important;
+}
+.layui-layer-title{
+   background: #1a2127!important;
+    color: #ffffff!important;
+}
+.layui-layer-ico{
+    background: url(../image/close-tc.png) no-repeat!important;
+    background-size: cover!important;
+    /*background-position: ;*/
+
+}
+.layui-layer-setwin a {
+    position: relative;
+    width: 13px!important;
+    height: 12px!important;
+    margin-left: 10px;
+    font-size: 12px;
+    _overflow: hidden;
+}
+.userbtn{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 40px;
+    line-height: 40px;
+    z-index: 10;
+    display: none;
+    width: 100%;
+    background: #ffffff;
+}
+.morebtn{
+
+    height: 40px;
+    overflow: hidden;
+    line-height: 40px;
+}
+.morebtn span{
+    min-width: 80px;
+    float: left;
+    text-align: center;
+    display: inline-block;
+    color: #576d88!important;
+    font-size: 13px;
+    /*margin-top: -40px;*/
+}
+.morebtn span a{
+    color: #576d88;
+
+}
+.morebtn span label{
+    color: #576d88!important;
+    padding: 0 2px;
+}
+.morebtn .fa-close{
+    float: right;
+    padding-top: 10px;
+    padding-right: 30px;
+}
+.form-editlayer .control-label{
+    text-align: left!important;
+    padding-left: 25px!important;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+#example-basic{
+
+}
+#example-basic .steps{
+    display: none;padding: 0 10px;
+}
+#example-basic .content{
+    position: relative!important;
+    height:350px;
+    width: 100%;
+}
+#example-basic .content h3{
+    position: absolute;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    top: 0px;
+    color: #878787;
+    outline: none;
+    background:#e6e6e4;
+    width: 160px;
+    margin-top:9px!important;
+    left: 0px;
+    /*border:1px solid red;*/
+}
+#example-basic .content section{
+    height: 300px;
+    width:100%;
+    /*padding: 0 2%;*/
+    position: absolute;
+    top:60px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*border: 1px solid red;*/
+    left: 0;
+    border-top: 1px solid #e6e6e4;
+}
+#example-basic #example-basic-h-0{
+    left: 20px;
+}
+#example-basic #example-basic-h-1{
+    left: 190px!important;
+}
+#example-basic #example-basic-h-2{
+    left: 360px!important;
+}
+#example-basic .actions{
+    overflow: hidden;
+    margin-top: 20px;
+}
+#example-basic .actions ul{
+    float: right;
+    margin-right: 20px;
+}
+#example-basic .actions ul li{
+    list-style: none;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    /*border: 1px solid #424242;*/
+    color: #fff;
+    background: #424242;
+    float: left;
+    margin-left: 10px;
+    text-align: center;
+}
+#example-basic .actions ul li a{
+    cursor: pointer;
+    color: #fff;
+    display: block;
+}
+#example-basic .disabled{
+    background: #fff!important;
+    border: 1px solid #424242;
+    color: #424242;
+}
+#example-basic .disabled a{
+    color: #424242!important;
+}
+#example-basic h3.current{
+    background: #424242;
+    color: #fff;
+}
+.addprobtn{
+    cursor: pointer;
+}
+.successd{
+    text-align: center;
+    margin-top: 150px;
+    font-size: 22px;
+    color: #959595;
+}
+
+
+#example-basic{}

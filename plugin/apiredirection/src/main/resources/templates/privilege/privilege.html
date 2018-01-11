@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="common/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>AlphaZ</title>
+    <link rel="stylesheet" href="resources/plugins/vakata-jstree-9770c67/dist/themes/default/style.min.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="content-header">
+        <h1>
+            权限管理
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="dashboard"><i class="fa fa-dashboard"></i>仪表盘</a></li>
+            <li class="active">权限管理</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box box-solid">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">角色</h3>
+
+                        <div class="box-tools">
+                            <button type="button" class="btn btn-box-tool" id="addRole"><i class="fa fa-plus">
+                                <label>新增</label></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body no-padding">
+                        <ul class="nav nav-pills nav-stacked" id="allrole">
+                            <!--<li class="active">-->
+                            <!--<a href="#">-->
+                            <!--<span>nihao</span>-->
+                            <!--<i class="fa fa-remove" style="float: right;"></i>-->
+                            <!--</a>-->
+
+                            <!--</li>-->
+                        </ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /. box -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#detail" data-toggle="tab">权限列表</a></li>
+                        <li style="float: right">
+                            <btn href="javascript:;" class="btn btn-primary" id="authCommit" disabled>确定</btn>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="active tab-pane" id="detail">
+                            <div id="container">
+
+                            </div>
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+                <!-- /.nav-tabs-custom -->
+            </div>
+
+        </div>
+
+    </section>
+    <script src="resources/plugins/vakata-jstree-9770c67/dist/jstree.min.js"></script>
+    <script src="resources/plugins/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script>
+        //空的权限树
+        var orgTree
+        //权限修改记录变量
+        var authOnChange = []
+        $(function () {
+            $.afax({
+                url: "privilege/rmo",
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    roleTemplate(data.data.roleList)
+                    orgTree = data.data.menuOperation
+                    priTemplate(data.data.menuOperation)
+                    $("#allrole li").eq(0).click();
+                }
+            });
+//渲染角色列表
+            var roleTemplate = function (data) {
+                var template = function (singleData) {
+                    var html = '<li data-id="' + singleData.id + '" data-description="' + singleData.description + '">\
+                        <a href="javascript:;">\
+                        <span>' + singleData.rolename + '</span>\
+                        </a>\
+                        </li>'
+                    return html;
+                }
+
+                data.forEach(function (a) {
+                    var tar = template(a);
+                    $("#allrole").append(tar)
+                    if (a.iseditable == 0) {
+                        $("#allrole li[data-id=" + a.id + "]").find("a").append('<i class="fa fa-remove delete" style="float: right;"></i><i class="fa fa-edit edit" style="float: right;"></i>')
+                        $("#allrole li[data-id=" + a.id + "]").find("a i.delete").on("click", function (e) {
+                            e.preventDefault()
+                            var $this = $(this)
+
+                            $.afax({
+                                url: "privilege/role/" + $this.closest("li").data("id"),
+                                type: "delete",
+                                dataType: "json",
+                                success: function (data) {
+                                    $this.closest("li").remove()
+                                    $("#allrole li:eq(0)").click()
+                                }
+                            })
+                        })
+                        $("#allrole li[data-id=" + a.id + "]").find("a i.edit").on("click", function (e) {
+                            e.preventDefault()
+                            var $this = $(this)
+
+                            $.afax({
+                                url: "privilege/role/" + $this.closest("li").data("id"),
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    var form = addRoleTemplate(data.data.id, data.data.rolename, data.data.description)
+                                    layer.open({
+                                        type: 1,
+                                        content: form.html(),
+                                        title: "编辑角色",
+                                        area: ['300px', '350px'],
+                                        btn: ["确定", "取消"],
+                                        btn1: function (a, b) {
+                                            if (!$("#roleTemplate").valid()) {
+                                                return;
+                                            }
+                                            $.afax({
+                                                url: "privilege/role/" + data.data.id,
+                                                type: "put",
+                                                data: {
+                                                    rolename: $("#rolename").val(),
+                                                    description: $("#description").val(),
+                                                },
+                                                dataType: "json",
+                                                success: function (data) {
+                                                    $this.closest("li").data("description", $("#description").val()).find("span").text($("#rolename").val())
+                                                }
+                                            })
+                                        }, btn2: function (a, b) {
+
+                                        },
+                                    });
+                                }
+                            })
+                            $("#roleTemplate").validate({
+                                rules: {
+                                    rolename: "required"
+                                },
+                                messages: {
+                                    rolename: "请输入角色名"
+                                }
+                            });
+                        })
+                    }
+                    $("#allrole li[data-id=" + a.id + "]").on("mouseover", function () {
+                        var $this = $(this)
+                        if (!$this.hasClass("tips") && $this.data('description') != null&&$this.data('description')!="") {
+                            layer.tips($this.data('description') || "", $this, {
+                                tips: [1, '#3595CC'],
+                                time: 3000,
+                                end: function () {
+                                    $this.removeClass("tips")
+                                }
+                            });
+                            $this.addClass("tips")
+                        }
+
+                    })
+                    $("#allrole li[data-id=" + a.id + "]").on("click", function (e) {
+                        e.preventDefault()
+                        $("#allrole li").removeClass("active")
+                        $(this).addClass("active")
+                        refreshPriTree($(this).data("id"))
+                    })
+
+                })
+
+            }
+//渲染权限树
+            var priTemplate = function (tree) {
+                $("#container").jstree({
+                    "core": {
+                        data: tree,
+                    },
+                    plugins: ["sort", "checkbox"]
+                })
+            }
+//刷新权限树
+            var refreshPriTree = function (roleid) {
+                authOnChange=[]
+                var arrayCopy = function (or, ob) {
+                    for (var i in or) {
+                        var tar = ob.filter(function (a) {
+                            return a.data === or[i].data
+                        })
+                        for (var j in tar[0]) {
+                            if (j === "children") {
+                                if (or[j] !== null && tar[j] !== null) {
+                                    arrayCopy(or[i][j], tar[0][j])
+                                }
+                            } else {
+                                or[i][j] = tar[0][j]
+                            }
+                        }
+                    }
+                }
+                $.afax({
+                    url: "privilege/rmo/role/" + roleid,
+                    type: "get",
+                    dataType: "json",
+                    success: function (data) {
+                        var ot = {}
+                        var temp = {};
+                        temp.a = orgTree
+                        $.extend(true, ot, temp)
+                        arrayCopy(ot.a, data.data)
+                        $("#container").jstree().settings.core.data = ot.a
+                        $("#container").jstree().refresh(false, true)
+
+                    }
+                });
+            }
+//角色弹窗模板
+            var addRoleTemplate = function (id, rolename, description) {
+                var form = '<div class="box"><form id="roleTemplate" role="form" data-id="' + id + '">\
+                    <div class="box-body">\
+                        <div class="form-group">\
+                        <label for="rolename">角色名称</label>\
+                    <input type="text" class="form-control" id="rolename" name="rolename" placeholder="请输入角色名" value="' + rolename + '">\
+                    </div>\
+                    <div class="form-group">\
+                    <label for="description">描述</label>\
+                    <textarea type="password" class="form-control" name="description" id="description" style="resize: none" placeholder="角色描述">' + description + '</textarea>\
+                    </div>\
+                     </div>\
+                </div>\
+                    </form></div>'
+                return $(form);
+
+            }
+            //绑定新增角色方法
+            $("#addRole").on("click", function () {
+                var form = addRoleTemplate("", "", "");
+                var index = layer.open({
+                    type: 1,
+                    content: form.html(),
+                    title: "新增角色",
+                    area: ['300px', '350px'],
+                    btn: ["确定", "取消"],
+                    btn1: function (a, b) {
+                        if (!$("#roleTemplate").valid()) {
+                            return;
+                        }
+                        $.afax({
+                            url: "privilege/role",
+                            type: "post",
+                            data: {
+                                "rolename": $("#rolename").val(),
+                                "description": $("#description").val(),
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                layer.close(index)
+                                $("#allrole").append(roleTemplate([data.data]))
+                            }
+                        })
+                    }, btn2: function (a, b) {
+
+                    },
+                    resize: false,
+                });
+                $("#roleTemplate").validate({
+                    rules: {
+                        rolename: "required"
+                    },
+                    messages: {
+                        rolename: "请输入角色名"
+                    }
+                });
+
+            })
+            //权限树变更监听事件
+            $("#container").on("changed.jstree", function (e, data) {
+                if (data.action !== "select_node" && data.action !== "deselect_node") {
+                    return;
+                }
+                var isContained = function (b) {
+                    return authOnChange.some(function (a) {
+                        return a.operationid === b.operationid && a.menuid === b.menuid
+                    })
+                }
+                var childNode = data.node.data.split("_")
+                //子级菜单格式为P_C,父级菜单只有P
+                var selectData = []
+                if (childNode.length > 1) {
+                    var data = {};
+                    data.menuid = childNode[0];
+                    data.operationid = childNode[1];
+                    data.state = data.action === "select_node" ? 0 : 1
+                    selectData.push(data);
+                } else {
+                    for (var child in data.node.children) {
+                        var subNode = $("#container").jstree(true).get_node(data.node.children[child]).data.split("_")
+                        var subData = {};
+                        subData.menuid = subNode[0];
+                        subData.operationid = subNode[1];
+                        subData.state = data.action === "select_node" ? 0 : 1
+                        selectData.push(subData);
+                    }
+                }
+                if (authOnChange.length === 0) {
+                    for (var i in selectData) {
+                        authOnChange.push(selectData[i])
+                    }
+
+                } else {
+                    for (var i in selectData) {
+                        var isContained = false
+                        for (var li in authOnChange) {
+                            if (authOnChange[li].menuid === selectData[i].menuid && authOnChange[li].operationid === selectData[i].operationid) {
+                                authOnChange.splice(li, 1)
+                                isContained = true
+                                break
+                            }
+                        }
+                        if (!isContained) {
+                            authOnChange.push(selectData[i])
+                        }
+
+                    }
+                }
+                if (authOnChange.length > 0) {
+                    $("#authCommit").attr("disabled", false)
+                }
+
+            });
+//权限提交监听
+            $("#authCommit").on("click", function () {
+                if (authOnChange.length == 0) {
+                    return;
+                }
+                $.afax({
+                    url: "privilege/rmo/moid/" + $("#allrole li.active").data("id"),
+                    type: "put",
+                    contentType: "application/json;charset=UTF-8",
+                    data: JSON.stringify(authOnChange),
+                    dataType: "json",
+                    success: function (data) {
+                        $("#authCommit").attr("disabled", true)
+                    }
+                })
+                ;
+            })
+        })
+    </script>
+</div>
+
+</body>
+
+</html>
+
+

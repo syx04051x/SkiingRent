@@ -1,0 +1,12 @@
+version "1.0"
+dependencies {
+    compile(
+
+            "com.belerweb:pinyin4j:${pinyin4j}",
+            "com.squareup.okhttp3:okhttp:${okhttp}",
+            "io.netty:netty-all:${netty}",
+    )
+}
+
+
+

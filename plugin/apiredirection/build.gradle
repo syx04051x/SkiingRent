@@ -1,0 +1,34 @@
+version '1.0-SNAPSHOT'
+
+
+buildscript {
+    repositories {
+        maven {
+            url "http://122.112.234.252:8888/nexus/content/groups/public/"
+        }
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
+}
+
+apply plugin: 'org.springframework.boot'
+bootRepackage {
+    mainClass = 'com.alphaz.apiredirection.Application'
+}
+
+dependencies {
+    compile project(':Util')
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf",
+            "org.springframework.boot:spring-boot-devtools",
+            "org.springframework.boot:spring-boot-starter-actuator",
+            "net.sourceforge.nekohtml:nekohtml:1.9.22",
+            "org.springframework.boot:spring-boot-starter-test",
+            "org.springframework.boot:spring-boot-starter-aop"
+    )
+
+//    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+}
+
+

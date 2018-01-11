@@ -1,0 +1,4 @@
+rootProject.name = 'alphaz'
+include "App", "Api", "Core", "Task", "Util", "plugin:Oauth", "plugin:Flow","plugin:Apiredirection"
+include "extra:Customentity"
+
