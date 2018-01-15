@@ -1,14 +1,14 @@
 package com.alphaz.app.controller;
 
 
-import com.alphaz.core.pojo.viewmodel.DataTableModel;
+import com.alphaz.core.constant.DataState;
+import com.alphaz.core.constant.SessionConstant;
+import com.alphaz.core.dao.UserDAO;
+import com.alphaz.core.pojo.DTO.MenuOperationDTO;
 import com.alphaz.core.pojo.viewmodel.ResponseModel;
 import com.alphaz.core.pojo.viewmodel.user.UserModel;
-import com.alphaz.core.pojo.viewmodel.user.UserSearchModel;
 import com.alphaz.core.pojo.viewmodel.user.UserUpdateModel;
 import com.alphaz.core.pojo.viewmodel.user.UserViewModel;
-import com.alphaz.core.constant.SessionConstant;
-import com.alphaz.core.constant.DataState;
 import com.alphaz.core.service.PrivilegeService;
 import com.alphaz.core.service.UserService;
 import com.alphaz.oauth.token.UserToken;
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * Created by C0dEr on 2016/12/3.
@@ -30,6 +31,11 @@ import java.util.Base64;
 public class UserController {
     @Resource
     UserService userService;
+
+    @Resource
+    UserDAO userDAO;
+
+
     @Resource
     PrivilegeService privilegeService;
 
@@ -94,8 +100,8 @@ public class UserController {
         return this.userService.deleteUser(userid);
     }
 
-//    @GetMapping("/search")
-//    public DataTableModel findUser(@Valid UserSearchModel model) {
-//        return this.userService.findUser(model);
-//    }
+    @GetMapping("/search")
+    public List<MenuOperationDTO> findUser() {
+        return userDAO.getMenuOperationByUserid(1L);
+    }
 }

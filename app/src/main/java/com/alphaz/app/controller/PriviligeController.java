@@ -1,14 +1,12 @@
 package com.alphaz.app.controller;
 
-import com.alphaz.core.pojo.dto.RoleDTO;
+import com.alphaz.core.pojo.DTO.RoleDTO;
 import com.alphaz.core.pojo.viewmodel.ResponseModel;
 import com.alphaz.core.pojo.viewmodel.privilege.AllRoleMenuVIewModel;
-import com.alphaz.core.pojo.viewmodel.privilege.MOValueModel;
 import com.alphaz.core.service.PrivilegeService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * ProjectName: alphaz

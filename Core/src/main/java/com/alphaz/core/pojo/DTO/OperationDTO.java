@@ -1,4 +1,4 @@
-package com.alphaz.core.pojo.dto;
+package com.alphaz.core.pojo.DTO;
 
 import com.alphaz.core.constant.DataState;
 

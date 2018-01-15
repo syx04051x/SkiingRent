@@ -1,14 +1,14 @@
 package com.alphaz.core.service.impl;
 
-import com.alphaz.core.pojo.entity.*;
-import com.alphaz.core.pojo.dto.*;
-import com.alphaz.core.pojo.viewmodel.ResponseModel;
-import com.alphaz.core.pojo.viewmodel.privilege.*;
-import com.alphaz.core.pojo.viewmodel.user.UserViewModel;
 import com.alphaz.core.constant.DataState;
 import com.alphaz.core.dao.RMODAO;
 import com.alphaz.core.dao.RoleDAO;
 import com.alphaz.core.dao.UserDAO;
+import com.alphaz.core.pojo.DTO.*;
+import com.alphaz.core.pojo.entity.*;
+import com.alphaz.core.pojo.viewmodel.ResponseModel;
+import com.alphaz.core.pojo.viewmodel.privilege.*;
+import com.alphaz.core.pojo.viewmodel.user.UserViewModel;
 import com.alphaz.core.service.LocalizationService;
 import com.alphaz.core.service.PrivilegeService;
 import com.alphaz.util.extension.StreamPredicate;
@@ -90,6 +90,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
     public ResponseModel getMenuByUserId(Long userid) {
         List<MenuOperationDTO> dto = this.userDAO.getMenuOperationByUserid(userid);
         //由于getMenuOperationByUserid 方法结果是所有operation和menu对应数据，存在重复menu，这里只需要唯一menu
+        System.out.println(dto);
         List<MenuOperationDTO> sorted = dto.stream().filter(StreamPredicate.distinctByKey(p -> p.menuid))
                 .sorted(Comparator.comparing(a -> a.menuSort)).collect(Collectors.toList());
         List<MenuViewModel> menuViewModels = new ArrayList<>();

@@ -43,7 +43,8 @@
                 dataType: "json",
                 async: false,
                 success: function (data) {
-                    if (data.state == 0) {
+                    console.log(data)
+                    if (data.state == 1) {
                         menutemplate(data.data);
                         $(".sidebar-menu li a").each(function (e) {
                             if ($(".content-header h1").text().trim() === $(this).text().trim()) {
@@ -81,7 +82,7 @@
                 return node;
             }
             for (var i = 0; i < data.length; i++) {
-                data[i].label = '<span>' + data[i].label + '</span>'
+                data[i].label = '<span>' + data[i].label + '</span>'11
                 if (data[i].child != null) {
                     menus.push(setTree(data[i]))
                 } else {

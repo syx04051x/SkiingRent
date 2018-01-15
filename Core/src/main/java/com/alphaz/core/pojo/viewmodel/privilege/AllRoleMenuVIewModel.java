@@ -1,6 +1,7 @@
 package com.alphaz.core.pojo.viewmodel.privilege;
 
-import com.alphaz.core.pojo.dto.RoleDTO;
+
+import com.alphaz.core.pojo.DTO.RoleDTO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

@@ -1,7 +1,8 @@
 package com.alphaz.core.pojo.viewmodel.privilege;
 
-import com.alphaz.core.pojo.dto.MenuDTO;
-import com.alphaz.core.pojo.dto.OperationDTO;
+
+import com.alphaz.core.pojo.DTO.MenuDTO;
+import com.alphaz.core.pojo.DTO.OperationDTO;
 
 import java.util.List;
 import java.util.Map;

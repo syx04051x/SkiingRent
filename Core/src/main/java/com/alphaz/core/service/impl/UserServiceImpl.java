@@ -1,5 +1,8 @@
 package com.alphaz.core.service.impl;
 
+import com.alphaz.core.constant.DataState;
+import com.alphaz.core.dao.TeamUserDAO;
+import com.alphaz.core.dao.UserDAO;
 import com.alphaz.core.pojo.entity.AlphazUserEntity;
 import com.alphaz.core.pojo.entity.QAlphazUserEntity;
 import com.alphaz.core.pojo.entity.TbTeamusersEntity;
@@ -10,9 +13,6 @@ import com.alphaz.core.pojo.viewmodel.user.UserModel;
 import com.alphaz.core.pojo.viewmodel.user.UserSearchModel;
 import com.alphaz.core.pojo.viewmodel.user.UserUpdateModel;
 import com.alphaz.core.pojo.viewmodel.user.UserViewModel;
-import com.alphaz.core.constant.DataState;
-import com.alphaz.core.dao.TeamUserDAO;
-import com.alphaz.core.dao.UserDAO;
 import com.alphaz.core.service.PrivilegeService;
 import com.alphaz.core.service.UserService;
 import com.alphaz.util.string.DateUtil;

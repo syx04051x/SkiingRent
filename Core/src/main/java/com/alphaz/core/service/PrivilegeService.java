@@ -1,11 +1,12 @@
 package com.alphaz.core.service;
 
-import com.alphaz.core.pojo.dto.RoleDTO;
+
+import com.alphaz.core.pojo.DTO.RoleDTO;
 import com.alphaz.core.pojo.viewmodel.ResponseModel;
 import com.alphaz.core.pojo.viewmodel.privilege.AllRoleMenuVIewModel;
-import com.alphaz.core.pojo.viewmodel.user.UserViewModel;
 import com.alphaz.core.pojo.viewmodel.privilege.MOValueModel;
 import com.alphaz.core.pojo.viewmodel.privilege.MenuOperationModel;
+import com.alphaz.core.pojo.viewmodel.user.UserViewModel;
 
 import java.util.List;
 

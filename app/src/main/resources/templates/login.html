@@ -53,6 +53,7 @@
                         </label>
                     </div>
                 </div>
+
                 <!-- /.col -->
                 <div class="col-xs-4">
                     <button type="button" class="btn btn-primary btn-block btn-flat" id="login">登录</button>
@@ -64,8 +65,10 @@
         <!-- /.social-auth-links -->
 
         <a href="javascript:;">忘记密码，请联系管理员</a><br/>
+        <button type="button"  onclick="openSDK()">Open接入方式</button>
 
     </div>
+
     <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
@@ -82,6 +85,15 @@
 <script src="resources/plugins/pace/pace.min.js"></script>
 <!--<script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>-->
 <script src="resources/plugins/stomp/stomp.min.js"></script>
+<!--<script src='//kefu.easemob.com/webim/easemob.js?configId=2c00605d-7f48-428e-92b3-802d2e7f4efb'></script>-->
+<script src="https://qiyukf.com/script/2cb3dde4d616c89788ba73ed76da48f8.js"></script>
+<script type="text/javascript">
+    window.openSDK = function(){
+        ysf.open({
+            templateId: 123//此处id对应样式模板id,配置不同的模板id,打开的窗口样式不一样，欢迎语也不一样
+        });
+    }
+</script>
 </body>
 <script>
     /*<![CDATA[*/
@@ -144,8 +156,8 @@
                 type: "post",
                 dataType: "json",
                 success: function (data) {
-                    //  console.log(data);
-                    if (data.state == 0) {
+                      console.log(data);
+                    if (data.state == 1) {
                         location.href = "dashboard";
                     } else {
                         $("#password").parent().find("label").remove()
