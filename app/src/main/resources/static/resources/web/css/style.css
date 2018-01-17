@@ -1,0 +1,139 @@
+
+/* Link Hovers */
+/*#latest-news-container a {*/
+	/*/!*color:none;*!/*/
+	/*text-decoration:none;*/
+/*}*/
+
+/*#latest-news-container a:hover {*/
+	/*/!*color:#26C9FF;*!/*/
+/*}*/
+
+/* Circular Content Carousel Style */
+#latest-news-container {
+ 	max-width:1200px;
+	min-height:178px;
+	position:relative;
+	margin:50px auto 70px auto;
+    /*font-family: 'kalingaregular';*/
+}
+
+#latest-news-container .single-wrapper {
+	max-width:735px;
+	height:190px;
+	position:relative;
+	margin:0 auto;
+}
+	
+/* Slide Width / Properties */	
+#latest-news-container .single-item {
+	width:245px;
+	height:182px; /* Adjust Height On Slide / To Your Needs */
+	position:relative;
+	/*margin: 0 20px;*/
+	float:left;
+	text-align:center;
+}
+#latest-news-container .single-more{
+	position: absolute;
+	bottom: 10px;
+	right:0px;
+	padding:4px 15px;
+	font-weight:bold;
+	background: #ccbda2;
+	text-align:center;
+	color: white;
+	font-family: 'kalingaregular';
+	font-style:italic;
+	text-shadow:1px 1px 1px #897c63;
+}
+#latest-news-container .single-item-main{
+	padding:0px;
+	margin:0px 2px 0px 0px;
+	position:absolute;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	background:#fff;
+	overflow:hidden;
+	/*border:#EEEEEE thin solid;*/
+	/*border-width:1px;*/
+}
+.cs-style-5{
+	width: 200px;
+	margin: 0 auto;
+}
+.cs-style-5 img {
+	z-index: 10;
+	width: 178px;
+	height: 178px;
+	vertical-align: middle;
+
+}
+.cs-style-5 li {
+	width: 178px;
+	display: inline-block;
+	height: 178px;
+	line-height: 178px;
+	/*margin: 0 40px;*/
+	padding: 0px;
+	text-algin:center;
+	background: #fafafa;
+	overflow: hidden;
+	border-radius: 89px;
+}
+.onthis{
+	border:5px solid #ffb900;
+}
+#latest-news-container .single-content-wrapper {
+	background:#b0ccc6;
+	position:absolute;
+	width:0px; /* expands to width of the wrapper minus 1 element */
+	height:522px;
+	top:5px;
+	text-align:left;
+	z-index:100;
+	overflow:hidden;
+}
+
+#latest-news-container .single-content{
+	width:660px;
+	overflow:hidden;
+}
+
+/* Navigation Arrows */
+#latest-news-container .single-nav .single-nav-prev{
+	width:26px;
+	height:26px;
+	background:transparent url(../images/arrowsSquare.fw.png) no-repeat top left;
+	position:absolute;
+	top:70px;
+	left:150px;
+	text-indent:-9000px;
+	/*opacity:0.7;*/
+	cursor:pointer;
+	z-index:100;
+}
+
+#latest-news-container .single-nav .single-nav-next{
+	width:26px;
+	height:26px;
+	background:transparent url(../images/arrowsSquare.fw.png) no-repeat top right;
+	position:absolute;
+	top:70px;
+	right:150px;
+	text-indent:-9000px;
+	/*opacity:0.7;*/
+	cursor:pointer;
+	z-index:100;
+}
+.single-nav{
+
+}
+.single-nav-prev{
+
+}
+.single-nav-next{
+
+}

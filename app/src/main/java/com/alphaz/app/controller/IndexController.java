@@ -101,4 +101,14 @@ public class IndexController {
         return mav;
     }
 
+
+    @GetMapping("index.html")
+    public ModelAndView index() {
+        ModelAndView mav = new ModelAndView("web/index");
+        return mav;
+    }
+
+
+
+
 }

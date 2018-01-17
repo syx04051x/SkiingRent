@@ -65,12 +65,43 @@
         <!-- /.social-auth-links -->
 
         <a href="javascript:;">忘记密码，请联系管理员</a><br/>
-        <button type="button"  onclick="openSDK()">Open接入方式</button>
+        <!-- 你可以直接在 HTML 元素中绑定 showPanel -->
+        <a href="javascript:void(0)" onclick="_MEIQIA('showPanel')">联系客服</a>
+
+        <script type='text/javascript'>
+            (function(m, ei, q, i, a, j, s) {
+                m[i] = m[i] || function() {
+                    (m[i].a = m[i].a || []).push(arguments)
+                };
+                j = ei.createElement(q),
+                    s = ei.getElementsByTagName(q)[0];
+                j.async = true;
+                j.charset = 'UTF-8';
+                j.src = 'https://static.meiqia.com/dist/meiqia.js?_=t';
+                s.parentNode.insertBefore(j, s);
+            })(window, document, 'script', '_MEIQIA');
+            _MEIQIA('entId', 96105);
+            _MEIQIA('withoutBtn');
+        </script>
+        <!-- 当然也可以在 Javascript 中调用 -->
+        <!--<script>-->
+            <!--_MEIQIA('showPanel');-->
+        <!--</script>-->
+
+        <!-- 当然也可以在 Javascript 中调用 -->
+        <!--<script type='text/javascript'>-->
+            <!--// 当你使用了「手动初始化」时，就可以在自己的逻辑中选择合适的时机调用 withoutBtn-->
+            <!--// 只要是在美洽初始化之前，就可以被正确执行-->
+            <!--_MEIQIA('withoutBtn');-->
+            <!--_MEIQIA('init');-->
+        <!--</script>-->
 
     </div>
 
     <!-- /.login-box-body -->
 </div>
+<!-- 这是美洽的嵌入代码 -->
+
 <!-- /.login-box -->
 
 <!-- jQuery 2.2.3 -->
