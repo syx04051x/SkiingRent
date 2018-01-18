@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="common/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Banner管理</title>
+    <link rel="stylesheet" href="/resources/plugins/datatables/media/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/css/dataTables.checkboxes.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active">Banner管理</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12" style="padding-top: 30px">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Banner管理</h3>
+                        <button type="button" class="btn btn-primary createbutton" onclick="openCreate()">新增</button>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="table" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th width="5%">编号</th>
+                                <th width="16%">标题</th>
+                                <th width="16%">类型</th>
+                                <th width="56%">链接</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-5"></div>
+                            <div class="col-sm-7">
+                                <div class="fenye" id="page" style="float: right;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/resources/plugins/page/page.js"></script>
+    <script src="/resources/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/resources/plugins/datatables/media/js/dataTables.bootstrap.min.js"></script>
+    <script src="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+    <script src="/resources/plugins/sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="/resources/plugins/sweetalert/sweetalert.css"/>
+    <script>
+        var no;
+        var url;
+        var pageNum = 1;
+        function GetRequest() {
+            url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                str = url.substr(1);
+                if (str.indexOf("&") != -1) {
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        no = theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                        pageNum = no;
+                    }
+                } else {
+                    no = theRequest[str.split("=")[0]] = unescape(str.split("=")[1]);
+                    pageNum = no;
+                    console.log("no:" + no)
+                }
+            }
+
+        }
+
+        $(function () {
+            GetRequest();
+            if (url != "") {
+                pageNo(no);
+            }
+            if (url == "") {
+                no = 1;
+                pageNo(no);
+            }
+        });
+
+
+        function template(data) {
+            console.log(data)
+            var id;
+            //渲染列表
+            $("table tbody").empty();
+            for (var i = 0; i < data.length; i++) {
+                id = data[i].id;
+                var title = data[i].title == null ? "" : data[i].title;
+                var style = data[i].style == null ? "" : data[i].style;
+                var link = data[i].link == null ? "" : data[i].link;
+                $("table tbody").append("<tr role='row' class='even'>"
+                        + "   <td>" + id + "</td>"
+                        + "   <td>" + title + "</td>"
+                        + "   <td>" + style + "</td>"
+                        + "   <td>" + link + "</td>"
+                        + "   <td><a href='#' onclick='toUpdate(" + id + ")'>编辑|<a href='#' onclick='deleteOne(" + id + ")'>删除</td>"
+                        + "   </tr>");
+            }
+        }
+
+        function pageNo(no) {
+            $.ajax({
+                type: "post",
+                url: "../banner/bannerList",
+                data: {
+                    pageSize: 10,
+                    pageIndex: no,
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.data)
+                    $("#page").pagination({
+                        pageIndex: no, // 默认页
+                        pageSize: data.data.size, // 默认分页大小
+                        totalCount: data.data.totalElements,
+                        onChange: function (pageIndex, pageSize) {
+                            $.ajax({
+                                type: "post",
+                                url: "../banner/bannerList",
+                                data: {
+                                    pageSize: pageSize,
+                                    pageIndex: pageIndex,
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log(data)
+                                    template(data.data.content);
+                                    pageNum = pageIndex;
+                                },
+                                error: function () {
+                                    swal("跳转失败！", "跳转失败。", "error");
+                                }
+                            })
+                        }
+                    })
+                    template(data.data.content);
+                }
+            });
+        }
+
+
+        function deleteOne(id) {
+            swal({
+                title: "您确定要删除这条信息吗",
+                text: "删除后将无法恢复，请谨慎操作！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除", cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "../banner/deleteBanner",
+                    type: "post",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.statusCode == 0) {
+                            swal({
+                                title: "删除成功！",
+                                text: "您已经永久删除了这条信息。", confirmButtonText: "删除",
+                                confirmButtonText: "删除",
+                                type: "success",
+                                closeOnConfirm: true
+                            }, function () {
+                                location.href = '../bannerList.html';
+                        });
+                        }
+                    },
+                    error: function () {
+                        swal("删除失败！", "删除失败。", "error");
+                    }
+                })
+            });
+        }
+
+        function search() {
+            var username = $("#username").val();
+            $.ajax({
+                type: "post",
+                url: "../banner/bannerList",
+                data: {
+                    pagesize: 10,
+                    pageno: 1,
+                    username: username
+                },
+                dataType: "json",
+                success: function (data) {
+                    $("#page").pagination({
+                        pageIndex: no, // 默认页
+                        pageSize: data.data.pageSize, // 默认分页大小
+                        totalCount: data.data.rowCount,
+                        onChange: function (pageIndex, pageSize) {
+                            $.ajax({
+                                type: "post",
+                                url: "../banner/bannerList",
+                                data: {
+                                    pagesize: pageSize,
+                                    pageno: pageIndex,
+                                    username: username
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    //if(data.statusCode == 200){
+                                    template(data.data.resultList);
+                                    // }
+                                }
+                            })
+                        }
+                    });
+                    template(data.data.resultList);
+                }
+            })
+        }
+
+        function openCreate() {
+            location.href = "../createBanner.html"
+        }
+
+        function toUpdate(data) {
+            location.href = "updateBanner.html" + "?id=" + data ;
+        }
+
+
+
+    </script>
+</div>
+
+</body>
+
+</html>
+
+
