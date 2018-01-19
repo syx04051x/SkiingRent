@@ -149,7 +149,7 @@
 
 .phonenumber .diyibu {
   overflow: hidden;
-  width: 1250px;
+    padding-right: 90px;
 }
 
 .diyibu div {
@@ -3942,6 +3942,142 @@ body {
   text-align: center;
   line-height: 20px;
   margin-top:5px;
+}
+
+
+.bigpng {
+  overflow: hidden;
+}
+.bigpng .pngs {
+  width: 1520px;
+  height: 700px!important;
+  position: relative;
+  margin: auto;
+}
+.bigpng .pngs .png {
+  width: 1520px;
+  height: 700px!important;
+  position: absolute;
+  left: 50%;
+  margin-left: -760px;
+}
+.logocon {
+  position: absolute;
+  right: 100px;
+  top: 140px;
+  height: 320px;
+  background: #ffffff;
+  width: 300px;
+  padding: 30px 40px;
+}
+.logocon .title {
+  font-size: 26px;
+  color: #00b5e0;
+  font-weight: bold;
+}
+.logocon .title span {
+  border-bottom: 5px solid #00b5e0;
+  display: block;
+  height: 0px;
+  width: 55px;
+  margin-top: 13px;
+}
+.logocon .listline {
+  height: 46px;
+  border-radius: 3px;
+  line-height: 46px;
+  margin-top: 15px;
+  border: 1px solid #d6d6d6;
+}
+.logocon .listline span {
+  display: inline-block;
+  width: 15%;
+  text-align: center;
+  float: left;
+  height: 46px;
+  line-height: 46px;
+}
+.logocon .listline span img {
+  vertical-align: middle;
+}
+.logocon .listline .inptxt {
+  height: 44px!important;
+  line-height: normal;
+  border: none;
+  color: #aaaaaa;
+  font-size: 14px;
+  outline: none;
+  width: 84%;
+  float: left;
+}
+.logocon .mess {
+  font-size: 14px;
+  color: #ff5a4b;
+  margin-top: 15px;
+}
+.logocon .logobtn {
+  margin-top: 10px;
+}
+.logocon .logobtn button {
+  height: 64px;
+  width: 100%;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  outline: none;
+  box-shadow: 5px 4px 8px #fac5c1;
+  background: #ff5a4b;
+}
+.logocon .morecon {
+  overflow: hidden;
+  margin-top: 15px;
+}
+.logocon .morecon .leftdiv {
+  float: left;
+  height: 30px;
+  line-height: 30px;
+}
+.logocon .morecon .leftdiv input {
+  width: 17px;
+  height: 17px;
+  float: left;
+  margin-top: 7px;
+  margin-right: 3px;
+}
+.logocon .morecon .leftdiv span {
+  font-size: 12px;
+  color: #999999;
+  float: left;
+}
+.logocon .morecon .leftdiv a {
+  color: #ff5a4b;
+  float: left;
+  font-size: 14px;
+  margin-left: 10px;
+}
+.logocon .morecon .rightdiv {
+  float: right;
+  color: #999999;
+  font-size: 14px;
+  height: 30px;
+  line-height: 30px;
+}
+.logocon .morecon .rightdiv a {
+  color: #ff5a4b;
+  font-size: 14px;
+}
+.regibk .regicon .regibtn {
+  margin-top: 30px;
+}
+.regibk .regicon .regibtn button {
+  height: 64px;
+  width: 100%;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  outline: none;
+  box-shadow: 5px 4px 8px #fac5c1;
+  background: #ff5a4b;
 }
 
 

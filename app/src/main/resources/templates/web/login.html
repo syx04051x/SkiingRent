@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link href="/resources/web/css/reset.css" rel="stylesheet">
+    <link href="resources/web/css/newstyle.css" rel="stylesheet">
+    <script src="/resources/web/js/jquery-2.2.4.min.js"></script>
+
+</head>
+<body>
+<div class="phonenumber">
+    <div class="diyibu">
+        <div><a href="index">服务热线：400-965-9919</a></div>
+        <div>购物车</div>
+        <div><a href="toregister">注册</a></div>
+    </div>
+</div>
+<input name="hid" style="display: none;" id="webUrl" th:value="${session.webUrl}">
+<div>
+    <div>
+        <img src="/resources/web/images/loginpng.jpg" width="100%">
+    </div>
+    <div class="logocon">
+        <div class="title">登录<span></span></div>
+        <div class="listline"><span><img src="/resources/web/images/logophone.png" width="22"> </span><input type="text" class="inptxt" placeholder="用户名/手机号" id="loginphone"></div>
+        <div class="listline"><span><img src="/resources/web/images/logopwd.png" width="20"> </span><input type="password" class="inptxt" placeholder="密码" id="loginpassword"></div>
+        <div class="mess" style="display: none">用户名或密码错误</div>
+        <div class="logobtn"><button onclick="webLogin()">登录</button></div>
+
+        <div class="morecon">
+            <div class="leftdiv"><input type="radio"><span>记住密码</span><a href="../reset_pwd">忘记密码</a></div>
+            <div class="rightdiv">
+                <a href="../registered">注册</a>新用户
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <script>
+        $(function(){
+            $(".bluenav").height($(window).height()*1.5);
+            $(".sanheng").click(function(){
+                $(".bluenav").stop();
+                if($(".sanheng").find("span").hasClass("rihgtmenu2")){
+                    $(".sanheng").find("span").removeClass("rihgtmenu2");
+                    $(".bluenav").fadeOut(300);
+                }else{
+                    $(".sanheng").find("span").addClass("rihgtmenu2");
+                    $(".bluenav").fadeIn(300);
+                }
+            })
+            $(".addresssele").hover(function(){
+                $(".twonav").stop();
+                $(".twonav").slideDown(300);
+            },function(){
+                $(".twonav").stop();
+                $(".twonav").slideUp(300);
+            })
+            $(".tabdawen .tab a").click(function(){
+                $(this).addClass('on').siblings().removeClass('on');
+                var index = $(this).index();
+                number = index;
+                $('.tabdawen .content .con').hide();
+                $('.tabdawen .content .con:eq('+index+')').show();
+            })
+
+            $(".querenbtn span").on("click",function(){
+                var img1='images/nullchecked.png';
+                var img2='images/onchecked.png';
+                var sr=$(this).find("img").attr("src");
+//                alert(sr)
+                if(sr==img1){
+                    $(this).find("img").attr("src",img2);
+                }
+               else{
+                    $(this).find("img").attr("src",img1);
+                }
+            })
+        })
+        function totop(){
+            $(document.documentElement).animate({
+                scrollTop: 0
+            },1000);
+            $(document.body).animate({
+                scrollTop: 0
+            },1000);
+
+        }
+        function openinp(){
+            $(".popbg").fadeIn(300);
+            $(".closebtn").click(function(){
+                $(".popbg").fadeOut(300);
+            })
+        }
+    </script>
+<script>
+    function webLogin(){
+        var phone = $("#loginphone").val();
+        var password = $("#loginpassword").val();
+        console.log(phone+"  and  "+password);
+        $("#load-layout").show()
+        $.ajax({
+            url: '../customLogin',
+            type: 'post',
+            data:
+            {
+                "phone":phone,
+                "password":password
+            },
+            success: function (data) {
+                $("#load-layout").hide();
+                if (data.message == "操作成功") {
+                    var url = $("#webUrl").val();
+                    var mess = url.replace(/;/g,"&")
+                    location.href = mess;
+                }else{
+                    $(".mess").attr("style","display: block")
+                }
+            }
+        })
+
+    }
+</script>
+</body>
+</html>

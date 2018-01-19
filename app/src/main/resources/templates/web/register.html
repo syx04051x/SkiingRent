@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="/resources/web/css/reset.css" rel="stylesheet">
+    <link href="/resources/web/css/newstyle.css" rel="stylesheet">
+    <script src="/resources/web/js/jquery-2.2.4.min.js"></script>
+
+</head>
+<body>
+<div class="phonenumber">
+    <div class="diyibu">
+        <div><a href="index">服务热线：400-965-9919</a></div>
+        <div>购物车</div>
+        <div><a href="toweblogin">登陆</a></div>
+    </div>
+</div>
+
+    <div class="regibk">
+        <div>
+            <img src="/resources/web/images/registerpng.jpg" width="100%">
+        </div>
+        <div class="regicon">
+            <div class="logocon" style="height: 435px;top: 90px;">
+                <div class="title">注册新用户<span></span></div>
+                <div class="listline"><span><img src="resources/web/images/reg-user.png"> </span><input type="text" class="inptxt" placeholder="姓名" id="customname"></div>
+                <div class="listline"><span><img src="resources/web/images/logophone.png"> </span><input type="text" class="inptxt" placeholder="手机号" id="phone__c"></div>
+                <div class="listline"><span><img src="resources/web/images/reg-email.png"> </span><input type="text" class="inptxt" placeholder="邮箱" id="email__c"></div>
+                <div class="listline"><span><img src="resources/web/images/logopwd.png"> </span><input type="password" class="inptxt" placeholder="密码" id="passoword"></div>
+                <div class="listline"><span><img src="resources/web/images/logopwd.png"> </span><input type="password" class="inptxt" placeholder="确认密码" id="confrimpassoword"></div>
+                <div class="logobtn"><button onclick="webLogin()">注册新用户</button></div>
+            </div>
+
+        </div>
+    </div>
+
+<script>
+
+    function toregist(){
+
+        var createCustom = null;
+
+        var usertype__c =  $('#usertype__c option:selected').val();
+
+        var getname = $("#customname").val();
+
+        if(getname==""||!(regBox.regName.test(getname))){
+            alert("请输入正确用户名！");
+            $("#customname").val("");
+            return
+        }
+
+        var phone__c = $("#phone__c").val();
+
+        if(phone__c==""||!(regBox.regMobile.test(phone__c))){
+            alert("请输入正确的手机号！");
+            $("#phone__c").val("");
+            return
+        }
+
+        var code = $("#code").val();
+
+        var email__c = $("#email__c").val();
+
+        if(email__c==""||!(regBox.regEmail.test(email__c))){
+            alert("请输入正确的邮箱！");
+            $("#email__c").val("");
+            return
+        }
+
+        if(code!= MailCode){
+            alert("验证码输入不正确")
+            return
+        }
+
+        var password = $("#passoword").val();
+        if(password==""){
+            alert("请输入密码！");
+            $("#passoword").val("");
+            return
+        }
+
+        var confrimpassoword = $("#confrimpassoword").val();
+        if(password==""){
+            alert("请输入确认密码！");
+            $("#confrimpassoword").val("");
+            return
+        }
+
+        if(password!= confrimpassoword){
+            alert("密码输入不一致")
+            return
+        }
+
+
+
+        if(usertype__c == "个人用户"){
+            createCustom = {
+                "usertype__c": usertype__c,
+                "name":getname,
+                "phone__c":phone__c,
+                "email__c": email__c,
+                "password":password,
+                "leadtype__c":"注册用户"
+
+            };
+        }else{
+            createCustom = {
+                "usertype__c": usertype__c,
+                "accountname__c":getname,
+                "name":"公司用户",
+                "phone__c":phone__c,
+                "email__c": email__c,
+                "password":password,
+                "leadtype__c":"注册用户"
+
+            };
+        }
+
+        console.log(JSON.stringify(createCustom));
+        $("#load-layout").show()
+
+        $.ajax({
+            url: '../createCustom',
+            type: 'post',
+            contentType: "application/json;charset=UTF-8",
+            data: JSON.stringify(createCustom),
+            success: function (data) {
+                if(data.statusCode==0){
+                    $("#load-layout").hide()
+                    location.href = "../registered_success";
+                }
+            }
+        });
+
+    }
+        $(function(){
+            $(".btntwo .two").hover(function(){
+                $(this).addClass("ontwo");
+                $(this).text("86-512-6255-1612");
+            },function(){
+                $(this).removeClass("ontwo");
+                $(this).text("联系我们");
+            })
+        })
+        $(function(){
+            $(".bluenav").height($(window).height()*1.5);
+            $(".sanheng").click(function(){
+                $(".bluenav").stop();
+                if($(".sanheng").find("span").hasClass("rihgtmenu2")){
+                    $(".sanheng").find("span").removeClass("rihgtmenu2");
+                    $(".bluenav").fadeOut(300);
+                }else{
+                    $(".sanheng").find("span").addClass("rihgtmenu2");
+                    $(".bluenav").fadeIn(300);
+                }
+            })
+            $(".addresssele").hover(function(){
+                $(".twonav").stop();
+                $(".twonav").slideDown(300);
+            },function(){
+                $(".twonav").stop();
+                $(".twonav").slideUp(300);
+            })
+            $(".tabdawen .tab a").click(function(){
+                $(this).addClass('on').siblings().removeClass('on');
+                var index = $(this).index();
+                number = index;
+                $('.tabdawen .content .con').hide();
+                $('.tabdawen .content .con:eq('+index+')').show();
+            })
+
+            $(".querenbtn span").on("click",function(){
+                var img1='images/nullchecked.png';
+                var img2='images/onchecked.png';
+                var sr=$(this).find("img").attr("src");
+//                alert(sr)
+                if(sr==img1){
+                    $(this).find("img").attr("src",img2);
+                }
+               else{
+                    $(this).find("img").attr("src",img1);
+                }
+            })
+        })
+        function totop(){
+            $(document.documentElement).animate({
+                scrollTop: 0
+            },1000);
+            $(document.body).animate({
+                scrollTop: 0
+            },1000);
+
+        }
+        function openinp(){
+            $(".popbg").fadeIn(300);
+            $(".closebtn").click(function(){
+                $(".popbg").fadeOut(300);
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+*,body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+    margin: 0;
+    padding: 0;
+    /*font-weight: normal;*/
+}
+
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #333333;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+img {
+    border: none;
+}
+
+button, input, select, textarea {
+    font-size: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    font-family: "微软雅黑";
+}
+.blockH5 {
+    clear: both;
+    height: 5px;
+}
+.blockH10 {
+    clear: both;
+    height: 10px;
+}
+.blockH20 {
+    clear: both;
+    height: 20px;
+}
+.blockH40 {
+    clear: both;
+    height: 40px;
+}
+.blockH55 {
+    clear: both;
+    height: 55px;
+}.blockH60 {
+    clear: both;
+    height: 60px;
+}
+.blockH70 {
+    clear: both;
+    height:70px;
+}
+.clear{
+    clear: both;
+}
+textarea{resize: none;}
+button{
+    cursor: pointer;
+}

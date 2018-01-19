@@ -4,6 +4,7 @@ import com.alphaz.core.pojo.entity.SkiingSupportEntity;
 import com.alphaz.core.pojo.viewmodel.ResponseModel;
 import com.alphaz.core.service.SkiingSupportService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -49,6 +50,11 @@ public class SkiingSupportController {
     @ResponseBody
     public ResponseModel search(Integer pageIndex,Integer pageSize,String username) {
         return skiingSupportService.search(pageIndex,pageSize,username);
+    }
+
+    @GetMapping("/tosupportlist")
+    public ModelAndView toSupportList(){
+        return new ModelAndView("support/supportlist");
     }
 
 }

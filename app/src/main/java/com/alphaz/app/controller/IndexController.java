@@ -28,14 +28,10 @@ public class IndexController {
 
     @GetMapping("")
     public String index(HttpSession session) {
-        if (null == session.getAttribute(SessionConstant.CURRENTUSER)) {
-            return "redirect:login";
-        } else {
-            return "redirect:dashboard";
-        }
+        return "redirect:index";
     }
 
-    @GetMapping(value = "login")
+    @GetMapping(value = "manage")
     public ModelAndView login(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         ModelAndView mav = new ModelAndView("login");
@@ -102,11 +98,30 @@ public class IndexController {
     }
 
 
-    @GetMapping("index.html")
+    @GetMapping("index")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView("web/index");
         return mav;
     }
+
+    @GetMapping("toweblogin")
+    public ModelAndView toWeblogin() {
+        return new ModelAndView("web/login");
+    }
+
+    @GetMapping("toregister")
+    public ModelAndView toRegister() {
+        return new ModelAndView("web/register");
+    }
+    @GetMapping("toabouts")
+    public ModelAndView toAbouts() {
+        return new ModelAndView("web/abouts");
+    }
+
+
+
+
+
 
 
 
