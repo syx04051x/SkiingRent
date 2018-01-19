@@ -3,7 +3,7 @@
       layout:decorator="common/layout">
 <head>
     <meta charset="UTF-8"/>
-    <title>Banner管理</title>
+    <title>产品管理</title>
     <link rel="stylesheet" href="/resources/plugins/datatables/media/css/dataTables.bootstrap.min.css"/>
     <link rel="stylesheet"
           href="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/css/dataTables.checkboxes.css"/>
@@ -13,27 +13,17 @@
     <section class="content-header">
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
-            <li class="active">供应商管理</li>
+            <li class="active">产品管理</li>
         </ol>
     </section>
     <section class="content">
         <div class="row">
-            <!--<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">-->
-                <!--<label class="" style="line-height: 35px; float: left;">关键字查询：</label>-->
-                <!--<div class="col-md-9 col-xs-9 form-group">-->
-                    <!--<input type="text" placeholder="请输入关键字" class="form-control"-->
-                           <!--id="name">-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="col-md-3">-->
-                <!--<button class="btn btn-primary" type="button" onClick="search()">搜索</button>-->
-            <!--</div>-->
             <div class="col-xs-12" style="padding-top: 30px">
                 <div class="box">
                     <div class="box-header">
                         <div class="col-lg-3 col-md-6 col-sm-4 col-xs-12">
                             <div>
-                                <input class="form-control" id="name" name="" placeholder="请输入姓名" type="text" />
+                                <input class="form-control" id="name" name="" placeholder="请输入名称" type="text" />
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -47,10 +37,14 @@
                             <thead>
                             <tr>
                                 <th width="5%">编号</th>
-                                <th width="16%">姓名</th>
-                                <th width="16%">电话</th>
-                                <th width="30%">地址</th>
-                                <th width="20%">创建时间</th>
+                                <th width="16%">名称</th>
+                                <th width="8%">种类</th>
+                                <th width="10%">价格</th>
+                                <th width="10%">押金</th>
+                                <th width="8%">使用？</th>
+                                <th width="8%">好坏？</th>
+                                <th width="10%">编码</th>
+                                <th width="16%">创建时间</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -121,14 +115,24 @@
             for (var i = 0; i < data.length; i++) {
                 id = data[i].id;
                 var name = data[i].name == null ? "" : data[i].name;
-                var address = data[i].address == null ? "" : data[i].address;
-                var tel = data[i].tel == null ? "" : data[i].tel;
+                var type = data[i].type == null ? "" : data[i].type;
+                var price  = data[i].price  == null ? "" : data[i].price ;
+                var deposit = data[i].deposit == null ? "" : data[i].deposit;
+                var isuse = data[i].isuse == null ? "" : data[i].isuse;
+                isuse = isuse == 1? "使用中":"未使用"
+                var isdefect = data[i].isdefect == null ? "" : data[i].isdefect;
+                isdefect = isdefect == 0? "完好":"破损";
+                var code = data[i].code == null ? "" : data[i].code;
                 var createTime = data[i].createTime == null ? "" : data[i].createTime;
                 $("table tbody").append("<tr role='row' class='even'>"
                         + "   <td>" + id + "</td>"
                         + "   <td>" + name + "</td>"
-                        + "   <td>" + tel + "</td>"
-                        + "   <td>" + address + "</td>"
+                        + "   <td>" + type + "</td>"
+                        + "   <td>" + price + "</td>"
+                        + "   <td>" + deposit + "</td>"
+                        + "   <td>" + isuse + "</td>"
+                        + "   <td>" + isdefect + "</td>"
+                        + "   <td>" + code + "</td>"
                         + "   <td>" + createTime + "</td>"
                         + "   <td><a href='#' onclick='toUpdate(" + id + ")'>编辑|<a href='#' onclick='deleteOne(" + id + ")'>删除</td>"
                         + "   </tr>");
@@ -138,7 +142,7 @@
         function pageNo(no) {
             $.ajax({
                 type: "post",
-                url: "/support/search",
+                url: "/product/search",
                 data: {
                     pageSize: 10,
                     pageIndex: no,
@@ -153,7 +157,7 @@
                         onChange: function (pageIndex, pageSize) {
                             $.ajax({
                                 type: "post",
-                                url: "/support/search",
+                                url: "/product/search",
                                 data: {
                                     pageSize: pageSize,
                                     pageIndex: pageIndex,
@@ -187,7 +191,7 @@
                 closeOnConfirm: false
             }, function () {
                 $.ajax({
-                    url: "/support/delete",
+                    url: "/product/delete",
                     type: "post",
                     data: {
                         id: id,
@@ -202,7 +206,7 @@
                                 type: "success",
                                 closeOnConfirm: true
                             }, function () {
-                                location.href = '/support/tosupportlist';
+                                location.href = '/product/toproductlist';
                             });
                         }
                     },
@@ -217,7 +221,7 @@
             var name = $("#name").val();
             $.ajax({
                 type: "post",
-                url: "/support/search",
+                url: "/product/search",
                 data: {
                     pageSize: 10,
                     pageIndex: 1,
@@ -232,7 +236,7 @@
                         onChange: function (pageIndex, pageSize) {
                             $.ajax({
                                 type: "post",
-                                url: "/support/search",
+                                url: "/product/search",
                                 data: {
                                     pageSize: pageSize,
                                     pageIndex: pageIndex,
@@ -251,11 +255,11 @@
         }
 
         function openCreate() {
-            location.href = "/support/tocreatesupport"
+            location.href = "/product/tocreateproduct"
         }
 
         function toUpdate(data) {
-            location.href = "/support/toupdatesupport" + "?id=" + data ;
+            location.href = "/product/toupdateproduct" + "?id=" + data ;
         }
 
 
