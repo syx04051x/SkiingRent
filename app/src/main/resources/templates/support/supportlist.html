@@ -18,10 +18,27 @@
     </section>
     <section class="content">
         <div class="row">
+            <!--<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">-->
+                <!--<label class="" style="line-height: 35px; float: left;">关键字查询：</label>-->
+                <!--<div class="col-md-9 col-xs-9 form-group">-->
+                    <!--<input type="text" placeholder="请输入关键字" class="form-control"-->
+                           <!--id="name">-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+                <!--<button class="btn btn-primary" type="button" onClick="search()">搜索</button>-->
+            <!--</div>-->
             <div class="col-xs-12" style="padding-top: 30px">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">供应商管理</h3>
+                        <div class="col-lg-3 col-md-6 col-sm-4 col-xs-12">
+                            <div>
+                                <input class="form-control" id="name" name="" placeholder="请输入姓名" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary" onclick="search()" type="button">搜索</button>
+                        </div>
                         <button type="button" class="btn btn-primary createbutton" onclick="openCreate()">新增</button>
                     </div>
                     <!-- /.box-header -->
@@ -83,16 +100,16 @@
 
         }
 
-        // $(function () {
-        //     GetRequest();
-        //     if (url != "") {
-        //         pageNo(no);
-        //     }
-        //     if (url == "") {
-        //         no = 1;
-        //         pageNo(no);
-        //     }
-        // });
+        $(function () {
+            GetRequest();
+            if (url != "") {
+                pageNo(no);
+            }
+            if (url == "") {
+                no = 1;
+                pageNo(no);
+            }
+        });
 
 
         function template(data) {
@@ -102,14 +119,14 @@
             $("table tbody").empty();
             for (var i = 0; i < data.length; i++) {
                 id = data[i].id;
-                var title = data[i].title == null ? "" : data[i].title;
-                var style = data[i].style == null ? "" : data[i].style;
-                var link = data[i].link == null ? "" : data[i].link;
+                var name = data[i].name == null ? "" : data[i].name;
+                var address = data[i].address == null ? "" : data[i].address;
+                var tel = data[i].tel == null ? "" : data[i].tel;
                 $("table tbody").append("<tr role='row' class='even'>"
                         + "   <td>" + id + "</td>"
-                        + "   <td>" + title + "</td>"
-                        + "   <td>" + style + "</td>"
-                        + "   <td>" + link + "</td>"
+                        + "   <td>" + name + "</td>"
+                        + "   <td>" + tel + "</td>"
+                        + "   <td>" + address + "</td>"
                         + "   <td><a href='#' onclick='toUpdate(" + id + ")'>编辑|<a href='#' onclick='deleteOne(" + id + ")'>删除</td>"
                         + "   </tr>");
             }
@@ -118,7 +135,7 @@
         function pageNo(no) {
             $.ajax({
                 type: "post",
-                url: "../banner/bannerList",
+                url: "/support/search",
                 data: {
                     pageSize: 10,
                     pageIndex: no,
@@ -133,7 +150,7 @@
                         onChange: function (pageIndex, pageSize) {
                             $.ajax({
                                 type: "post",
-                                url: "../banner/bannerList",
+                                url: "/support/search",
                                 data: {
                                     pageSize: pageSize,
                                     pageIndex: pageIndex,
@@ -167,14 +184,14 @@
                 closeOnConfirm: false
             }, function () {
                 $.ajax({
-                    url: "../banner/deleteBanner",
+                    url: "/support/delete",
                     type: "post",
                     data: {
                         id: id,
                     },
                     dataType: "json",
                     success: function (data) {
-                        if (data.statusCode == 0) {
+                        if (data.state == 1) {
                             swal({
                                 title: "删除成功！",
                                 text: "您已经永久删除了这条信息。", confirmButtonText: "删除",
@@ -182,8 +199,8 @@
                                 type: "success",
                                 closeOnConfirm: true
                             }, function () {
-                                location.href = '../bannerList.html';
-                        });
+                                location.href = '/support/tosupportlist';
+                            });
                         }
                     },
                     error: function () {
@@ -194,14 +211,14 @@
         }
 
         function search() {
-            var username = $("#username").val();
+            var name = $("#name").val();
             $.ajax({
                 type: "post",
-                url: "../banner/bannerList",
+                url: "/support/search",
                 data: {
-                    pagesize: 10,
-                    pageno: 1,
-                    username: username
+                    pageSize: 10,
+                    pageIndex: 1,
+                    name: name
                 },
                 dataType: "json",
                 success: function (data) {
@@ -212,32 +229,30 @@
                         onChange: function (pageIndex, pageSize) {
                             $.ajax({
                                 type: "post",
-                                url: "../banner/bannerList",
+                                url: "/support/search",
                                 data: {
-                                    pagesize: pageSize,
-                                    pageno: pageIndex,
-                                    username: username
+                                    pageSize: pageSize,
+                                    pageIndex: pageIndex,
+                                    name: name
                                 },
                                 dataType: "json",
                                 success: function (data) {
-                                    //if(data.statusCode == 200){
-                                    template(data.data.resultList);
-                                    // }
+                                    template(data.data.content);
                                 }
                             })
                         }
                     });
-                    template(data.data.resultList);
+                    template(data.data.content);
                 }
             })
         }
 
         function openCreate() {
-            location.href = "../createBanner.html"
+            location.href = "/support/tocreatesupport"
         }
 
         function toUpdate(data) {
-            location.href = "updateBanner.html" + "?id=" + data ;
+            location.href = "/support/toupdatesupport" + "?id=" + data ;
         }
 
 

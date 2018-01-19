@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * ProjectName: alphaz
@@ -40,7 +41,7 @@ public class SkiingSupportController {
         ResponseModel responseModel = skiingSupportService.update(skiingSupportEntity);
         return responseModel;
     }
-    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public ResponseModel deleteEntity(Long id){
         ResponseModel responseModel = skiingSupportService.delete(id);
@@ -48,13 +49,23 @@ public class SkiingSupportController {
     }
     @RequestMapping("/search")
     @ResponseBody
-    public ResponseModel search(Integer pageIndex,Integer pageSize,String username) {
-        return skiingSupportService.search(pageIndex,pageSize,username);
+    public ResponseModel search(Integer pageIndex,Integer pageSize,String name) {
+        return skiingSupportService.search(pageIndex,pageSize,name);
     }
 
     @GetMapping("/tosupportlist")
     public ModelAndView toSupportList(){
         return new ModelAndView("support/supportlist");
     }
+    @GetMapping("/tocreatesupport")
+    public ModelAndView toCreateSupport(){
+        return new ModelAndView("support/createsupport");
+    }
+    @GetMapping("/toupdatesupport")
+    public ModelAndView toUpdateSupport(Long id , HttpSession session){
+        session.setAttribute("supportid",id);
+        return new ModelAndView("support/updatesupport");
+    }
+
 
 }

@@ -1,7 +1,6 @@
 package com.alphaz.core.pojo.entity;
 
 import com.alphaz.core.constant.DataState;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -94,28 +93,11 @@ public abstract class BaseDO {
         this.updateBy = updateBy;
     }
 
-    public void setEntityVersion(Integer entityVersion) {
-        this.entityVersion = entityVersion;
-    }
-
-    @Version
-    protected Integer entityVersion;
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
-    }
-
-    @JsonIgnore
-    public int getEntityVersion() {
-        return entityVersion;
-    }
-
-
-    public void setEntityVersion(int version) {
-        this.entityVersion = version;
     }
 
 }
