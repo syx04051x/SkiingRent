@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * ProjectName: alphaz
@@ -23,39 +24,54 @@ public class SkiingEmployeeController {
     private SkiingEmployeeService skiingEmployeeService;
 
     @GetMapping(value = "/toemployeelist")
-    public ModelAndView toEmployeeList(){
-        return new ModelAndView("/employee/employeeList");
+    public ModelAndView toEmployeeList() {
+        return new ModelAndView("/employee/employeelist");
 
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+    @GetMapping("/tocreateemployee")
+    public ModelAndView toCreateSupport() {
+        return new ModelAndView("employee/createemployee");
+    }
+
+    @GetMapping("/toupdateemployee")
+    public ModelAndView toUpdateSupport(Long id, HttpSession session) {
+        session.setAttribute("employeeid", id);
+        return new ModelAndView("employee/updateemployee");
+    }
+
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseModel addEntity(@RequestBody SkiingEmployeeEntity skiingEmployeeEntity){
+    public ResponseModel addEntity(@RequestBody SkiingEmployeeEntity skiingEmployeeEntity) {
         ResponseModel responseModel = skiingEmployeeService.add(skiingEmployeeEntity);
         return responseModel;
     }
+
     @RequestMapping(value = "/find", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseModel findEntity(Long id){
+    public ResponseModel findEntity(Long id) {
         ResponseModel responseModel = skiingEmployeeService.find(id);
         return responseModel;
     }
-    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseModel updateEntity(@RequestBody SkiingEmployeeEntity skiingEmployeeEntity){
+    public ResponseModel updateEntity(@RequestBody SkiingEmployeeEntity skiingEmployeeEntity) {
         ResponseModel responseModel = skiingEmployeeService.update(skiingEmployeeEntity);
         return responseModel;
     }
-    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseModel deleteEntity(Long id){
+    public ResponseModel deleteEntity(Long id) {
         ResponseModel responseModel = skiingEmployeeService.delete(id);
         return responseModel;
     }
+
     @RequestMapping("/search")
     @ResponseBody
-    public ResponseModel search(Integer pageIndex,Integer pageSize,String username) {
-        return skiingEmployeeService.search(pageIndex,pageSize,username);
+    public ResponseModel search(Integer pageIndex, Integer pageSize, String name) {
+        return skiingEmployeeService.search(pageIndex, pageSize, name);
     }
 
 }
