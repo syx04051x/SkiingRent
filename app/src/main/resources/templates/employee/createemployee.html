@@ -3,7 +3,7 @@
       layout:decorator="common/layout" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>供应商添加</title>
+    <title>员工添加</title>
     <link rel="stylesheet" href="/resources/plugins/datatables/media/css/dataTables.bootstrap.min.css"/>
     <link rel="stylesheet"
           href="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/css/dataTables.checkboxes.css"/>
@@ -13,7 +13,7 @@
     <section class="content-header">
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
-            <li class="active">供应商添加</li>
+            <li class="active">员工添加</li>
         </ol>
     </section>
     <section class="content">
@@ -21,7 +21,7 @@
             <div class="col-xs-12" style="padding-top: 30px">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">供应商添加</h3>
+                        <h3 class="box-title">员工添加</h3>
                         <button type="button" class="btn btn-primary createbutton" onclick="back()">返回</button>
                     </div>
                     <!-- /.box-header -->
@@ -37,15 +37,24 @@
                             <div class="form-group">
                                 <label class="control-label col-md-2">部门：<span style="color: red">*</span></label>
                                 <div class="col-md-6  col-sm-12 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="部门" name="dept"
-                                           id="dept">
+                                    <select id="dept" name="dept" class="form-control" style="width: 30%;">
+                                        <option value="">请选择</option>
+                                        <option value="人事部">人事部</option>
+                                        <option value="开发部">开发部</option>
+                                        <option value="财务部">财务部</option>
+                                        <option value="销售部">销售部</option>
+                                        <option value="后勤部">后勤部</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">性别：</label>
                                 <div class="col-md-6  col-sm-12 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="性别" name="sex"
-                                           id="sex">
+                                    <select id="sex" name="sex" class="form-control" style="width: 30%;">
+                                        <option value="">请选择</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
