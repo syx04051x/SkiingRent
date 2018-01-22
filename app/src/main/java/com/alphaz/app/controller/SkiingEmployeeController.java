@@ -1,6 +1,5 @@
 package com.alphaz.app.controller;
 
-import com.alphaz.core.constant.EmployeeDepts;
 import com.alphaz.core.pojo.entity.SkiingEmployeeEntity;
 import com.alphaz.core.pojo.viewmodel.ResponseModel;
 import com.alphaz.core.service.SkiingEmployeeService;
