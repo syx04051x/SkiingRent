@@ -102,9 +102,9 @@
         var phone = $("#loginphone").val();
         var password = $("#loginpassword").val();
         console.log(phone+"  and  "+password);
-        $("#load-layout").show()
+        // $("#load-layout").show()
         $.ajax({
-            url: '../customLogin',
+            url: '/customlogin',
             type: 'post',
             data:
             {
@@ -112,7 +112,7 @@
                 "password":password
             },
             success: function (data) {
-                $("#load-layout").hide();
+                // $("#load-layout").hide();
                 if (data.message == "操作成功") {
                     var url = $("#webUrl").val();
                     var mess = url.replace(/;/g,"&")

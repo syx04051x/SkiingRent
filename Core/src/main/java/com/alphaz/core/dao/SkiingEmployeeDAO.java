@@ -21,5 +21,7 @@ public interface SkiingEmployeeDAO extends BaseRepo<SkiingEmployeeEntity, Long> 
 
     Page findByStateAndName(DataState state, Pageable pageable, String name);
 
+    SkiingEmployeeEntity findbyUsernameAndPassword(String username,String password);
+
 
 }

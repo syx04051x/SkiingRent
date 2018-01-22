@@ -68,4 +68,10 @@ public class SkiingEmployeeServiceImpl implements SkiingEmployeeService{
         SkiingEmployeeEntity finder = skiingEmployeeDAO.findOne(id);
         return new ResponseModel(DataState.Ava,"成功！",finder);
     }
+
+    @Override
+    public ResponseModel login(String username,String password) {
+        SkiingEmployeeEntity finder = this.skiingEmployeeDAO.findbyUsernameAndPassword(username, password);
+        return new ResponseModel(DataState.Ava,"成功！",finder);
+    }
 }

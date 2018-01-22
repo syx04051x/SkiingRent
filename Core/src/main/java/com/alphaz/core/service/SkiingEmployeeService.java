@@ -23,4 +23,6 @@ public interface SkiingEmployeeService {
     ResponseModel update(SkiingEmployeeEntity skiingEmployeeEntity);
 
     ResponseModel find(Long id);
+
+    ResponseModel login(String username,String password);
 }

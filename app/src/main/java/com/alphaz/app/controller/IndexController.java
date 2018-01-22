@@ -6,9 +6,7 @@ import com.alphaz.core.constant.MenuConst;
 import com.alphaz.core.constant.SessionConstant;
 import com.alphaz.core.service.PrivilegeService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -21,6 +19,7 @@ import java.util.Base64;
  * Created by C0dEr on 2016/12/3.
  */
 @Controller
+
 public class IndexController {
 
     @Resource
@@ -116,6 +115,13 @@ public class IndexController {
     @GetMapping("toabouts")
     public ModelAndView toAbouts() {
         return new ModelAndView("web/abouts");
+    }
+
+    @RequestMapping("customlogin")
+    @ResponseBody
+    public ModelAndView customLogin(String phone, String password) {
+        System.out.println("customlogin");
+        return new ModelAndView("web/index");
     }
 
 
