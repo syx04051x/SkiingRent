@@ -3,7 +3,6 @@ package com.alphaz.core.dao;
 import com.alphaz.core.constant.DataState;
 import com.alphaz.core.dao.base.BaseRepo;
 import com.alphaz.core.pojo.entity.SkiingEmployeeEntity;
-import com.alphaz.core.pojo.entity.SkiingSupportEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -21,7 +20,7 @@ public interface SkiingEmployeeDAO extends BaseRepo<SkiingEmployeeEntity, Long> 
 
     Page findByStateAndName(DataState state, Pageable pageable, String name);
 
-    SkiingEmployeeEntity findbyUsernameAndPassword(String username,String password);
+    SkiingEmployeeEntity findByNameAndPassword(String name,String password);
 
 
 }
