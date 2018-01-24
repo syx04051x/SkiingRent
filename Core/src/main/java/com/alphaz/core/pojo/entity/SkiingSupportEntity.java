@@ -14,7 +14,7 @@ import javax.persistence.Table;
  * Description:This is a class of com.alphaz.core.pojo.entity
  */
 @Entity
-@Table(name = "skiing_support", schema = "alphaz", catalog = "")
+@Table(name = "skiing_support", schema = "skiingrent", catalog = "")
 public class SkiingSupportEntity extends BaseDO {
 
     private String name;
