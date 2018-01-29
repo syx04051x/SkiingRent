@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
 <head lang="en">
     <meta charset="UTF-8">
     <title>登录</title>
@@ -16,15 +16,14 @@
         <div><a href="toregister">注册</a></div>
     </div>
 </div>
-<input name="hid" style="display: none;" id="webUrl" th:value="${session.webUrl}">
 <div>
     <div>
         <img src="/resources/web/images/loginpng.jpg" width="100%">
     </div>
     <div class="logocon">
         <div class="title">登录<span></span></div>
-        <div class="listline"><span><img src="/resources/web/images/logophone.png" width="22"> </span><input type="text" class="inptxt" placeholder="用户名/手机号" id="loginphone"></div>
-        <div class="listline"><span><img src="/resources/web/images/logopwd.png" width="20"> </span><input type="password" class="inptxt" placeholder="密码" id="loginpassword"></div>
+        <div class="listline"><span><img src="/resources/web/images/logophone.png" width="22"> </span><input type="text" class="inptxt" placeholder="手机号" id="phone"></div>
+        <div class="listline"><span><img src="/resources/web/images/logopwd.png" width="20"> </span><input type="password" class="inptxt" placeholder="密码" id="password"></div>
         <div class="mess" style="display: none">用户名或密码错误</div>
         <div class="logobtn"><button onclick="webLogin()">登录</button></div>
 
@@ -98,31 +97,28 @@
         }
     </script>
 <script>
+
     function webLogin(){
-        var phone = $("#loginphone").val();
-        var password = $("#loginpassword").val();
-        console.log(phone+"  and  "+password);
-        // $("#load-layout").show()
+        var tel = $("#phone").val();
+        var password = $("#password").val();
+
         $.ajax({
-            url: '/customlogin',
+            url: '/custom/login',
             type: 'post',
             data:
-            {
-                "phone":phone,
-                "password":password
-            },
+                {
+                    "phone":tel,
+                    "password":password
+                },
+            date:"json",
             success: function (data) {
-                // $("#load-layout").hide();
-                if (data.message == "操作成功") {
-                    var url = $("#webUrl").val();
-                    var mess = url.replace(/;/g,"&")
-                    location.href = mess;
+                if (data.state== 1) {
+                    alert("登录成功")
                 }else{
                     $(".mess").attr("style","display: block")
                 }
             }
         })
-
     }
 </script>
 </body>

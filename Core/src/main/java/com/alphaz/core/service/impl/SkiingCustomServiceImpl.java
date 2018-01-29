@@ -71,4 +71,13 @@ public class SkiingCustomServiceImpl implements SkiingCustomService {
         SkiingCustomEntity finder = skiingCustomDAO.findOne(id);
         return new ResponseModel(DataState.Ava,"成功！",finder);
     }
+
+    @Override
+    public ResponseModel login(String phone, String password) {
+        SkiingCustomEntity finder = skiingCustomDAO.findByTelAndPasswordAndState(phone,password,DataState.Ava);
+        if(finder==null){
+            return new ResponseModel(DataState.NAva,"成功！",finder);
+        }
+        return new ResponseModel(DataState.Ava,"成功！",finder);
+    }
 }

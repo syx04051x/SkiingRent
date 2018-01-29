@@ -20,5 +20,7 @@ public interface SkiingCustomDAO extends BaseRepo<SkiingCustomEntity, Long> {
 
     Page findByStateAndName(DataState state, Pageable pageable, String name);
 
+    SkiingCustomEntity findByTelAndPasswordAndState(String phone,String password,DataState state);
+
 
 }

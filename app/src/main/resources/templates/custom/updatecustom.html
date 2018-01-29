@@ -29,29 +29,16 @@
                     <div class="box-body" style="align-content: center">
                         <form action="" class="form-horizontal form-label-left">
                             <div class="form-group">
-                                <label class="control-label col-md-2">请输入姓名：<span style="color: red">*</span></label>
+                                <label class="control-label col-md-2">姓名：<span style="color: red"></span></label>
                                 <div class="col-md-6  col-sm-12 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="姓名" name="name"
+                                    <input type="text" disabled="true" class="form-control" placeholder="姓名" name="name"
                                            id="name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label col-md-2">部门：<span style="color: red">*</span></label>
-                                <div class="col-md-6  col-sm-12 col-xs-12">
-                                    <select id="dept" name="dept" class="form-control" style="width: 30%;">
-                                        <option value="">请选择</option>
-                                        <option value="人事部">人事部</option>
-                                        <option value="开发部">开发部</option>
-                                        <option value="财务部">财务部</option>
-                                        <option value="销售部">销售部</option>
-                                        <option value="后勤部">后勤部</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-md-2">性别：</label>
                                 <div class="col-md-6  col-sm-12 col-xs-12">
-                                    <select id="sex" name="sex" class="form-control" style="width: 30%;">
+                                    <select id="sex" disabled="true" name="sex" class="form-control" style="width: 30%;">
                                         <option value="">请选择</option>
                                         <option value="男">男</option>
                                         <option value="女">女</option>
@@ -59,16 +46,52 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2">电话：</label>
+                                <label class="control-label col-md-2">电话号码：</label>
                                 <div class="col-md-6  col-sm-12 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="电话" name="tel"
+                                    <input type="text" disabled="true" class="form-control" placeholder="电话号码" name="tel"
                                            id="tel">
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label class="control-label col-md-2">密码：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="password" disabled="true" class="form-control" placeholder="密码" name="password"
+                                           id="password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">会员等级：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <select id="isvip" name="isvip" class="form-control" style="width: 30%;" onchange="changediscount()">
+                                        <option value="">请选择</option>
+                                        <option value="非会员">非会员</option>
+                                        <option value="白银会员">白银会员</option>
+                                        <option value="黄金会员">黄金会员</option>
+                                        <option value="白金会员">白金会员</option>
+                                        <option value="钻石会员">钻石会员</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">折扣：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="text" disabled="true" class="form-control" placeholder="折扣" name="discount"
+                                           id="discount">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">身份证号：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="text" disabled="true" class="form-control" placeholder="地址" name="card"
+                                           id="card">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label class="control-label col-md-2">地址：</label>
                                 <div class="col-md-6  col-sm-12 col-xs-12">
-                                    <input type="text" class="form-control" placeholder="地址" name="address"
+                                    <input type="text" disabled="true" class="form-control" placeholder="地址" name="address"
                                            id="address">
                                 </div>
                             </div>
@@ -122,10 +145,18 @@
                         $("#address").val(address);
                         var tel = data.data.tel;
                         $("#tel").val(tel);
-                        var dept = data.data.dept;
-                        $("#dept").val(dept);
                         var sex = data.data.sex;
                         $("#sex").val(sex);
+                        var password = data.data.password;
+                        $("#password").val(password);
+                        var card  = data.data.card ;
+                        $("#card").val(card);
+                        var sex = data.data.sex;
+                        $("#sex").val(sex);
+                        var discount  = data.data.discount ;
+                        $("#discount ").val(discount );
+                        var isvip = data.data.isvip;
+                        $("#isvip").val(isvip);
 
                     }
                 }
@@ -133,32 +164,52 @@
         }
 
 
+        function changediscount(){
+            var isvip = $("#isvip option:selected").val();
+            if(isvip=="非会员"){
+                $("#discount").val("1")
+            }else if(isvip=="白银会员"){
+                $("#discount").val("0.9")
+            }else if(isvip=="黄金会员"){
+                $("#discount").val("0.8")
+            } else if(isvip=="白金会员"){
+                $("#discount").val("0.7")
+            }else{
+                $("#discount").val("0.6")
+            }
+        }
         function tosubmit() {
             var customid = $("#customid").val();
-            var name = $("#name").val();
-            var dept = $("#dept").val();
-            var sex = $("#sex").val();
+            var isvip = $("#isvip option:selected").val();
+            var discount = $("#discount").val();
+            var name =   $("#name").val();
             var address = $("#address").val();
             var tel = $("#tel").val();
+            var sex =  $("#sex").val();
+            var password = $("#password").val();
+            var card  =      $("#card").val();
 
-            var skiingSupportEntity = {
+
+            var skiingCustomEntity = {
                 "id": customid,
                 "name": name,
-                "dept": dept,
+                "isvip": isvip,
                 "sex": sex,
                 "address": address,
                 "tel": tel,
+                "discount": discount,
+                "password": password,
+                "card": card,
 
             };
-            console.log(JSON.stringify(skiingSupportEntity));
+            console.log(JSON.stringify(skiingCustomEntity));
             $("#load-layout").show()
             $.ajax({
                 url: "/custom/update",
-                data: JSON.stringify(skiingSupportEntity),
+                data: JSON.stringify(skiingCustomEntity),
                 type: "post",
                 contentType: "application/json;chrset=UTF-8",
                 success: function (data) {
-                    $("#load-layout").hide()
                     if (data.state == 1) {
                         swal({
                             title: "提示",

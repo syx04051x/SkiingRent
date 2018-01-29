@@ -67,5 +67,11 @@ public class SkiingCustomController {
         return new ModelAndView("custom/updatecustom");
     }
 
+    @RequestMapping("/login")
+    @ResponseBody
+    public ResponseModel login(String phone , String password) {
+        return skiingCustomService.login(phone,password);
+    }
+
 
 }

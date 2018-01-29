@@ -22,4 +22,6 @@ public interface SkiingCustomService {
     ResponseModel update(SkiingCustomEntity skiingCustomEntity);
 
     ResponseModel find(Long id);
+
+    ResponseModel login(String phone , String password);
 }

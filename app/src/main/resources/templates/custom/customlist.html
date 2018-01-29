@@ -29,7 +29,7 @@
                         <div class="col-md-6">
                             <button class="btn btn-primary" onclick="search()" type="button">搜索</button>
                         </div>
-                        <button type="button" class="btn btn-primary createbutton" onclick="openCreate()">新增</button>
+                        <!--<button type="button" class="btn btn-primary createbutton" onclick="openCreate()">新增</button>-->
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -37,10 +37,13 @@
                             <thead>
                             <tr>
                                 <th width="5%">编号</th>
-                                <th width="21%">姓名</th>
-                                <th width="20%">部门</th>
-                                <th width="20%">性别</th>
-                                <th width="23%">电话</th>
+                                <th width="10%">姓名</th>
+                                <th width="5%">性别</th>
+                                <th width="10%">电话</th>
+                                <th width="8%">会员等级</th>
+                                <th width="8%">会员折扣</th>
+                                <th width="15%">身份证号码</th>
+                                <th width="30%">地址</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -112,15 +115,24 @@
             for (var i = 0; i < data.length; i++) {
                 id = data[i].id;
                 var name = data[i].name == null ? "" : data[i].name;
-                var dept = data[i].dept == null ? "" : data[i].dept;
                 var sex = data[i].sex == null ? "" : data[i].sex;
                 var tel = data[i].tel == null ? "" : data[i].tel;
+                var email = data[i].email == null ? "" : data[i].email;
+                var isvip = data[i].isvip == null ? "" : data[i].isvip;
+                var discount  = data[i].discount  == null ? "" : data[i].discount ;
+                var address = data[i].address == null ? "" : data[i].address;
+                var card = data[i].card == null ? "" : data[i].card;
+
                 $("table tbody").append("<tr role='row' class='even'>"
                     + "   <td>" + id + "</td>"
                     + "   <td>" + name + "</td>"
-                    + "   <td>" + dept + "</td>"
                     + "   <td>" + sex + "</td>"
                     + "   <td>" + tel + "</td>"
+                    + "   <td>" + email + "</td>"
+                    + "   <td>" + isvip + "</td>"
+                    + "   <td>" + discount  + "</td>"
+                    + "   <td>" + card + "</td>"
+                    + "   <td>" + address + "</td>"
                     + "   <td><a href='#' onclick='toUpdate(" + id + ")'>编辑|<a href='#' onclick='deleteOne(" + id + ")'>删除</td>"
                     + "   </tr>");
             }
@@ -185,7 +197,7 @@
                     },
                     dataType: "json",
                     success: function (data) {
-                        if (data.statusCode == 0) {
+                        if (data.state == 1) {
                             swal({
                                 title: "删除成功！",
                                 text: "您已经永久删除了这条信息。", confirmButtonText: "删除",
