@@ -69,8 +69,11 @@ public class SkiingCustomController {
 
     @RequestMapping("/login")
     @ResponseBody
-    public ResponseModel login(String phone , String password) {
-        return skiingCustomService.login(phone,password);
+    public ResponseModel login(String phone , String password, HttpSession session) {
+        ResponseModel login = skiingCustomService.login(phone, password);
+        SkiingCustomEntity data = (SkiingCustomEntity) login.getData();
+        session.setAttribute("loginId", data.getId());
+        return login;
     }
 
 

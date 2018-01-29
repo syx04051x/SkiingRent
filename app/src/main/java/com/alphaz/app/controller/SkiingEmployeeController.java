@@ -30,12 +30,12 @@ public class SkiingEmployeeController {
     }
 
     @GetMapping("/tocreateemployee")
-    public ModelAndView toCreateSupport() {
+    public ModelAndView toCreateEmployee() {
         return new ModelAndView("employee/createemployee");
     }
 
     @GetMapping("/toupdateemployee")
-    public ModelAndView toUpdateSupport(Long id, HttpSession session) {
+    public ModelAndView toUpdateEmployee(Long id, HttpSession session) {
         session.setAttribute("employeeid", id);
         return new ModelAndView("employee/updateemployee");
     }
