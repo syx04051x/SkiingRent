@@ -17,49 +17,69 @@
     </div>
 </div>
 
-    <div class="regibk">
-        <div>
-            <img src="/resources/web/images/registerpng.jpg" width="100%">
-        </div>
-        <div class="regicon">
-            <div class="logocon" style="height: 487px;top: 90px;">
-                <div class="title">注册新用户<span></span></div>
-                <div class="listline"><span><img src="resources/web/images/reg-user.png"> </span><input type="text" class="inptxt" placeholder="姓名" id="name"></div>
-                <div class="listline"><span><img src="resources/web/images/reg-user.png"> </span><input type="text" class="inptxt" placeholder="性别" id="sex"></div>
-                <div class="listline"><span><img src="resources/web/images/logophone.png"> </span><input type="text" class="inptxt" placeholder="电话号码" id="tel"></div>
-                <div class="listline"><span><img src="resources/web/images/logopwd.png"> </span><input type="password" class="inptxt" placeholder="密码" id="password"></div>
-                <div class="listline"><span><img src="resources/web/images/reg-email.png"> </span><input type="text" class="inptxt" placeholder="地址" id="address"></div>
-                <div class="listline"><span><img src="resources/web/images/reg-user.png"> </span><input type="text" class="inptxt" placeholder="身份证号码" id="card"></div>
-                <div class="logobtn"><button onclick="toregist()">注册新用户</button></div>
-            </div>
-
-        </div>
+<div class="regibk">
+    <div>
+        <img src="/resources/web/images/registerpng.jpg" width="100%">
     </div>
+    <div class="regicon">
+        <div class="logocon" style="height: 487px;top: 90px;">
+            <div class="title">注册新用户<span></span></div>
+            <div class="listline"><span><img src="resources/web/images/reg-user.png"> </span><input type="text"
+                                                                                                    class="inptxt"
+                                                                                                    placeholder="姓名"
+                                                                                                    id="name"></div>
+            <div class="listline"><span><img src="resources/web/images/reg-user.png"> </span><input type="text"
+                                                                                                    class="inptxt"
+                                                                                                    placeholder="性别"
+                                                                                                    id="sex"></div>
+            <div class="listline"><span><img src="resources/web/images/logophone.png"> </span><input type="text"
+                                                                                                     class="inptxt"
+                                                                                                     placeholder="电话号码"
+                                                                                                     id="tel"></div>
+            <div class="listline"><span><img src="resources/web/images/logopwd.png"> </span><input type="password"
+                                                                                                   class="inptxt"
+                                                                                                   placeholder="密码"
+                                                                                                   id="password"></div>
+            <div class="listline"><span><img src="resources/web/images/reg-email.png"> </span><input type="text"
+                                                                                                     class="inptxt"
+                                                                                                     placeholder="地址"
+                                                                                                     id="address"></div>
+            <div class="listline"><span><img src="resources/web/images/reg-user.png"> </span><input type="text"
+                                                                                                    class="inptxt"
+                                                                                                    placeholder="身份证号码"
+                                                                                                    id="card"></div>
+            <div class="logobtn">
+                <button onclick="toregist()">注册新用户</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script>
 
-    function toregist(){
+    function toregist() {
 
 
         var name = $("#name").val();
-        var sex =  $("#sex").val();
+        var sex = $("#sex").val();
         var addrress = $("#addrress").val();
         var tel = $("#tel").val();
         var password = $("#password").val();
         var card = $("#card").val();
 
 
-         var skiingCustomEntity = {
-                "name": name,
-                "sex":sex,
-                "addrress":addrress,
-                "tel": tel,
-                "password":password,
-                "card":card,
-                "isvip":"无",
-                "discount":"1.0"
+        var skiingCustomEntity = {
+            "name": name,
+            "sex": sex,
+            "addrress": addrress,
+            "tel": tel,
+            "password": password,
+            "card": card,
+            "isvip": "无",
+            "discount": "1.0"
 
-            };
+        };
 
 
         console.log(JSON.stringify(skiingCustomEntity));
@@ -69,69 +89,72 @@
             contentType: "application/json;charset=UTF-8",
             data: JSON.stringify(skiingCustomEntity),
             success: function (data) {
-                if(data.state==1){
-                    alert("注册成功");
+                if (data.state == 1) {
+                    alert("注册成功！");
+                    location.href = "../index";
                 }
             }
         });
 
     }
 
-        $(function(){
-            $(".bluenav").height($(window).height()*1.5);
-            $(".sanheng").click(function(){
-                $(".bluenav").stop();
-                if($(".sanheng").find("span").hasClass("rihgtmenu2")){
-                    $(".sanheng").find("span").removeClass("rihgtmenu2");
-                    $(".bluenav").fadeOut(300);
-                }else{
-                    $(".sanheng").find("span").addClass("rihgtmenu2");
-                    $(".bluenav").fadeIn(300);
-                }
-            })
-            $(".addresssele").hover(function(){
-                $(".twonav").stop();
-                $(".twonav").slideDown(300);
-            },function(){
-                $(".twonav").stop();
-                $(".twonav").slideUp(300);
-            })
-            $(".tabdawen .tab a").click(function(){
-                $(this).addClass('on').siblings().removeClass('on');
-                var index = $(this).index();
-                number = index;
-                $('.tabdawen .content .con').hide();
-                $('.tabdawen .content .con:eq('+index+')').show();
-            })
-
-            $(".querenbtn span").on("click",function(){
-                var img1='images/nullchecked.png';
-                var img2='images/onchecked.png';
-                var sr=$(this).find("img").attr("src");
-//                alert(sr)
-                if(sr==img1){
-                    $(this).find("img").attr("src",img2);
-                }
-               else{
-                    $(this).find("img").attr("src",img1);
-                }
-            })
+    $(function () {
+        $(".bluenav").height($(window).height() * 1.5);
+        $(".sanheng").click(function () {
+            $(".bluenav").stop();
+            if ($(".sanheng").find("span").hasClass("rihgtmenu2")) {
+                $(".sanheng").find("span").removeClass("rihgtmenu2");
+                $(".bluenav").fadeOut(300);
+            } else {
+                $(".sanheng").find("span").addClass("rihgtmenu2");
+                $(".bluenav").fadeIn(300);
+            }
         })
-        function totop(){
-            $(document.documentElement).animate({
-                scrollTop: 0
-            },1000);
-            $(document.body).animate({
-                scrollTop: 0
-            },1000);
+        $(".addresssele").hover(function () {
+            $(".twonav").stop();
+            $(".twonav").slideDown(300);
+        }, function () {
+            $(".twonav").stop();
+            $(".twonav").slideUp(300);
+        })
+        $(".tabdawen .tab a").click(function () {
+            $(this).addClass('on').siblings().removeClass('on');
+            var index = $(this).index();
+            number = index;
+            $('.tabdawen .content .con').hide();
+            $('.tabdawen .content .con:eq(' + index + ')').show();
+        })
 
-        }
-        function openinp(){
-            $(".popbg").fadeIn(300);
-            $(".closebtn").click(function(){
-                $(".popbg").fadeOut(300);
-            })
-        }
-    </script>
+        $(".querenbtn span").on("click", function () {
+            var img1 = 'images/nullchecked.png';
+            var img2 = 'images/onchecked.png';
+            var sr = $(this).find("img").attr("src");
+//                alert(sr)
+            if (sr == img1) {
+                $(this).find("img").attr("src", img2);
+            }
+            else {
+                $(this).find("img").attr("src", img1);
+            }
+        })
+    })
+
+    function totop() {
+        $(document.documentElement).animate({
+            scrollTop: 0
+        }, 1000);
+        $(document.body).animate({
+            scrollTop: 0
+        }, 1000);
+
+    }
+
+    function openinp() {
+        $(".popbg").fadeIn(300);
+        $(".closebtn").click(function () {
+            $(".popbg").fadeOut(300);
+        })
+    }
+</script>
 </body>
 </html>

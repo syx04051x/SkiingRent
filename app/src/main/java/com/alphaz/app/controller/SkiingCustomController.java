@@ -23,57 +23,65 @@ public class SkiingCustomController {
     @Resource
     private SkiingCustomService skiingCustomService;
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseModel addEntity(@RequestBody SkiingCustomEntity skiingCustomEntity){
+    public ResponseModel addEntity(@RequestBody SkiingCustomEntity skiingCustomEntity, HttpSession session) {
         ResponseModel responseModel = skiingCustomService.add(skiingCustomEntity);
+        SkiingCustomEntity data = (SkiingCustomEntity) responseModel.getData();
+        session.setAttribute("loginId", data.getId());
         return responseModel;
     }
+
     @RequestMapping(value = "/find", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseModel findEntity(Long id){
+    public ResponseModel findEntity(Long id) {
         ResponseModel responseModel = skiingCustomService.find(id);
         return responseModel;
     }
-    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseModel updateEntity(@RequestBody SkiingCustomEntity skiingCustomEntity){
+    public ResponseModel updateEntity(@RequestBody SkiingCustomEntity skiingCustomEntity) {
         ResponseModel responseModel = skiingCustomService.update(skiingCustomEntity);
         return responseModel;
     }
+
     @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseModel deleteEntity(Long id){
+    public ResponseModel deleteEntity(Long id) {
         ResponseModel responseModel = skiingCustomService.delete(id);
         return responseModel;
     }
+
     @RequestMapping("/search")
     @ResponseBody
-    public ResponseModel search(Integer pageIndex,Integer pageSize,String name) {
-        return skiingCustomService.search(pageIndex,pageSize,name);
+    public ResponseModel search(Integer pageIndex, Integer pageSize, String name) {
+        return skiingCustomService.search(pageIndex, pageSize, name);
     }
 
     @GetMapping("/tocustomlist")
-    public ModelAndView toCustomList(){
+    public ModelAndView toCustomList() {
         return new ModelAndView("custom/customlist");
     }
+
     @GetMapping("/tocreatecustom")
-    public ModelAndView toCreateCustom(){
+    public ModelAndView toCreateCustom() {
         return new ModelAndView("custom/createcustom");
     }
+
     @GetMapping("/toupdatecustom")
-    public ModelAndView toUpdateCustom(Long id , HttpSession session){
-        session.setAttribute("customid",id);
+    public ModelAndView toUpdateCustom(Long id, HttpSession session) {
+        session.setAttribute("customid", id);
         return new ModelAndView("custom/updatecustom");
     }
 
     @RequestMapping("/login")
     @ResponseBody
-    public ResponseModel login(String phone , String password, HttpSession session) {
-        ResponseModel login = skiingCustomService.login(phone, password);
-        SkiingCustomEntity data = (SkiingCustomEntity) login.getData();
+    public ResponseModel login(String phone, String password, HttpSession session) {
+        ResponseModel responseModel = skiingCustomService.login(phone, password);
+        SkiingCustomEntity data = (SkiingCustomEntity) responseModel.getData();
         session.setAttribute("loginId", data.getId());
-        return login;
+        return responseModel;
     }
 
 

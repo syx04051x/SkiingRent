@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8">
     <title>中博企培</title>
@@ -7,210 +7,245 @@
     <link href="resources/web/css/reset.css" rel="stylesheet">
     <link href="resources/web/css/newstyle.css" rel="stylesheet">
     <script src="resources/web/js/jquery-2.2.4.min.js"></script>
-    <link href="resources/web/css/jquery.bxslider.css" rel="stylesheet" />
+    <link href="resources/web/css/jquery.bxslider.css" rel="stylesheet"/>
     <script src="resources/web/js/slider/jquery.bxslider.min.js"></script>
     <!--<script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.js"></script>-->
     <script>
-        $(document).ready(function(e) {
-            var slider=$('.bxslider').bxSlider({
-                speed:500,
-                startSlide:0,
-                captions:false,//show title
-                auto:true,
-                easing:'linear',
-                preloadImages:'all',
-                pager:true,//焦点
-                controls:true,
-                pause:5000,
-                autoHover:false
+        $(document).ready(function (e) {
+            var slider = $('.bxslider').bxSlider({
+                speed: 500,
+                startSlide: 0,
+                captions: false,//show title
+                auto: true,
+                easing: 'linear',
+                preloadImages: 'all',
+                pager: true,//焦点
+                controls: true,
+                pause: 5000,
+                autoHover: false
             });
-            $("body").click(function(){
+            $("body").click(function () {
                 slider.startAuto();
             });
         });
     </script>
 </head>
 <body style="background: #f1f1f1;">
-    <div class="phonenumber">
-        <div class="diyibu">
-            <div><a href="index">服务热线：400-965-9919</a></div>
-            <div>购物车</div>
+<div class="phonenumber">
+    <div class="diyibu">
+        <div>购物车</div>
+        <div id="web_div">
             <div><a href="toregister">注册</a></div>
             <div><a href="toweblogin">登陆</a></div>
         </div>
-    </div>
-
-    <div class="ban" id="topnav">
-        <div class="banner">
-            <div class="bannercontent">
-                <ul class="bxslider">
-                    <li>
-                        <a href="toabouts">
-                            <img alt="" src="resources/web/images/skiing_index1.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="toabouts">
-                            <img alt="" src="resources/web/images/skiing_index5.jpg">
-                        </a>
-                    </li>
-                    <li>
-                        <a href="toabouts">
-                            <img alt="" src="resources/web/images/skiing_index3.jpg">
-                        </a>
-                    </li>
-
-                </ul>
-            </div>
+        <div id="login_div">
         </div>
-
     </div>
-    <div class="contentinfo">
-        <div class="biaoti">
-            <span>热门道具</span>
-        </div>
-        <div class="tuijianlist">
-            <ul>
+</div>
+<div>
+    <input name="loginId" type="hidden" id="loginId" th:value="${session.loginId}"></div>
+<div class="ban" id="topnav">
+    <div class="banner">
+        <div class="bannercontent">
+            <ul class="bxslider">
                 <li>
-                    <a href="#"><img src="resources/web/images/tuijian1.jpg"></a>
+                    <a href="toabouts">
+                        <img alt="" src="resources/web/images/skiing_index1.jpg">
+                    </a>
                 </li>
                 <li>
-                    <a href="#"><img src="resources/web/images/tuijian2.jpg"></a>
+                    <a href="toabouts">
+                        <img alt="" src="resources/web/images/skiing_index5.jpg">
+                    </a>
                 </li>
                 <li>
-                    <a href="#"><img src="resources/web/images/tuijian3.jpg"></a>
+                    <a href="toabouts">
+                        <img alt="" src="resources/web/images/skiing_index3.jpg">
+                    </a>
                 </li>
-                <li class="lastli">
-                    <a href="#"><img src="resources/web/images/tuijian4.jpg"></a>
-                </li>
+
             </ul>
         </div>
     </div>
-    <div class="contentinfo">
-        <div class="biaoti">
-            <span>道具分类</span>
-        </div>
-        <div class="youshi">
-            <div class="tabdawen2">
-                <div class="tab">
-                    <a href="javascript:;" class="on">服装</a>
-                    <a href="javascript:;">鞋子</a>
-                    <a href="javascript:;">器材</a>
-                    <a href="javascript:;" class="lasta">器具</a>
+
+</div>
+<div class="contentinfo">
+    <div class="biaoti">
+        <span>热门道具</span>
+    </div>
+    <div class="tuijianlist">
+        <ul>
+            <li>
+                <a href="#"><img src="resources/web/images/tuijian1.jpg"></a>
+            </li>
+            <li>
+                <a href="#"><img src="resources/web/images/tuijian2.jpg"></a>
+            </li>
+            <li>
+                <a href="#"><img src="resources/web/images/tuijian3.jpg"></a>
+            </li>
+            <li class="lastli">
+                <a href="#"><img src="resources/web/images/tuijian4.jpg"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="contentinfo">
+    <div class="biaoti">
+        <span>道具分类</span>
+    </div>
+    <div class="youshi">
+        <div class="tabdawen2">
+            <div class="tab">
+                <a href="javascript:;" class="on">服装</a>
+                <a href="javascript:;">鞋子</a>
+                <a href="javascript:;">器材</a>
+                <a href="javascript:;" class="lasta">器具</a>
+            </div>
+            <div class="content">
+                <div class="con" style="display:block;">
+                    <div class="shili">
+                        <div class="leftshili">
+                            <img src="resources/web/images/pictwo.jpg">
+                        </div>
+                        <div class="rightshili">
+                            <div class="left">
+
+                                <ul class="listul">
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+
+
+                                </ul>
+                            </div>
+
+                            <div class="right">
+                                <img src="resources/web/images/pic1.jpg">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="content">
-                    <div class="con" style="display:block;">
-                       <div class="shili">
-                           <div class="leftshili">
-                                <img src="resources/web/images/pictwo.jpg">
-                           </div>
-                           <div class="rightshili">
-                               <div class="left">
+                <div class="con">
+                    <div class="shili">
+                        <div class="leftshili">
+                            <img src="resources/web/images/pictwo.jpg">
+                        </div>
+                        <div class="rightshili">
+                            <div class="left">
 
-                                   <ul class="listul">
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
+                                <ul class="listul">
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
 
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                       <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
 
 
-                                   </ul>
-                               </div>
-
-                               <div class="right">
-                                   <img src="resources/web/images/pic1.jpg">
-                               </div>
-                           </div>
-                       </div>
-                    </div>
-                    <div class="con">
-                        <div class="shili">
-                            <div class="leftshili">
-                                <img src="resources/web/images/pictwo.jpg">
+                                </ul>
                             </div>
-                            <div class="rightshili">
-                                <div class="left">
 
-                                    <ul class="listul">
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-
-
-                                    </ul>
-                                </div>
-
-                                <div class="right">
-                                    <img src="resources/web/images/pic2.jpg">
-                                </div>
+                            <div class="right">
+                                <img src="resources/web/images/pic2.jpg">
                             </div>
                         </div>
                     </div>
-                    <div class="con">
-                        <div class="shili">
-                            <div class="leftshili">
-                                <img src="resources/web/images/pictwo.jpg">
+                </div>
+                <div class="con">
+                    <div class="shili">
+                        <div class="leftshili">
+                            <img src="resources/web/images/pictwo.jpg">
+                        </div>
+                        <div class="rightshili">
+                            <div class="left">
+
+                                <ul class="listul">
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+
+
+                                </ul>
                             </div>
-                            <div class="rightshili">
-                                <div class="left">
 
-                                    <ul class="listul">
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-
-
-                                    </ul>
-                                </div>
-
-                                <div class="right">
-                                    <img src="resources/web/images/pic3.jpg">
-                                </div>
+                            <div class="right">
+                                <img src="resources/web/images/pic3.jpg">
                             </div>
                         </div>
                     </div>
-                    <div class="con">
-                        <div class="shili">
-                            <div class="leftshili">
-                                <img src="resources/web/images/pictwo.jpg">
+                </div>
+                <div class="con">
+                    <div class="shili">
+                        <div class="leftshili">
+                            <img src="resources/web/images/pictwo.jpg">
+                        </div>
+                        <div class="rightshili">
+                            <div class="left">
+
+                                <ul class="listul">
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+                                    <li><span class="product">滑雪服</span><span class="product">100元/天</span><span
+                                            class="product">120元</span><a href="#">我要预定</a></li>
+
+
+                                </ul>
                             </div>
-                            <div class="rightshili">
-                                <div class="left">
 
-                                    <ul class="listul">
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-                                        <li><span class="product">滑雪服</span><span class="product">100元/天</span><span class="product">120元</span><a href="#">我要预定</a></li>
-
-
-                                    </ul>
-                                </div>
-
-                                <div class="right">
-                                    <img src="resources/web/images/picthree.jpg">
-                                </div>
+                            <div class="right">
+                                <img src="resources/web/images/picthree.jpg">
                             </div>
                         </div>
                     </div>
@@ -218,148 +253,198 @@
             </div>
         </div>
     </div>
-    <div class="contentinfo" style="padding: 18px 18px 0 18px">
-        <div class="biaoti">
-            <span>注意事项</span>
-        </div>
-        <div class="xueyuan">
-            <div class="tabdawen3">
-                <div class="tab">
-                    <a href="javascript:;" class="on">最新活动</a>
-                    <a href="javascript:;">行业资讯</a>
-                    <a href="javascript:;">精彩回顾</a>
-                    <a href="javascript:;">财税学院</a>
-                </div>
-                <div class="content">
-                    <div class="con" style="display:block;">
-                        <div class="shili">
-                            <div class="leftshili">
-                                <div class="topdiv">
-                                    <div class="left">
-                                        <img src="resources/web/images/picfour.jpg">
-                                    </div>
-                                    <div class="right">
-                                        <div class="tit18">很多人可能存在疑惑，为什么身为非财务人员的公司高层们</div>
-                                        <div class="txt12">
-                                            员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是报表中的哪些指标，这些数据分
-                                            析结果又反映出该部门怎么样的经营绩效，更不能不知道企业税务筹划与管理对于企业成本节约、价值创造
-                                            的重大意义。员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是报表中的哪些指标\
-                                            ，这些数据分析结果又反映出该部门怎么样的经营绩效，更不能不知道企业税务筹划与管理对于企业成本节
-                                            约、价值创造的重大意义。
-                                        </div>
+</div>
+<div class="contentinfo" style="padding: 18px 18px 0 18px">
+    <div class="biaoti">
+        <span>注意事项</span>
+    </div>
+    <div class="xueyuan">
+        <div class="tabdawen3">
+            <div class="tab">
+                <a href="javascript:;" class="on">最新活动</a>
+                <a href="javascript:;">行业资讯</a>
+                <a href="javascript:;">精彩回顾</a>
+                <a href="javascript:;">财税学院</a>
+            </div>
+            <div class="content">
+                <div class="con" style="display:block;">
+                    <div class="shili">
+                        <div class="leftshili">
+                            <div class="topdiv">
+                                <div class="left">
+                                    <img src="resources/web/images/picfour.jpg">
+                                </div>
+                                <div class="right">
+                                    <div class="tit18">很多人可能存在疑惑，为什么身为非财务人员的公司高层们</div>
+                                    <div class="txt12">
+                                        员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是报表中的哪些指标，这些数据分
+                                        析结果又反映出该部门怎么样的经营绩效，更不能不知道企业税务筹划与管理对于企业成本节约、价值创造
+                                        的重大意义。员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是报表中的哪些指标\
+                                        ，这些数据分析结果又反映出该部门怎么样的经营绩效，更不能不知道企业税务筹划与管理对于企业成本节
+                                        约、价值创造的重大意义。
                                     </div>
                                 </div>
-                                <table>
-                                    <tr>
-                                        <td width="50%">
-                                            <ul>
-                                                <li><div><a href="#"><span>1/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                                <li><div><a href="#"><span>2/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                                <li><div><a href="#"><span>3/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                                <li><div><a href="#"><span>4/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                                <li><div><a href="#"><span>5/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                            </ul>
-                                        </td>
-                                        <td width="50%">
-                                            <ul>
-                                                <li><div><a href="#"><span>1/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                                <li><div><a href="#"><span>2/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                                <li><div><a href="#"><span>3/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                                <li><div><a href="#"><span>4/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a></div></li>
-                                            </ul>
-                                            <div class="btna"><a href="#">查看更多</a></div>
-                                        </td>
-                                    </tr>
-                                </table>
+                            </div>
+                            <table>
+                                <tr>
+                                    <td width="50%">
+                                        <ul>
+                                            <li>
+                                                <div><a href="#"><span>1/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div><a href="#"><span>2/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div><a href="#"><span>3/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div><a href="#"><span>4/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div><a href="#"><span>5/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td width="50%">
+                                        <ul>
+                                            <li>
+                                                <div><a href="#"><span>1/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div><a href="#"><span>2/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div><a href="#"><span>3/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div><a href="#"><span>4/</span>员，你可以不知道如何制作财务报表，但是，你不能不知道你需要关心的是.</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="btna"><a href="#">查看更多</a></div>
+                                    </td>
+                                </tr>
+                            </table>
 
 
-                            </div>
-                            <div class="rightshili">
-                                <img src="resources/web/images/picfive.jpg">
-                                <img src="resources/web/images/picsix.jpg">
-                            </div>
+                        </div>
+                        <div class="rightshili">
+                            <img src="resources/web/images/picfive.jpg">
+                            <img src="resources/web/images/picsix.jpg">
                         </div>
                     </div>
-                    <div class="con"></div>
                 </div>
+                <div class="con"></div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="phonenumber" style="margin-top: 15px">
-        <div class="diyibu">
-            <div>© 2017 Starbucks Corporation.All rights reserved. 沪ICP备17003747号 沪公网安备 31010402000253号</div>
-        </div>
+<div class="phonenumber" style="margin-top: 15px">
+    <div class="diyibu">
+        <div>© 2017 Starbucks Corporation.All rights reserved. 沪ICP备17003747号 沪公网安备 31010402000253号</div>
     </div>
+</div>
 
-    <script>
-        $(function(){
-            $(".tabdawen .tab a").click(function(){
-                $(this).addClass('on').siblings().removeClass('on');
-                var index = $(this).index();
-                number = index;
-                $('.tabdawen .content .con').hide();
-                $('.tabdawen .content .con:eq('+index+')').show();
-            });
-            $(".tabdawen2 .tab a").click(function(){
-                $(this).addClass('on').siblings().removeClass('on');
-                var index = $(this).index();
-                number = index;
-                $('.tabdawen2 .content .con').hide();
-                $('.tabdawen2 .content .con:eq('+index+')').show();
-            });
-            $(".tabdawen3 .tab a").click(function(){
-                $(this).addClass('on').siblings().removeClass('on');
-                var index = $(this).index();
-                number = index;
-                $('.tabdawen3 .content .con').hide();
-                $('.tabdawen3 .content .con:eq('+index+')').show();
-            });
-            $(".headtwonav .linav").hover(function() {
+<script>
+    $(function () {
+        getInfo();
+        $(".tabdawen .tab a").click(function () {
+            $(this).addClass('on').siblings().removeClass('on');
+            var index = $(this).index();
+            number = index;
+            $('.tabdawen .content .con').hide();
+            $('.tabdawen .content .con:eq(' + index + ')').show();
+        });
+        $(".tabdawen2 .tab a").click(function () {
+            $(this).addClass('on').siblings().removeClass('on');
+            var index = $(this).index();
+            number = index;
+            $('.tabdawen2 .content .con').hide();
+            $('.tabdawen2 .content .con:eq(' + index + ')').show();
+        });
+        $(".tabdawen3 .tab a").click(function () {
+            $(this).addClass('on').siblings().removeClass('on');
+            var index = $(this).index();
+            number = index;
+            $('.tabdawen3 .content .con').hide();
+            $('.tabdawen3 .content .con:eq(' + index + ')').show();
+        });
+        $(".headtwonav .linav").hover(function () {
 //                alert(1)
-                $(this).find(".chil").stop();
-                $(this).find(".chil,.childs").css("width",$(this).outerWidth());
-                $(this).find(".chil").slideDown(300);
-            }, function() {
-                $(this).find(".chil").stop();
-                $(this).find(".chil").slideUp(100);
-            });
-            $(".twoli").hover(function() {
-                $(this).find(".threenav").stop();
-                $(this).find(".threenav").show(300);
-            }, function() {
-                $(this).find(".threenav").stop();
-                $(this).find(".threenav").hide(100);
-            });
-            $(".cuanfu .left li").hover(function() {
-                $(this).find(".chil").stop();
-                $(this).find(".chil").css("width",$(this).outerWidth());
-                $(this).find(".chil").slideDown(300);
-            }, function() {
-                $(this).find(".chil").stop();
-                $(this).find(".chil").slideUp(100);
-            });
-        })
-        $(function () {
-            var marginTop = 0;
-            $(window).scroll(function() {
-                var scrollTop = $(window).scrollTop();
-                if( scrollTop >= 170) {
-                    $('.blackbg').fadeIn();
-                } else{
-                    $('.blackbg').fadeOut();
+            $(this).find(".chil").stop();
+            $(this).find(".chil,.childs").css("width", $(this).outerWidth());
+            $(this).find(".chil").slideDown(300);
+        }, function () {
+            $(this).find(".chil").stop();
+            $(this).find(".chil").slideUp(100);
+        });
+        $(".twoli").hover(function () {
+            $(this).find(".threenav").stop();
+            $(this).find(".threenav").show(300);
+        }, function () {
+            $(this).find(".threenav").stop();
+            $(this).find(".threenav").hide(100);
+        });
+        $(".cuanfu .left li").hover(function () {
+            $(this).find(".chil").stop();
+            $(this).find(".chil").css("width", $(this).outerWidth());
+            $(this).find(".chil").slideDown(300);
+        }, function () {
+            $(this).find(".chil").stop();
+            $(this).find(".chil").slideUp(100);
+        });
+    })
+    $(function () {
+        var marginTop = 0;
+        $(window).scroll(function () {
+            var scrollTop = $(window).scrollTop();
+            if (scrollTop >= 170) {
+                $('.blackbg').fadeIn();
+            } else {
+                $('.blackbg').fadeOut();
+            }
+        });
+    });
+
+    function totop() {
+        $(document.documentElement).animate({
+            scrollTop: 0
+        }, 100);
+        $(document.body).animate({
+            scrollTop: 0
+        }, 100);
+    }
+
+    function getInfo() {
+        var loginId = $("#loginId").val();
+        if ("" != loginId) {
+            $.ajax({
+                url: "../custom/find",
+                type: "post",
+                data: {id: loginId},
+                dataType: "json",
+                success: function (data) {
+                    if (1 == data.state) {
+                        // console.log(data);
+                        $("#web_div").hide();
+                        var loginName = data.data.name;
+                        $("#login_div").html("<div><a href='#'>" + loginName + "</a></div><div><a href='#'>退出</a></div>")
+                    }
                 }
             });
-        });
-        function totop(){
-            $(document.documentElement).animate({
-                scrollTop: 0
-            },100);
-            $(document.body).animate({
-                scrollTop: 0
-            },100);
         }
+    }
 
-    </script>
+</script>
 </body>
 </html>
