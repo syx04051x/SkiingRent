@@ -28,6 +28,7 @@ public class SkiingCustomController {
     public ResponseModel addEntity(@RequestBody SkiingCustomEntity skiingCustomEntity, HttpSession session) {
         ResponseModel responseModel = skiingCustomService.add(skiingCustomEntity);
         SkiingCustomEntity data = (SkiingCustomEntity) responseModel.getData();
+        //在session中加入登录用户
         session.setAttribute("loginId", data.getId());
         return responseModel;
     }
@@ -80,6 +81,7 @@ public class SkiingCustomController {
     public ResponseModel login(String phone, String password, HttpSession session) {
         ResponseModel responseModel = skiingCustomService.login(phone, password);
         SkiingCustomEntity data = (SkiingCustomEntity) responseModel.getData();
+        //在session中加入登录用户
         session.setAttribute("loginId", data.getId());
         return responseModel;
     }
@@ -87,6 +89,7 @@ public class SkiingCustomController {
     @RequestMapping("/loginout")
     @ResponseBody
     public String loginOut(HttpSession session) {
+        //消除登录用户的session记录
         session.removeAttribute("loginId");
         return "退出成功";
     }
