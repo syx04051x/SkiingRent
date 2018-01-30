@@ -88,10 +88,13 @@ public class SkiingCustomController {
 
     @RequestMapping("/loginout")
     @ResponseBody
-    public String loginOut(HttpSession session) {
+    public ResponseModel loginOut(HttpSession session, long loginId) {
+        System.out.println("loginId = " + loginId);
         //消除登录用户的session记录
         session.removeAttribute("loginId");
-        return "退出成功";
+        ResponseModel responseModel = new ResponseModel();
+        responseModel.setMessage("退出成功");
+        return responseModel;
     }
 
 }

@@ -440,7 +440,7 @@
                         // console.log(data);
                         $("#web_div").hide();
                         var loginName = data.data.name;
-                        $("#login_div").html("<div><a href='topersonalcenter'>" + loginName + "</a></div><div><a href='#' onclick='" + webLoginOut(loginId) + "'>退出</a></div>")
+                        $("#login_div").html("<div><a href='#' onclick='webLoginOut(" + loginId + ")'>退出</a></div><div><a href='topersonalcenter'>" + loginName + "</a></div>")
                     }
                 }
             });
@@ -449,12 +449,13 @@
 
     function webLoginOut(obj) {
         $.ajax({
-            url: "/custom/loginout", //todo
+            url: "/custom/loginout",
             type: "post",
-            data: {id: obj},
+            data: {loginId: obj},
             dataType: "json",
             success: function (data) {
-                if ("退出成功" == data) {
+                console.log(data);
+                if ("退出成功" == data.message) {
                     $("#web_div").show();
                     $("#login_div").html("");
                     alert("已退出登录！");
