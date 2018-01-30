@@ -357,7 +357,9 @@
 
 <script>
     $(function () {
+        //获得已登录用户的信息
         getInfo();
+
         $(".tabdawen .tab a").click(function () {
             $(this).addClass('on').siblings().removeClass('on');
             var index = $(this).index();
