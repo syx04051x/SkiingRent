@@ -438,11 +438,29 @@
                         // console.log(data);
                         $("#web_div").hide();
                         var loginName = data.data.name;
-                        $("#login_div").html("<div><a href='#'>" + loginName + "</a></div><div><a href='#'>退出</a></div>")
+                        $("#login_div").html("<div><a href='topersonalcenter'>" + loginName + "</a></div><div><a href='#' onclick='" + webLoginOut(loginId) + "'>退出</a></div>")
                     }
                 }
             });
         }
+    }
+
+    function webLoginOut(obj) {
+        $.ajax({
+            url: "/custom/loginout", //todo
+            type: "post",
+            data: {id: obj},
+            dataType: "json",
+            success: function (data) {
+                if ("退出成功" == data) {
+                    $("#web_div").show();
+                    $("#login_div").html("");
+                    alert("已退出登录！");
+                    location.reload();
+                }
+            }
+
+        })
     }
 
 </script>

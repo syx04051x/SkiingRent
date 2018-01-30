@@ -112,6 +112,7 @@ public class IndexController {
     public ModelAndView toRegister() {
         return new ModelAndView("web/register");
     }
+
     @GetMapping("toabouts")
     public ModelAndView toAbouts() {
         return new ModelAndView("web/abouts");
@@ -124,12 +125,9 @@ public class IndexController {
         return new ModelAndView("web/index");
     }
 
-
-
-
-
-
-
-
+    @GetMapping("topersonalcenter")
+    public ModelAndView toPersonalCenter() {
+        return new ModelAndView("web/personalcenter");
+    }
 
 }

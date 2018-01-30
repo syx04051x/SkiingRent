@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link href="/resources/web/css/reset.css" rel="stylesheet">
+    <link href="/resources/web/css/newstyle.css" rel="stylesheet">
+    <script src="/resources/web/js/jquery-2.2.4.min.js"></script>
+    <style>
+        ul {
+            margin-left: 0px;
+        }
+
+        .tree_li {
+            font-size: 18px;
+            width: 100%;
+            height: 50px;
+            line-height: 50px !important;
+            background-color: #bce8f1;
+            margin-bottom: 12px;
+            padding-left: 25px;
+            list-style: none;
+            cursor: pointer;
+            border-radius: 5px;
+            -moz-border-radius: 5px; /* Old Firefox */
+        }
+
+        .tree_li:hover {
+            background-color: #d6e9c6 !important;
+        }
+
+        .tree_li:first-child {
+            background-color: #d6e9c6;
+        }
+
+        .tree_li span {
+            font-size: 21px;
+            font-weight: bold;
+            height: 40px;
+            margin-right: 17% !important;
+            float: right !important;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="lfr-app-column-view manage-view row-fluid">
+        <div id="treeDiv" class="span3">
+            <ul>
+                <li class="tree_li" onclick="changeContent(this,'')">
+                    个人资料<span></span>
+                </li>
+                <li class="tree_li" onclick="changeContent(this,'')">
+                    我的购物车<span>10</span>
+                </li>
+                <li class="tree_li" onclick="changeContent(this,'')">
+                    预订的宝具<span>10</span>
+                </li>
+            </ul>
+        </div>
+        <div id="contentDiv" class="span9">
+            正在开发中
+        </div>
+    </div>
+</div>
+<script>
+    function changeContent(obj, id) {
+        $(".tree_li").each(function (i, e) {
+            if (obj == e) {
+                e.style.backgroundColor = "#d6e9c6";
+            } else {
+                e.style.backgroundColor = "#bce8f1";
+            }
+        });
+//        $.ajax({
+//            type: "post",
+//            url: "${changeTicketURL}",
+//            data: {
+//                '<portlet:namespace/>projectId': id
+//            },
+//            error: function (err) {
+//                alert("提交失败!");
+//            },
+//            success: function (data) {
+//                var list = eval('(' + data + ')');
+//                var table = '';
+//                $.each(list, function (i, e) {
+//                    console.log(i);
+//                    table += '<table class="contentDiv_table" border="1"><tr>';
+//                    table += '<td colspan="2" class="table_title"><a class="table_a" href="#" onclick="jump(' + e['tollStationId'] + ',\'' + e['stationName'] + '\')">' + e['stationName'] + '</a></td></tr>';
+//                    table += '<tr><td colspan="2" class="table_next">当前通行卡存量：<span class="table_span"  style="color: ' + e['curColor'] + '">' + e['curNum'] + '</span></td></tr>';
+//                    table += '<tr><td class="table_td">上个班发：<span class="td_span">' + e['curOut'] + '</span></td>' +
+//                        '<td class="table_td">上个班收：<span class="td_span">' + e['curRecycle'] + '</span></td></tr>';
+//                    table += '<tr><td class="table_td">当月发：<span class="td_span">' + e['monthOut'] + '</span></td>' +
+//                        '<td class="table_td">当月收：<span class="td_span">' + e['monthRecycle'] + '</span></td></tr>';
+//                    table += '</table>';
+//                })
+//                document.getElementById("contentDiv").innerHTML = table;
+//            }
+//        });
+    }
+</script>
+</body>
+</html>

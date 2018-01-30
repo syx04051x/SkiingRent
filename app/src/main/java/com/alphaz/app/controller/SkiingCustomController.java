@@ -84,5 +84,11 @@ public class SkiingCustomController {
         return responseModel;
     }
 
+    @RequestMapping("/loginout")
+    @ResponseBody
+    public String loginOut(HttpSession session) {
+        session.removeAttribute("loginId");
+        return "退出成功";
+    }
 
 }
