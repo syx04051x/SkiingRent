@@ -59,7 +59,7 @@
             </ul>
         </div>
         <div class="col-xs-9" id="content_div" style="height:500px;width:70%;">
-            <div id="personal" style="display:none">
+            <div id="personal" style="display:block">
                 <div class="row" style="margin-bottom:20px;">
                     <div class="col-md-6 mb-3">
                         <label for="name">姓名</label>
@@ -97,6 +97,60 @@
                     </div>
                 </div>
                 <button class="btn btn-primary" type="submit">保存</button>
+            </div>
+            <div id="shopCar" style="display:none">
+                <div class="box-body">
+                    <table id="tableShop" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="15%">订单编号</th>
+                            <th width="20%">名称</th>
+                            <th width="12%">价格</th>
+                            <th width="12%">押金</th>
+                            <th width="12%">状态</th>
+                            <th width="12%">创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-7">
+                            <div class="fenye" id="pageShop" style="float: right;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="bought" style="display:none">
+                <div class="box-body">
+                    <table id="tableBought" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th width="15%">订单编号</th>
+                            <th width="20%">名称</th>
+                            <th width="12%">价格</th>
+                            <th width="12%">押金</th>
+                            <th width="12%">状态</th>
+                            <th width="12%">创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-7">
+                            <div class="fenye" id="pageBought" style="float: right;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- <table class="table" style="font-size: 20px;" border="0">
                 <tr class="" style="">
@@ -138,8 +192,8 @@
 
     function toPersonal() {
         document.getElementById("personal").style.display = "block";
-//        document.getElementById("shopCar").style.display = "none";
-//        document.getElementById("bought").style.display = "none";
+        document.getElementById("shopCar").style.display = "none";
+        document.getElementById("bought").style.display = "none";
         var loginId = $("#loginId").val();
         $.ajax({
             url: "/custom/find",
