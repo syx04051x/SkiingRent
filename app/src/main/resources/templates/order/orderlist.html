@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="common/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>产品管理</title>
+    <link rel="stylesheet" href="/resources/plugins/datatables/media/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/css/dataTables.checkboxes.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active">产品管理</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12" style="padding-top: 30px">
+                <div class="box">
+                    <div class="box-header">
+                        <div class="col-lg-3 col-md-6 col-sm-4 col-xs-12">
+                            <div>
+                                <input class="form-control" id="name" name="" placeholder="请输入名称" type="text" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary" onclick="search()" type="button">搜索</button>
+                        </div>
+                        <button type="button" class="btn btn-primary createbutton" onclick="openCreate()">新增</button>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="table" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th width="5%">编号</th>
+                                <th width="16%">名称</th>
+                                <th width="8%">种类</th>
+                                <th width="10%">价格</th>
+                                <th width="10%">押金</th>
+                                <th width="8%">使用？</th>
+                                <th width="8%">好坏？</th>
+                                <th width="10%">编码</th>
+                                <th width="16%">创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-sm-5"></div>
+                            <div class="col-sm-7">
+                                <div class="fenye" id="page" style="float: right;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/resources/plugins/page/page.js"></script>
+    <script src="/resources/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/resources/plugins/datatables/media/js/dataTables.bootstrap.min.js"></script>
+    <script src="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+    <script src="/resources/plugins/sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="/resources/plugins/sweetalert/sweetalert.css"/>
+    <script>
+        var no;
+        var url;
+        var pageNum = 1;
+        function GetRequest() {
+            url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                str = url.substr(1);
+                if (str.indexOf("&") != -1) {
+                    strs = str.split("&");
+                    for (var i = 0; i < strs.length; i++) {
+                        no = theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                        pageNum = no;
+                    }
+                } else {
+                    no = theRequest[str.split("=")[0]] = unescape(str.split("=")[1]);
+                    pageNum = no;
+                    console.log("no:" + no)
+                }
+            }
+
+        }
+
+        $(function () {
+            GetRequest();
+            if (url != "") {
+                pageNo(no);
+            }
+            if (url == "") {
+                no = 1;
+                pageNo(no);
+            }
+        });
+
+
+        function template(data) {
+            console.log(data)
+            var id;
+            //渲染列表
+            $("table tbody").empty();
+            for (var i = 0; i < data.length; i++) {
+                id = data[i].id;
+                var name = data[i].name == null ? "" : data[i].name;
+                var type = data[i].type == null ? "" : data[i].type;
+                var price  = data[i].price  == null ? "" : data[i].price ;
+                var deposit = data[i].deposit == null ? "" : data[i].deposit;
+                var isuse = data[i].isuse == null ? "" : data[i].isuse;
+                isuse = isuse == 1? "使用中":"未使用"
+                var isdefect = data[i].isdefect == null ? "" : data[i].isdefect;
+                isdefect = isdefect == 0? "完好":"破损";
+                var code = data[i].code == null ? "" : data[i].code;
+                var createTime = data[i].createTime == null ? "" : data[i].createTime;
+                $("table tbody").append("<tr role='row' class='even'>"
+                        + "   <td>" + id + "</td>"
+                        + "   <td>" + name + "</td>"
+                        + "   <td>" + type + "</td>"
+                        + "   <td>" + price + "</td>"
+                        + "   <td>" + deposit + "</td>"
+                        + "   <td>" + isuse + "</td>"
+                        + "   <td>" + isdefect + "</td>"
+                        + "   <td>" + code + "</td>"
+                        + "   <td>" + createTime + "</td>"
+                        + "   <td><a href='#' onclick='toUpdate(" + id + ")'>编辑|<a href='#' onclick='deleteOne(" + id + ")'>删除</td>"
+                        + "   </tr>");
+            }
+        }
+
+        function pageNo(no) {
+            $.ajax({
+                type: "post",
+                url: "/order/search",
+                data: {
+                    pageSize: 10,
+                    pageIndex: no,
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data.data)
+                    $("#page").pagination({
+                        pageIndex: no, // 默认页
+                        pageSize: data.data.size, // 默认分页大小
+                        totalCount: data.data.totalElements,
+                        onChange: function (pageIndex, pageSize) {
+                            $.ajax({
+                                type: "post",
+                                url: "/order/search",
+                                data: {
+                                    pageSize: pageSize,
+                                    pageIndex: pageIndex,
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    console.log(data)
+                                    template(data.data.content);
+                                    pageNum = pageIndex;
+                                },
+                                error: function () {
+                                    swal("跳转失败！", "跳转失败。", "error");
+                                }
+                            })
+                        }
+                    })
+                    template(data.data.content);
+                }
+            });
+        }
+
+
+        function deleteOne(id) {
+            swal({
+                title: "您确定要删除这条信息吗",
+                text: "删除后将无法恢复，请谨慎操作！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除", cancelButtonText: "取消",
+                closeOnConfirm: false
+            }, function () {
+                $.ajax({
+                    url: "/order/delete",
+                    type: "post",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.state == 1) {
+                            swal({
+                                title: "删除成功！",
+                                text: "您已经永久删除了这条信息。", confirmButtonText: "删除",
+                                confirmButtonText: "删除",
+                                type: "success",
+                                closeOnConfirm: true
+                            }, function () {
+                                location.href = '/order/toorderlist';
+                            });
+                        }
+                    },
+                    error: function () {
+                        swal("删除失败！", "删除失败。", "error");
+                    }
+                })
+            });
+        }
+
+        function search() {
+            var name = $("#name").val();
+            $.ajax({
+                type: "post",
+                url: "/order/search",
+                data: {
+                    pageSize: 10,
+                    pageIndex: 1,
+                    name: name
+                },
+                dataType: "json",
+                success: function (data) {
+                    $("#page").pagination({
+                        pageIndex: no, // 默认页
+                        pageSize: data.data.pageSize, // 默认分页大小
+                        totalCount: data.data.rowCount,
+                        onChange: function (pageIndex, pageSize) {
+                            $.ajax({
+                                type: "post",
+                                url: "/order/search",
+                                data: {
+                                    pageSize: pageSize,
+                                    pageIndex: pageIndex,
+                                    name: name
+                                },
+                                dataType: "json",
+                                success: function (data) {
+                                    template(data.data.content);
+                                }
+                            })
+                        }
+                    });
+                    template(data.data.content);
+                }
+            })
+        }
+
+        function openCreate() {
+            location.href = "/order/tocreateorder"
+        }
+
+        function toUpdate(data) {
+            location.href = "/order/toupdateorder" + "?id=" + data ;
+        }
+
+
+
+    </script>
+</div>
+
+</body>
+
+</html>
+
+
