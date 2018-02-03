@@ -52,6 +52,11 @@ public class SkiingProductController {
     public ResponseModel search(Integer pageIndex,Integer pageSize,String name) {
         return skiingProductService.search(pageIndex,pageSize,name);
     }
+    @RequestMapping("/findbytype")
+    @ResponseBody
+    public ResponseModel findByType(String type) {
+        return skiingProductService.findByType(type);
+    }
 
     @GetMapping("/toproductlist")
     public ModelAndView toProductList(){

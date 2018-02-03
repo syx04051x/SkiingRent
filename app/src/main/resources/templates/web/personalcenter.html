@@ -52,106 +52,13 @@
     </div>
     <div class="row">
         <div class="col-xs-3" id="myScrollspy">
-            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
+            <ul class="nav nav-tabs nav-stacked">
                 <li><a href="#" onclick="toPersonal()">个人资料</a></li>
                 <li><a href="#" onclick="toShopCar()">我的购物车</a></li>
                 <li><a href="#" onclick="toBought()">购买的宝具</a></li>
             </ul>
         </div>
         <div class="col-xs-9" id="content_div" style="height:500px;width:70%;">
-            <div id="personal" style="display:block">
-                <div class="row" style="margin-bottom:20px;">
-                    <div class="col-md-6 mb-3">
-                        <label for="name">姓名</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="" value=""
-                               required="">
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom:20px;">
-                    <div class="col-md-6 mb-3">
-                        <label for="sex">性别</label>
-                        <select class="form-control d-block w-100" id="sex" name="sex" required="">
-                            <option value="男">男</option>
-                            <option value="女">女</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom:20px;">
-                    <div class="col-md-6 mb-3">
-                        <label for="tel">电话号码</label>
-                        <input type="text" class="form-control" id="tel" name="tel" placeholder="" value="" required="">
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom:20px;">
-                    <div class="col-md-6 mb-3">
-                        </select>
-                        <label for="card">身份证号码</label>
-                        <input type="text" class="form-control" id="card" name="card" placeholder="" value=""
-                               required="">
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom:20px;">
-                    <div class="col-md-12 mb-3">
-                        <label for="address">地址</label>
-                        <input type="text" class="form-control" id="address" name="address" placeholder="">
-                    </div>
-                </div>
-                <button class="btn btn-primary" type="submit">保存</button>
-            </div>
-            <div id="shopCar" style="display:none">
-                <div class="box-body">
-                    <table id="tableShop" class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th width="15%">订单编号</th>
-                            <th width="20%">名称</th>
-                            <th width="12%">价格</th>
-                            <th width="12%">押金</th>
-                            <th width="12%">状态</th>
-                            <th width="12%">创建时间</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-sm-5"></div>
-                        <div class="col-sm-7">
-                            <div class="fenye" id="pageShop" style="float: right;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="bought" style="display:none">
-                <div class="box-body">
-                    <table id="tableBought" class="table table-bordered table-hover">
-                        <thead>
-                        <tr>
-                            <th width="15%">订单编号</th>
-                            <th width="20%">名称</th>
-                            <th width="12%">价格</th>
-                            <th width="12%">押金</th>
-                            <th width="12%">状态</th>
-                            <th width="12%">创建时间</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-sm-5"></div>
-                        <div class="col-sm-7">
-                            <div class="fenye" id="pageBought" style="float: right;">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- <table class="table" style="font-size: 20px;" border="0">
                 <tr class="" style="">
                     <td class="td_left">姓名</td>
@@ -179,24 +86,143 @@
                 </tr>
             </table> -->
         </div>
+        <div style="display: none;">
+
+            <div id='shopCar'>
+                <table id='tableShop' class='table table-bordered table-hover'>
+                    <thead>
+                    <tr>
+                        <th width='15%'>订单编号</th>
+                        <th width='20%'>名称</th>
+                        <th width='12%'>价格</th>
+                        <th width='12%'>押金</th>
+                        <th width='12%'>状态</th>
+                        <th width='12%'>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div id='bought'>
+                <div class='box-body'>
+                    <table id='tableBought' class='table table-bordered table-hover'>
+                        <thead>
+                        <tr>
+                            <th width='15%'>订单编号</th>
+                            <th width='20%'>名称</th>
+                            <th width='12%'>价格</th>
+                            <th width='12%'>押金</th>
+                            <th width='12%'>状态</th>
+                            <th width='12%'>创建时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                    <div class='row'>
+                        <div class='col-sm-5'></div>
+                        <div class='col-sm-7'>
+                            <div class='fenye' id='pageBought' style='float: right;'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script>
+    var personalHtml = "<div id='personal'>\n" +
+        "                <div class='row' style='margin-bottom:20px;'>\n" +
+        "                    <div class='col-md-6 mb-3'>\n" +
+        "                        <label for='name'>姓名</label>\n" +
+        "                        <input type='text' class='form-control' id='name' name='name' placeholder='' value=''\n" +
+        "                               required=''>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "                <div class='row' style='margin-bottom:20px;'>\n" +
+        "                    <div class='col-md-6 mb-3'>\n" +
+        "                        <label for='sex'>性别</label>\n" +
+        "                        <select class='form-control d-block w-100' id='sex' name='sex' required=''>\n" +
+        "                            <option value='男'>男</option>\n" +
+        "                            <option value='女'>女</option>\n" +
+        "                        </select>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "                <div class='row' style='margin-bottom:20px;'>\n" +
+        "                    <div class='col-md-6 mb-3'>\n" +
+        "                        <label for='tel'>电话号码</label>\n" +
+        "                        <input type='text' class='form-control' id='tel' name='tel' placeholder='' value='' required=''>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "                <div class='row' style='margin-bottom:20px;'>\n" +
+        "                    <div class='col-md-6 mb-3'>\n" +
+        "                        <label for='card'>身份证号码</label>\n" +
+        "                        <input type='text' class='form-control' id='card' name='card' placeholder='' value=''\n" +
+        "                               required=''>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "                <div class='row' style='margin-bottom:20px;'>\n" +
+        "                    <div class='col-md-12 mb-3'>\n" +
+        "                        <label for='address'>地址</label>\n" +
+        "                        <input type='text' class='form-control' id='address' name='address' placeholder=''>\n" +
+        "                    </div>\n" +
+        "                </div>\n" +
+        "                <button class='btn btn-primary' type='submit'>保存</button>\n" +
+        "            </div>";
+    var shopCarHtml = "<div id='shopCar'>\n" +
+        "                <table id='tableShop' class='table table-bordered table-hover'>\n" +
+        "                    <thead>\n" +
+        "                    <tr>\n" +
+        "                        <th width='15%'>订单编号</th>\n" +
+        "                        <th width='20%'>名称</th>\n" +
+        "                        <th width='12%'>价格</th>\n" +
+        "                        <th width='12%'>押金</th>\n" +
+        "                        <th width='12%'>状态</th>\n" +
+        "                        <th width='12%'>创建时间</th>\n" +
+        "                        <th>操作</th>\n" +
+        "                    </tr>\n" +
+        "                    </thead>\n" +
+        "                    <tbody>\n" +
+        "                    </tbody>\n" +
+        "                </table>\n" +
+        "            </div>";
+    var boughtHtml = "<div id='shopCar'>\n" +
+        "                <table id='tableShop' class='table table-bordered table-hover'>\n" +
+        "                    <thead>\n" +
+        "                    <tr>\n" +
+        "                        <th width='15%'>订单编号</th>\n" +
+        "                        <th width='20%'>名称</th>\n" +
+        "                        <th width='12%'>价格</th>\n" +
+        "                        <th width='12%'>押金</th>\n" +
+        "                        <th width='12%'>状态</th>\n" +
+        "                        <th width='12%'>创建时间</th>\n" +
+        "                        <th>操作</th>\n" +
+        "                    </tr>\n" +
+        "                    </thead>\n" +
+        "                    <tbody>\n" +
+        "                    </tbody>\n" +
+        "                </table>\n" +
+        "            </div>";
     $(document).ready(function () {
         $("#myNav").affix({
             offset: {
                 top: 125
             }
         });
+        toPersonal();
     });
 
     function toPersonal() {
-        document.getElementById("personal").style.display = "block";
-        document.getElementById("shopCar").style.display = "none";
-        document.getElementById("bought").style.display = "none";
+        $("#content_div").html(personalHtml);
         var loginId = $("#loginId").val();
         $.ajax({
-            url: "/custom/find",
+            url: "../custom/find",
             type: "post",
             data: {loginId: loginId},
             dataType: "json",
@@ -208,6 +234,7 @@
                     $("#tel").val(entity.tel);
                     $("#card").val(entity.card);
                     $("#address").val(entity.address);
+                    alert(document.getElementById("tableShop").innerHTML);
                 }
             }
 
@@ -216,18 +243,18 @@
 
 
     function toShopCar() {
-        document.getElementById("personal").style.display = "none";
-        document.getElementById("shopCar").style.display = "block";
-        document.getElementById("bought").style.display = "none";
+        console.log(shopCarHtml);
+        $("#content_div").html(shopCarHtml);
         var loginId = $("#loginId").val();
         $.ajax({
-            url: "",
+            url: "../order/findbyloginId",
             type: "post",
             data: {loginId: loginId},
             dataType: "json",
             success: function (data) {
+                console.log(data);
                 var html = "";
-                $("#content_div").html(html);
+                // $("#content_div").html(html);
             }
 
         });
@@ -235,9 +262,7 @@
 
 
     function toBought() {
-        document.getElementById("personal").style.display = "none";
-        document.getElementById("shopCar").style.display = "none";
-        document.getElementById("bought").style.display = "block";
+        $("#content_div").html(boughtHtml);
         var loginId = $("#loginId").val();
         $.ajax({
             url: "",
@@ -246,7 +271,7 @@
             dataType: "json",
             success: function (data) {
                 var html = "";
-                $("#content_div").html(html);
+                // $("#content_div").html(html);
             }
 
         });

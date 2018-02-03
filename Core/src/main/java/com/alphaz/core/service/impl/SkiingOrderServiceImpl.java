@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Service
@@ -67,5 +68,11 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
     public ResponseModel find(Long id) {
         SkiingOrderEntity finder = skiingOrderDAO.findOne(id);
         return new ResponseModel(DataState.Ava,"成功！",finder);
+    }
+
+    @Override
+    public ResponseModel findByLoginId(long loginId) {
+        List<SkiingOrderEntity> clothes = skiingOrderDAO.findByCustomId(loginId);
+        return new ResponseModel(DataState.Ava,"成功！",clothes);
     }
 }

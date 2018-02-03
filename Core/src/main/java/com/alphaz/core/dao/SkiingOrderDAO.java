@@ -6,6 +6,8 @@ import com.alphaz.core.pojo.entity.SkiingOrderEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 /**
  * ProjectName: alphaz
  * PackageName: com.alphaz.core.dao
@@ -18,6 +20,7 @@ public interface SkiingOrderDAO extends BaseRepo<SkiingOrderEntity, Long> {
 
     Page findByState(DataState state, Pageable pageable);
 
+    List<SkiingOrderEntity> findByCustomId(long customId);
 
 
 }

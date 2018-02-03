@@ -52,6 +52,11 @@ public class SkiingOrderController {
     public ResponseModel search(Integer pageIndex,Integer pageSize,String name) {
         return skiingOrderService.search(pageIndex,pageSize,name);
     }
+    @RequestMapping("/findbyloginId")
+    @ResponseBody
+    public ResponseModel findByLoginId(long loginId) {
+        return skiingOrderService.findByLoginId(loginId);
+    }
 
     @GetMapping("/toorderlist")
     public ModelAndView toOrderList(){

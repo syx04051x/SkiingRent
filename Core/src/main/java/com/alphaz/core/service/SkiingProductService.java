@@ -22,4 +22,6 @@ public interface SkiingProductService {
     ResponseModel update(SkiingProductEntity skiingProductEntity);
 
     ResponseModel find(Long id);
+
+    ResponseModel findByType(String type);
 }

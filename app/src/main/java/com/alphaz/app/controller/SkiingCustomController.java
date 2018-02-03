@@ -35,8 +35,8 @@ public class SkiingCustomController {
 
     @RequestMapping(value = "/find", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseModel findEntity(Long id) {
-        ResponseModel responseModel = skiingCustomService.find(id);
+    public ResponseModel findEntity(Long loginId) {
+        ResponseModel responseModel = skiingCustomService.find(loginId);
         return responseModel;
     }
 

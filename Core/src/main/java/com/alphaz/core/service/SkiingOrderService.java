@@ -22,4 +22,6 @@ public interface SkiingOrderService {
     ResponseModel update(SkiingOrderEntity skiingOrderEntity);
 
     ResponseModel find(Long id);
+
+    ResponseModel findByLoginId(long loginId);
 }
