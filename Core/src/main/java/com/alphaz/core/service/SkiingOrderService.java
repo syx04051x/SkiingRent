@@ -13,7 +13,7 @@ import com.alphaz.core.pojo.viewmodel.ResponseModel;
  */
 public interface SkiingOrderService {
 
-    ResponseModel search(Integer pageIndex, Integer pageSize, String name);
+    ResponseModel search(Integer pageIndex, Integer pageSize,Integer position);
 
     ResponseModel add(SkiingOrderEntity skiingOrderEntity);
 
@@ -24,4 +24,6 @@ public interface SkiingOrderService {
     ResponseModel find(Long id);
 
     ResponseModel findByLoginId(long loginId);
+
+    ResponseModel changePosition(Long id,Integer position);
 }

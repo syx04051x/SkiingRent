@@ -47,10 +47,16 @@ public class SkiingOrderController {
         ResponseModel responseModel = skiingOrderService.delete(id);
         return responseModel;
     }
+    @RequestMapping(value = "/changeposition", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public ResponseModel changePosition(Long id,Integer position){
+        ResponseModel responseModel = skiingOrderService.changePosition(id,position);
+        return responseModel;
+    }
     @RequestMapping("/search")
     @ResponseBody
-    public ResponseModel search(Integer pageIndex,Integer pageSize,String name) {
-        return skiingOrderService.search(pageIndex,pageSize,name);
+    public ResponseModel search(Integer pageIndex,Integer pageSize,Integer position) {
+        return skiingOrderService.search(pageIndex,pageSize,position);
     }
     @RequestMapping("/findbyloginId")
     @ResponseBody

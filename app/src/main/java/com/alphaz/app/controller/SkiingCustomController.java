@@ -76,6 +76,12 @@ public class SkiingCustomController {
         return new ModelAndView("custom/updatecustom");
     }
 
+    @GetMapping("/tocustominfo")
+    public ModelAndView toCustomInfo(Long id, HttpSession session) {
+        session.setAttribute("customid", id);
+        return new ModelAndView("custom/custominfo");
+    }
+
     @RequestMapping("/login")
     @ResponseBody
     public ResponseModel login(String phone, String password, HttpSession session) {

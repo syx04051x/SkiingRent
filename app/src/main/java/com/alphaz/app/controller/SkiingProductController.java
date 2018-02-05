@@ -72,5 +72,12 @@ public class SkiingProductController {
         return new ModelAndView("product/updateproduct");
     }
 
+    @GetMapping("/toproductinfo")
+    public ModelAndView toProductInfo(Long id , HttpSession session){
+        session.setAttribute("productid",id);
+        return new ModelAndView("product/productinfo");
+    }
+
+
 
 }

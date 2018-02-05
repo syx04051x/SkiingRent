@@ -4,6 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 /**
  * ProjectName: alphaz
@@ -22,6 +23,7 @@ public class SkiingOrderEntity extends BaseDO {
     private Integer day;
     private Integer price;
     private String deposit;
+    private Timestamp startTime;
 
     @Basic
     @Column(name = "customId")
@@ -84,5 +86,16 @@ public class SkiingOrderEntity extends BaseDO {
 
     public void setDeposit(String deposit) {
         this.deposit = deposit;
+    }
+
+
+    @Basic
+    @Column(name = "startTime")
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
     }
 }

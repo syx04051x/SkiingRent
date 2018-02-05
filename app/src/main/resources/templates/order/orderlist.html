@@ -3,7 +3,7 @@
       layout:decorator="common/layout">
 <head>
     <meta charset="UTF-8"/>
-    <title>产品管理</title>
+    <title>订单管理</title>
     <link rel="stylesheet" href="/resources/plugins/datatables/media/css/dataTables.bootstrap.min.css"/>
     <link rel="stylesheet"
           href="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/css/dataTables.checkboxes.css"/>
@@ -13,7 +13,7 @@
     <section class="content-header">
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
-            <li class="active">产品管理</li>
+            <li class="active">订单管理</li>
         </ol>
     </section>
     <section class="content">
@@ -23,13 +23,19 @@
                     <div class="box-header">
                         <div class="col-lg-3 col-md-6 col-sm-4 col-xs-12">
                             <div>
-                                <input class="form-control" id="name" name="" placeholder="请输入名称" type="text" />
+                                <select class="form-control" id="position" name="position">
+                                    <option value="">状态</option>
+                                    <option value="1">购物车</option>
+                                    <option value="2">已付款</option>
+                                    <option value="3">在使用</option>
+                                    <option value="4">已完成</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <button class="btn btn-primary" onclick="search()" type="button">搜索</button>
                         </div>
-                        <button type="button" class="btn btn-primary createbutton" onclick="openCreate()">新增</button>
+                        <!--<button type="button" class="btn btn-primary createbutton" onclick="openCreate()">新增</button>-->
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
@@ -37,14 +43,15 @@
                             <thead>
                             <tr>
                                 <th width="5%">编号</th>
-                                <th width="16%">名称</th>
-                                <th width="8%">种类</th>
-                                <th width="10%">价格</th>
-                                <th width="10%">押金</th>
-                                <th width="8%">使用？</th>
-                                <th width="8%">好坏？</th>
-                                <th width="10%">编码</th>
-                                <th width="16%">创建时间</th>
+                                <th width="14%">产品</th>
+                                <th width="8%">类型</th>
+                                <th width="7%">用户</th>
+                                <th width="10%">联系电话</th>
+                                <th width="10%">开始时间</th>
+                                <th width="8%">使用周期</th>
+                                <th width="8%">总价</th>
+                                <th width="16%">付款时间</th>
+                                <th width="6%">状态</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
@@ -106,6 +113,119 @@
             }
         });
 
+        function findorder(orderid) {
+            $.ajax({
+                url: "/order/find",
+                type: "post",
+                data: {
+                    "id": orderid
+                },
+                dataType: "json",
+                success: function (data) {
+                    if (data.state == 1) {
+                        console.log(JSON.stringify(data));
+                        var position = data.data.position;
+                        changePosition(orderid,position);
+                    }
+                }
+            });
+
+
+
+
+
+        }
+
+        function changePosition(orderid,position) {
+            console.log(orderid+"++"+position)
+            if(position == "2" ){
+                swal({
+                    title: "改订单的状态为\"在使用\"",
+                    text: "修改后无法恢复，请确认客户已租借成功",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "确认", cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "/order/changeposition",
+                        type: "post",
+                        data: {
+                            "id": orderid,
+                            "position":position
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.state == 1) {
+                                swal({
+                                    title: "状态修改成功！",
+                                    type: "success",
+                                    closeOnConfirm: true
+                                }, function () {
+                                    location.href = '/order/toorderlist';
+                                });
+                            }
+                        },
+                        error: function () {
+                            swal("状态修改失败！", "请联系系统管理员。", "error");
+                        }
+                    })
+                });
+            }
+            if(position == "3" ){
+                swal({
+                    title: "改订单的状态为\"已完成\"",
+                    text: "修改后无法恢复，请确认道具已归还成功",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "确认", cancelButtonText: "取消",
+                    closeOnConfirm: false
+                }, function () {
+                    $.ajax({
+                        url: "/order/changeposition",
+                        type: "post",
+                        data: {
+                            "id": orderid,
+                            "position":position
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.state == 1) {
+                                swal({
+                                    title: "道具是否损坏？",
+                                    text: "请仔细检查道具是否完好无损！",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "已损坏，去填写损坏描述！",
+                                    cancelButtonText: "未损坏！",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false
+                                }, function(isConfirm){
+                                    if (isConfirm) {
+                                        swal({
+                                            title: "订单完成！道具损坏！去填写损坏描述",
+                                            type: "success",
+                                            closeOnConfirm: true
+                                        }, function () {
+                                            location.href = "/product/toupdateproduct" + "?id=" + data.data.productId ;
+                                        })
+
+                                    } else {
+                                        swal({
+                                            title: "订单完成！道具正常！",
+                                            type: "success",
+                                            closeOnConfirm: true
+                                        }, function () {
+                                            location.href = '/order/toorderlist';
+                                        })
+                                    }
+                                });
+                            }
+                        },
+                    })
+                });
+            }
+        }
 
         function template(data) {
             console.log(data)
@@ -114,27 +234,31 @@
             $("table tbody").empty();
             for (var i = 0; i < data.length; i++) {
                 id = data[i].id;
-                var name = data[i].name == null ? "" : data[i].name;
-                var type = data[i].type == null ? "" : data[i].type;
-                var price  = data[i].price  == null ? "" : data[i].price ;
-                var deposit = data[i].deposit == null ? "" : data[i].deposit;
-                var isuse = data[i].isuse == null ? "" : data[i].isuse;
-                isuse = isuse == 1? "使用中":"未使用"
-                var isdefect = data[i].isdefect == null ? "" : data[i].isdefect;
-                isdefect = isdefect == 0? "完好":"破损";
-                var code = data[i].code == null ? "" : data[i].code;
-                var createTime = data[i].createTime == null ? "" : data[i].createTime;
+                var procuctname = data[i].procuctname == null ? "" : data[i].procuctname;
+                var productId = data[i].productId == null ? "" : data[i].productId;
+                var producttype = data[i].producttype == null ? "" : data[i].producttype;
+                var customId = data[i].customId == null ? "" : data[i].customId;
+                var customname  = data[i].customname  == null ? "" : data[i].customname ;
+                var customphone = data[i].customphone == null ? "" : data[i].customphone;
+                var startTime = data[i].startTime == null ? "" : data[i].startTime.substring(0,10);
+                var day = data[i].day == null ? "" : data[i].day;
+                var price = data[i].price == null ? "" : data[i].price;
+                var discount = data[i].discount == null ? "" : data[i].discount;
+                var allprice = day*price*discount;
+                var position = data[i].position == null ? "" : getpositiono(data[i].position);
+                var updateTime = data[i].updateTime == null ? "" : data[i].updateTime;
                 $("table tbody").append("<tr role='row' class='even'>"
                         + "   <td>" + id + "</td>"
-                        + "   <td>" + name + "</td>"
-                        + "   <td>" + type + "</td>"
-                        + "   <td>" + price + "</td>"
-                        + "   <td>" + deposit + "</td>"
-                        + "   <td>" + isuse + "</td>"
-                        + "   <td>" + isdefect + "</td>"
-                        + "   <td>" + code + "</td>"
-                        + "   <td>" + createTime + "</td>"
-                        + "   <td><a href='#' onclick='toUpdate(" + id + ")'>编辑|<a href='#' onclick='deleteOne(" + id + ")'>删除</td>"
+                        + "   <td><a href='#' onclick='toproduct("+productId+")'>" + procuctname + "</a></td>"
+                        + "   <td>" + producttype + "</td>"
+                        + "   <td><a href='#' onclick='tocustom("+customId+")'>" + customname + "</a></td>"
+                        + "   <td>" + customphone + "</td>"
+                        + "   <td>" + startTime + "</td>"
+                        + "   <td>" + day + "</td>"
+                        + "   <td>" + allprice + "</td>"
+                        + "   <td>" + updateTime + "</td>"
+                        + "   <td><a href='#' onclick='findorder("+id+")'>" + position + "</a></td>"
+                        + "   <td><a href='#' onclick='deleteOne(" + id + ")'>删除</a></td>"
                         + "   </tr>");
             }
         }
@@ -179,6 +303,21 @@
             });
         }
 
+        function getpositiono(data) {
+            var position = "";
+            if(data ==1){
+                position = "购物车"
+            }else if(data == 2 ){
+                position = "已付款"
+            }else if(data == 3 ){
+                position = "在使用"
+            }else{
+                position = "已完成"
+            }
+            return position;
+
+        }
+
 
         function deleteOne(id) {
             swal({
@@ -218,14 +357,14 @@
         }
 
         function search() {
-            var name = $("#name").val();
+            var position = $("#position option:selected").val();
             $.ajax({
                 type: "post",
                 url: "/order/search",
                 data: {
                     pageSize: 10,
                     pageIndex: 1,
-                    name: name
+                    position: position
                 },
                 dataType: "json",
                 success: function (data) {
@@ -240,7 +379,7 @@
                                 data: {
                                     pageSize: pageSize,
                                     pageIndex: pageIndex,
-                                    name: name
+                                    position: position
                                 },
                                 dataType: "json",
                                 success: function (data) {
@@ -254,13 +393,14 @@
             })
         }
 
-        function openCreate() {
-            location.href = "/order/tocreateorder"
+
+        function toproduct(data) {
+            location.href = "/product/toproductinfo" + "?id=" + data ;
+        }
+        function tocustom(data) {
+            location.href = "/custom/tocustominfo" + "?id=" + data;
         }
 
-        function toUpdate(data) {
-            location.href = "/order/toupdateorder" + "?id=" + data ;
-        }
 
 
 

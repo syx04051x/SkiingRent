@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="common/layout" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>用户详情</title>
+    <link rel="stylesheet" href="/resources/plugins/datatables/media/css/dataTables.bootstrap.min.css"/>
+    <link rel="stylesheet"
+          href="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/css/dataTables.checkboxes.css"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
+            <li class="active">用户详情</li>
+        </ol>
+    </section>
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12" style="padding-top: 30px">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">用户详情</h3>
+                        <input name="hid" type="hidden" id="customid" th:value="${session.customid}">
+                        <button type="button" class="btn btn-primary createbutton" onclick="back()">返回</button>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" style="align-content: center">
+                        <form action="" class="form-horizontal form-label-left">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">姓名：<span style="color: red"></span></label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="text" disabled="true" class="form-control" placeholder="姓名" name="name"
+                                           id="name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">性别：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <select id="sex" disabled="true" name="sex" class="form-control" style="width: 30%;">
+                                        <option value="">请选择</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">电话号码：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="text" disabled="true" class="form-control" placeholder="电话号码" name="tel"
+                                           id="tel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">密码：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="password" disabled="true" class="form-control" placeholder="密码" name="password"
+                                           id="password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">会员等级：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <select id="isvip"  disabled="true"  name="isvip" class="form-control" style="width: 30%;" onchange="changediscount()">
+                                        <option value="">请选择</option>
+                                        <option value="非会员">非会员</option>
+                                        <option value="白银会员">白银会员</option>
+                                        <option value="黄金会员">黄金会员</option>
+                                        <option value="白金会员">白金会员</option>
+                                        <option value="钻石会员">钻石会员</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">折扣：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="text" disabled="true" class="form-control" placeholder="折扣" name="discount"
+                                           id="discount">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">身份证号：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="text" disabled="true" class="form-control" placeholder="地址" name="card"
+                                           id="card">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-2">地址：</label>
+                                <div class="col-md-6  col-sm-12 col-xs-12">
+                                    <input type="text" disabled="true" class="form-control" placeholder="地址" name="address"
+                                           id="address">
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                                    <button type="reset" class="btn btn-primary">重置</button>
+                                    <div class="btn btn-success" onclick="tosubmit()">确认提交</div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/resources/plugins/page/page.js"></script>
+    <script src="/resources/plugins/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="/resources/plugins/datatables/media/js/dataTables.bootstrap.min.js"></script>
+    <script src="/resources/plugins/datatables/extensions/jquery-datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
+    <script src="/resources/plugins/sweetalert/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="/resources/plugins/sweetalert/sweetalert.css"/>
+
+
+    <!--<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>-->
+    <script src="/resources/js/ajaxfileupload.js"></script>
+    <script>
+        $(function () {
+            getInfo()
+        });
+
+        function getInfo() {
+            var customid = $("#customid").val();
+
+            $.ajax({
+                url: "../custom/find",
+                type: "post",
+                data: {
+                    "id": customid
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.state == 1) {
+                        console.log(JSON.stringify(data));
+
+                        var name = data.data.name;
+                        $("#name").val(name);
+                        var address = data.data.address;
+                        $("#address").val(address);
+                        var tel = data.data.tel;
+                        $("#tel").val(tel);
+                        var sex = data.data.sex;
+                        $("#sex").val(sex);
+                        var password = data.data.password;
+                        $("#password").val(password);
+                        var card  = data.data.card ;
+                        $("#card").val(card);
+                        var sex = data.data.sex;
+                        $("#sex").val(sex);
+                        var discount  = data.data.discount ;
+                        $("#discount ").val(discount );
+                        var isvip = data.data.isvip;
+                        $("#isvip").val(isvip);
+
+                    }
+                }
+            });
+        }
+
+
+        function changediscount(){
+            var isvip = $("#isvip option:selected").val();
+            if(isvip=="非会员"){
+                $("#discount").val("1")
+            }else if(isvip=="白银会员"){
+                $("#discount").val("0.9")
+            }else if(isvip=="黄金会员"){
+                $("#discount").val("0.8")
+            } else if(isvip=="白金会员"){
+                $("#discount").val("0.7")
+            }else{
+                $("#discount").val("0.6")
+            }
+        }
+        function tosubmit() {
+            var customid = $("#customid").val();
+            var isvip = $("#isvip option:selected").val();
+            var discount = $("#discount").val();
+            var name =   $("#name").val();
+            var address = $("#address").val();
+            var tel = $("#tel").val();
+            var sex =  $("#sex").val();
+            var password = $("#password").val();
+            var card  =      $("#card").val();
+
+
+            var skiingCustomEntity = {
+                "id": customid,
+                "name": name,
+                "isvip": isvip,
+                "sex": sex,
+                "address": address,
+                "tel": tel,
+                "discount": discount,
+                "password": password,
+                "card": card,
+
+            };
+            console.log(JSON.stringify(skiingCustomEntity));
+            $("#load-layout").show()
+            $.ajax({
+                url: "/custom/update",
+                data: JSON.stringify(skiingCustomEntity),
+                type: "post",
+                contentType: "application/json;chrset=UTF-8",
+                success: function (data) {
+                    if (data.state == 1) {
+                        swal({
+                            title: "提示",
+                            text: "更新成功！",
+                            type: "success"
+                        }, function () {
+                            location.href = "/custom/tocustomlist";
+                        })
+                    }
+                }
+            });
+        }
+
+        function back() {
+            history.back();
+        }
+
+    </script>
+</div>
+
+</body>
+
+</html>
+
+
