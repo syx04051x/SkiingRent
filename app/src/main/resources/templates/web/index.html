@@ -39,10 +39,9 @@
 <body style="background: #f1f1f1;">
 <div class="phonenumber">
     <div class="diyibu">
-        <div>购物车</div>
         <div id="web_div">
-            <div><a href="toregister">注册</a></div>
-            <div><a href="toweblogin">登陆</a></div>
+            <div><a href="toregister?toHref=index">注册</a></div>
+            <div><a href="toweblogin?toHref=index">登陆</a></div>
         </div>
         <div id="login_div">
         </div>
@@ -361,7 +360,7 @@
                         // console.log(data);
                         $("#web_div").hide();
                         var loginName = data.data.name;
-                        $("#login_div").html("<div><a href='#' onclick='webLoginOut(" + loginId + ")'>退出</a></div><div><a href='topersonalcenter'>" + loginName + "</a></div>")
+                        $("#login_div").html("<div><a href='toshopcar'>购物车</a></div><div><a href='#' onclick='webLoginOut(" + loginId + ")'>退出</a></div><div><a href='topersonalcenter'>" + loginName + "</a></div>")
                     }
                 }
             });
@@ -401,7 +400,7 @@
                 var array = data.data;
                 for (var i = 0; i < array.length; i++) {
                     clothesHtml += "<li><div class='products'>" + array[i].name + "</div><div class='products'>" + array[i].price + "元/天</div>" +
-                        "<div class='products'>" + array[i].deposit + "元</div><a href='#'>我要预定</a></li>" +
+                        "<div class='products'>" + array[i].deposit + "元</div><a href='toproductview?productId=" + array[i].id + "'>我要预定</a></li>" +
                         "<div style='clear:both'></div>"
                 }
                 $("#clothes").html(clothesHtml);
@@ -423,7 +422,7 @@
                 var array = data.data;
                 for (var i = 0; i < array.length; i++) {
                     clothesHtml += "<li><span class='products'>" + array[i].name + "</span><span class='products'>" + array[i].price + "元/天</span>" +
-                        "<span class='products'>" + array[i].deposit + "元</span><a href='#'>我要预定</a></li>" +
+                        "<span class='products'>" + array[i].deposit + "元</span><a href='toproductview?productId=" + array[i].id + "'>我要预定</a></li>" +
                         "<div style='clear:both'></div>"
                 }
                 $("#shoes").html(clothesHtml);
@@ -445,7 +444,7 @@
                 var array = data.data;
                 for (var i = 0; i < array.length; i++) {
                     clothesHtml += "<li><span class='products'>" + array[i].name + "</span><span class='products'>" + array[i].price + "元/天</span>" +
-                        "<span class='products'>" + array[i].deposit + "元</span><a href='#'>我要预定</a></li>" +
+                        "<span class='products'>" + array[i].deposit + "元</span><a href='toproductview?productId=" + array[i].id + "'>我要预定</a></li>" +
                         "<div style='clear:both'></div>"
                 }
                 $("#equipments").html(clothesHtml);
@@ -467,7 +466,7 @@
                 var array = data.data;
                 for (var i = 0; i < array.length; i++) {
                     clothesHtml += "<li><span class='products'>" + array[i].name + "</span><span class='products'>" + array[i].price + "元/天</span>" +
-                        "<span class='products'>" + array[i].deposit + "元</span><a href='#'>我要预定</a></li>" +
+                        "<span class='products'>" + array[i].deposit + "元</span><a href='toproductview?productId=" + array[i].id + "'>我要预定</a></li>" +
                         "<div style='clear:both'></div>"
                 }
                 $("#tools").html(clothesHtml);

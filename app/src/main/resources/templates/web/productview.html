@@ -6,49 +6,54 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="resources/web/css/reset.css" rel="stylesheet">
+    <link href="resources/web/css/newstyle.css" rel="stylesheet">
+    <script src="resources/web/js/jquery-2.2.4.min.js"></script>
+    <link href="resources/web/css/jquery.bxslider.css" rel="stylesheet"/>
+    <script src="resources/web/js/slider/jquery.bxslider.min.js"></script>
     <style>
-        .div_left{
+        .div_left {
             border: 1px solid lightgrey;
             height: 500px;
             /*background-image: url(sun.jpg);*/
-            background-size:100% 100%;
-            background-repeat:no-repeat;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
         }
 
-        .div_right{
+        .div_right {
             font-size: 18px;
         }
 
-        .div_bottom{
+        .div_bottom {
             border: 1px solid black;
             margin-top: 80px;
 
         }
 
-        .div_content{
+        .div_content {
             height: 120px;
             padding-top: 5px;
             padding-left: 10px;
-            background-color:#EDEDEE;
+            background-color: #EDEDEE;
         }
 
-        .div_deposit{
+        .div_deposit {
             font-size: 22px;
-            background-color:wheat;
-            height:50px;
-            line-height:50px;
+            background-color: wheat;
+            height: 50px;
+            line-height: 50px;
             margin: 20px 0;
             padding-left: 10px;
         }
 
-        .input_normal{
+        .input_normal {
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
         }
 
-        .div_content,.div_price,.div_startTime,.div_day{
+        .div_content, .div_price, .div_startTime, .div_day {
             margin-bottom: 10px;
         }
 
@@ -57,17 +62,18 @@
 <body>
 <div class="container">
     <div><input name="loginId" type="hidden" id="loginId" th:value="${session.loginId}"></div>
+    <div><input name="productId" type="text" id="productId" th:value="${session.productId}"></div>
     <div class="diyibu">
         <div><a href="index">首页</a></div>
-        <div>购物车</div>
+        <div><a href="toshopcar">购物车</a></div>
         <div id="web_div">
-            <div><a href="toregister">注册</a></div>
-            <div><a href="toweblogin">登陆</a></div>
+            <div><a href="toregister?toHref=toproductview">注册</a></div>
+            <div><a href="toweblogin?toHref=toproductview">登陆</a></div>
         </div>
         <div id="login_div">
         </div>
     </div>
-    <div class="jumbotron">
+    <div class="jumbotron" style="margin-top: 30px;">
         <h3>雪具详情</h3>
     </div>
     <div class="sngl-top">
@@ -83,8 +89,10 @@
                 </div>
                 <div class="div_deposit" id="deposit">$ 95.00</div>
                 <div class="div_content">
-                    <p>测试内容：Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-                        laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
+                    <p>测试内容：Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
+                        tincidunt ut
+                        laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
+                        tation
                         ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
                 </div>
                 <div class="div_price">
@@ -110,7 +118,7 @@
         getInfo();
     });
 
-    function addToCart(){
+    function addToCart() {
         alert("加入购物车");
     }
 
@@ -132,6 +140,45 @@
                 }
             });
         }
+    }
+
+    function getProductInfo() {
+        var productId = $("#productId").val();
+        if ("" != productId) {
+            $.ajax({
+                url: "../product/find",
+                type: "post",
+                data: {loginId: loginId},
+                dataType: "json",
+                success: function (data) {
+                    if (1 == data.state) {
+                        // console.log(data);
+                        $("#web_div").hide();
+                        var loginName = data.data.name;
+                        $("#login_div").html("<div><a href='#' onclick='webLoginOut(" + loginId + ")'>退出</a></div><div><a href='topersonalcenter'>" + loginName + "</a></div>")
+                    }
+                }
+            });
+        }
+    }
+
+    function webLoginOut(obj) {
+        $.ajax({
+            url: "/custom/loginout",
+            type: "post",
+            data: {loginId: obj},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if ("退出成功" == data.message) {
+                    $("#web_div").show();
+                    $("#login_div").html("");
+                    alert("已退出登录！");
+                    location.reload();
+                }
+            }
+
+        })
     }
 </script>
 </body>

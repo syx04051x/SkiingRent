@@ -6,26 +6,31 @@
     <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="resources/web/css/reset.css" rel="stylesheet">
+    <link href="resources/web/css/newstyle.css" rel="stylesheet">
+    <script src="resources/web/js/jquery-2.2.4.min.js"></script>
+    <link href="resources/web/css/jquery.bxslider.css" rel="stylesheet"/>
+    <script src="resources/web/js/slider/jquery.bxslider.min.js"></script>
     <style>
         .td_top_first {
 
         }
 
-        .div_head,.div_order{
+        .div_head, .div_order {
             font-size: 18px;
             border: 1px solid lightblue;
             border-radius: 5px;
             margin-bottom: 30px;
-            background-color:beige;
+            background-color: beige;
         }
 
-        .div_head{
+        .div_head {
             font-weight: 600;
             height: 50px;
             line-height: 50px;
         }
 
-        .div_order{
+        .div_order {
             height: 100px;
             line-height: 100px;
         }
@@ -38,13 +43,13 @@
     <div class="diyibu">
         <div><a href="index">首页</a></div>
         <div id="web_div">
-            <div><a href="toregister">注册</a></div>
-            <div><a href="toweblogin">登陆</a></div>
+            <div><a href="toregister?toHref=toshopcar">注册</a></div>
+            <div><a href="toweblogin?toHref=toshopcar">登陆</a></div>
         </div>
         <div id="login_div">
         </div>
     </div>
-    <div class="jumbotron" style="margin-bottom: 60px;">
+    <div class="jumbotron" style="margin-bottom: 60px;margin-top: 30px;">
         <h3>购物车</h3>
     </div>
     <div class="sngl-top" class="div_main">
@@ -92,6 +97,25 @@
                 }
             });
         }
+    }
+
+    function webLoginOut(obj) {
+        $.ajax({
+            url: "/custom/loginout",
+            type: "post",
+            data: {loginId: obj},
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if ("退出成功" == data.message) {
+                    $("#web_div").show();
+                    $("#login_div").html("");
+                    alert("已退出登录！");
+                    location.reload();
+                }
+            }
+
+        })
     }
 
     function getOrder() {

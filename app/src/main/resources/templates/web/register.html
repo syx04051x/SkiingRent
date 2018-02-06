@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8">
     <title>注册</title>
@@ -9,10 +9,10 @@
 
 </head>
 <body>
+<div><input name="toHref" type="hidden" id="toHref" th:value="${toHref}"></div>
 <div class="phonenumber">
     <div class="diyibu">
         <div><a href="index">首页</a></div>
-        <div>购物车</div>
         <div><a href="toweblogin">登陆</a></div>
     </div>
 </div>
@@ -59,7 +59,10 @@
 <script>
 
     function toregist() {
-
+        var toHref = $("#toHref").val();
+        if ("toproductview" == toHref) {
+            toHref = "index"
+        }
 
         var name = $("#name").val();
         var sex = $("#sex").val();
@@ -91,7 +94,8 @@
             success: function (data) {
                 if (data.state == 1) {
                     alert("注册成功！");
-                    location.href = "../index";
+                    // location.href = "../index";
+                    location.href = "../" + toHref;
                 }
             }
         });

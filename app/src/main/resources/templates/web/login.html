@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8">
     <title>登录</title>
@@ -9,10 +9,10 @@
 
 </head>
 <body>
+<div><input name="toHref" type="hidden" id="toHref" th:value="${toHref}"></div>
 <div class="phonenumber">
     <div class="diyibu">
         <div><a href="index">首页</a></div>
-        <div>购物车</div>
         <div><a href="toregister">注册</a></div>
     </div>
 </div>
@@ -108,6 +108,10 @@
     function webLogin() {
         var tel = $("#phone").val();
         var password = $("#password").val();
+        var toHref = $("#toHref").val();
+        if ("toproductview" == toHref) {
+            toHref = "index"
+        }
 
         $.ajax({
             url: '/custom/login',
@@ -121,7 +125,7 @@
             success: function (data) {
                 if (data.state == 1) {
                     alert("登录成功");
-                    location.href = "../index";
+                    location.href = "../" + toHref;
                 } else {
                     $(".mess").attr("style", "display: block")
                 }

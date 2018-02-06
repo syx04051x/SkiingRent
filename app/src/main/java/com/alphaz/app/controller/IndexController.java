@@ -104,13 +104,28 @@ public class IndexController {
     }
 
     @GetMapping("toweblogin")
-    public ModelAndView toWeblogin() {
-        return new ModelAndView("web/login");
+    public ModelAndView toWeblogin(String toHref) {
+        ModelAndView mav = new ModelAndView("web/login");
+        mav.addObject("toHref", toHref);
+        return mav;
     }
 
     @GetMapping("toregister")
-    public ModelAndView toRegister() {
-        return new ModelAndView("web/register");
+    public ModelAndView toRegister(String toHref) {
+        ModelAndView mav = new ModelAndView("web/register");
+        mav.addObject("toHref", toHref);
+        return mav;
+    }
+
+    @GetMapping("toproductview")
+    public ModelAndView toProductView(long productId, HttpSession session) {
+        session.setAttribute("productId", productId);
+        return new ModelAndView("web/productview");
+    }
+
+    @GetMapping("toshopcar")
+    public ModelAndView toShopCar() {
+        return new ModelAndView("web/shopcar");
     }
 
     @GetMapping("toabouts")
