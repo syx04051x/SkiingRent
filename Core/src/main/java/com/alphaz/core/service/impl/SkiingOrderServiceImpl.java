@@ -83,6 +83,12 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
     }
 
     @Override
+    public ResponseModel findByLoginIdAndPosition(long loginId, int position) {
+        List<SkiingOrderEntity> clothes = skiingOrderDAO.findByCustomIdAndPositionAndState(loginId, position, DataState.Ava);
+        return new ResponseModel(DataState.Ava,"成功！",clothes);
+    }
+
+    @Override
     public ResponseModel changePosition(Long id, Integer position) {
         SkiingOrderEntity finder = skiingOrderDAO.findOne(id);
         //该状态为已付款，到达下个状态为在使用
@@ -108,9 +114,4 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
 
     }
 
-    @Override
-    public ResponseModel findByLoginId(long loginId) {
-        List<SkiingOrderEntity> clothes = skiingOrderDAO.findByCustomId(loginId);
-        return new ResponseModel(DataState.Ava,"成功！",clothes);
-    }
 }

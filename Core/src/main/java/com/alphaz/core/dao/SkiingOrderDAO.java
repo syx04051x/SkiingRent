@@ -29,7 +29,7 @@ public interface SkiingOrderDAO extends BaseRepo<SkiingOrderEntity, Long> {
             countQuery = "select  count(*) from SkiingOrderEntity where state=?1")
     Page findByState(DataState state, Pageable pageable);
 
-    List<SkiingOrderEntity> findByCustomId(long customId);
+    List<SkiingOrderEntity> findByCustomIdAndPositionAndState(long customId, int position, DataState state);
 
     @Query(value = "SELECT new com.alphaz.core.pojo.DTO.OrderDTO( c.id,  a.id, a.name, a.tel, b.id, b.name, b.type, c.position, b.price, b.deposit, c.day,c.startTime,c.updateTime,a.discount)" +
             " FROM SkiingCustomEntity  a , " +
@@ -40,10 +40,7 @@ public interface SkiingOrderDAO extends BaseRepo<SkiingOrderEntity, Long> {
             "and b.id = c.productId " +
             "and c.position = ?2",
             countQuery = "select  count(*) from SkiingOrderEntity where state=?1 and position = ?2")
-    Page findByStateAndPosition(DataState state, Pageable pageable,Integer position);
-
-
-
+    Page findByStateAndPosition(DataState state, Pageable pageable, Integer position);
 
 
 }

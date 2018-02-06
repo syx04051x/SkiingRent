@@ -58,10 +58,10 @@ public class SkiingOrderController {
     public ResponseModel search(Integer pageIndex,Integer pageSize,Integer position) {
         return skiingOrderService.search(pageIndex,pageSize,position);
     }
-    @RequestMapping("/findbyloginId")
+    @RequestMapping("/findbyloginIdandposition")
     @ResponseBody
-    public ResponseModel findByLoginId(long loginId) {
-        return skiingOrderService.findByLoginId(loginId);
+    public ResponseModel findByLoginIdAndPosition(long loginId, int position) {
+        return skiingOrderService.findByLoginIdAndPosition(loginId, position);
     }
 
     @GetMapping("/toorderlist")

@@ -42,11 +42,41 @@
             top: 30px; /* Set the top position of pinned element */
         }
 
+        .div_head, .div_order {
+            font-size: 18px;
+            border: 1px solid lightblue;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            background-color: beige;
+        }
+
+        .div_head {
+            font-weight: 600;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .div_order {
+            height: 100px;
+            line-height: 100px;
+        }
+
+
     </style>
 </head>
 <body>
 <div class="container">
     <div><input name="loginId" type="hidden" id="loginId" th:value="${session.loginId}"></div>
+    <div class="diyibu">
+        <div><a href="index">首页</a></div>
+        <div>购物车</div>
+        <div id="web_div">
+            <div><a href="toregister">注册</a></div>
+            <div><a href="toweblogin">登陆</a></div>
+        </div>
+        <div id="login_div">
+        </div>
+    </div>
     <div class="jumbotron">
         <h3>个人中心</h3>
     </div>
@@ -102,23 +132,15 @@
         "                </div>\n" +
         "                <button class='btn btn-primary' type='submit'>保存</button>\n" +
         "            </div>";
-    var shopCarHtml = "<div id='shopCar'>\n" +
-        "                <table id='tableShop' class='table table-bordered table-hover'>\n" +
-        "                    <thead>\n" +
-        "                    <tr>\n" +
-        "                        <th width='15%'>订单编号</th>\n" +
-        "                        <th width='20%'>名称</th>\n" +
-        "                        <th width='12%'>价格</th>\n" +
-        "                        <th width='12%'>押金</th>\n" +
-        "                        <th width='12%'>状态</th>\n" +
-        "                        <th width='12%'>创建时间</th>\n" +
-        "                        <th>操作</th>\n" +
-        "                    </tr>\n" +
-        "                    </thead>\n" +
-        "                    <tbody>\n" +
-        "                    </tbody>\n" +
-        "                </table>\n" +
-        "            </div>";
+    var shopCarHtml = "<div id='orderHead' class='div_head'>\n" +
+        "               <div class='col-md-2'>名称</div>\n" +
+        "               <div class='col-md-2'>单价</div>\n" +
+        "               <div class='col-md-1'>天数</div>\n" +
+        "               <div class='col-md-1'>押金</div>\n" +
+        "               <div class='col-md-2'>总价</div>\n" +
+        "               <div class='col-md-2'>开始时间</div>\n" +
+        "               <div class='col-md-2'>操作</div>\n" +
+        "             </div>";
     var boughtHtml = "<div id='shopCar'>\n" +
         "                <table id='tableShop' class='table table-bordered table-hover'>\n" +
         "                    <thead>\n" +
@@ -143,6 +165,7 @@
             }
         });
         toPersonal();
+        getInfo();
     });
 
     function toPersonal() {
@@ -173,14 +196,17 @@
         $("#content_div").html(shopCarHtml);
         var loginId = $("#loginId").val();
         $.ajax({
-            url: "../order/findbyloginId",
+            url: "../order/findbyloginIdandposition",
             type: "post",
-            data: {loginId: loginId},
+            data: {
+                loginId: loginId,
+                position: 1
+            },
             dataType: "json",
             success: function (data) {
                 console.log(data);
                 var html = "";
-                // $("#content_div").html(html);
+                $("#orderHead").after(html)
             }
 
         });
@@ -201,6 +227,26 @@
             }
 
         });
+    }
+
+    function getInfo() {
+        var loginId = $("#loginId").val();
+        if ("" != loginId) {
+            $.ajax({
+                url: "../custom/find",
+                type: "post",
+                data: {loginId: loginId},
+                dataType: "json",
+                success: function (data) {
+                    if (1 == data.state) {
+                        // console.log(data);
+                        $("#web_div").hide();
+                        var loginName = data.data.name;
+                        $("#login_div").html("<div><a href='#' onclick='webLoginOut(" + loginId + ")'>退出</a></div><div><a href='topersonalcenter'>" + loginName + "</a></div>")
+                    }
+                }
+            });
+        }
     }
 
     function changeContent(obj, id) {

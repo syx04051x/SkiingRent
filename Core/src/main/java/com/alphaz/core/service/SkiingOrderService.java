@@ -23,7 +23,7 @@ public interface SkiingOrderService {
 
     ResponseModel find(Long id);
 
-    ResponseModel findByLoginId(long loginId);
+    ResponseModel findByLoginIdAndPosition(long loginId, int position);
 
     ResponseModel changePosition(Long id,Integer position);
 }
