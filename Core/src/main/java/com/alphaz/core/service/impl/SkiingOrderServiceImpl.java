@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,19 +29,20 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
 
     @Override
     public ResponseModel search(Integer pageIndex, Integer pageSize, Integer position) {
-        Pageable pageable= new PageRequest(pageIndex-1,pageSize);
-        if(position==null){
-            Page<SkiingOrderEntity> page= skiingOrderDAO.findByState(DataState.Ava,pageable);
-            return new ResponseModel(DataState.Ava,"成功！",page);
+        Pageable pageable = new PageRequest(pageIndex - 1, pageSize);
+        if (position == null) {
+            Page<SkiingOrderEntity> page = skiingOrderDAO.findByState(DataState.Ava, pageable);
+            return new ResponseModel(DataState.Ava, "成功！", page);
         }
-        Page<SkiingOrderEntity> page= skiingOrderDAO.findByStateAndPosition(DataState.Ava,pageable,position);
-        return new ResponseModel(DataState.Ava,"成功！",page);
+        Page<SkiingOrderEntity> page = skiingOrderDAO.findByStateAndPosition(DataState.Ava, pageable, position);
+        return new ResponseModel(DataState.Ava, "成功！", page);
     }
 
     @Override
     public ResponseModel add(SkiingOrderEntity skiingOrderEntity) {
         //生成一条订单数据
         skiingOrderEntity.setState(DataState.Ava);
+        skiingOrderEntity.setPosition(1);
         skiingOrderEntity.setCreateTime(DateUtil.getTime());
         skiingOrderDAO.save(skiingOrderEntity);
         //将订单的产品状态修改为可使用
@@ -49,7 +51,7 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
         skiingProductEntity.setState(DataState.Ava);
         skiingProductEntity.setCreateTime(DateUtil.getTime());
         skiingProductDAO.save(skiingProductEntity);
-        return new ResponseModel(DataState.Ava,"成功！",skiingOrderEntity);
+        return new ResponseModel(DataState.Ava, "成功！", skiingOrderEntity);
 
     }
 
@@ -59,7 +61,7 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
         finder.setState(DataState.NAva);
         finder.setUpdateTime(DateUtil.getTime());
         skiingOrderDAO.save(finder);
-        return new ResponseModel(DataState.Ava,"成功！",finder);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
     }
 
     @Override
@@ -73,32 +75,41 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
         finder.setPosition(skiingOrderEntity.getPosition());
         finder.setUpdateTime(DateUtil.getTime());
         skiingOrderDAO.save(finder);
-        return new ResponseModel(DataState.Ava,"成功！",finder);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
     }
 
     @Override
     public ResponseModel find(Long id) {
         SkiingOrderEntity finder = skiingOrderDAO.findOne(id);
-        return new ResponseModel(DataState.Ava,"成功！",finder);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
     }
 
     @Override
     public ResponseModel findByLoginIdAndPosition(long loginId, int position) {
         List<SkiingOrderEntity> clothes = skiingOrderDAO.findByCustomIdAndPositionAndState(loginId, position, DataState.Ava);
-        return new ResponseModel(DataState.Ava,"成功！",clothes);
+        return new ResponseModel(DataState.Ava, "成功！", clothes);
+    }
+
+    @Override
+    public ResponseModel findByLoginIdAndPositionIn(long loginId) {
+        List<Integer> position = new ArrayList();
+        position.add(3);
+        position.add(4);
+        List<SkiingOrderEntity> finder = skiingOrderDAO.findByCustomIdAndStateAndPositionIn(loginId, DataState.Ava, position);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
     }
 
     @Override
     public ResponseModel changePosition(Long id, Integer position) {
         SkiingOrderEntity finder = skiingOrderDAO.findOne(id);
         //该状态为已付款，到达下个状态为在使用
-        if(position == 2 ){
+        if (position == 2) {
             finder.setPosition(3);
             skiingOrderDAO.save(finder);
-            return new ResponseModel(DataState.Ava,"成功！",finder);
+            return new ResponseModel(DataState.Ava, "成功！", finder);
         }
         //该状态为在使用，到达下个状态为已完成，产品则需要重新修改状态为未使用
-        if(position == 3 ){
+        if (position == 3) {
             finder.setPosition(4);
             skiingOrderDAO.save(finder);
             //将订单的产品状态修改为可使用
@@ -109,7 +120,7 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
             skiingProductDAO.save(skiingProductEntity);
 
         }
-        return new ResponseModel(DataState.Ava,"成功！",finder);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
 
 
     }

@@ -23,13 +23,13 @@ public class SkiingProductServiceImpl implements SkiingProductService {
 
     @Override
     public ResponseModel search(Integer pageIndex, Integer pageSize, String name) {
-        Pageable pageable= new PageRequest(pageIndex-1,pageSize);
-        if(name==null||name == ""){
-            Page<SkiingProductEntity> page= skiingProductDAO.findByState(DataState.Ava,pageable);
-            return new ResponseModel(DataState.Ava,"成功！",page);
+        Pageable pageable = new PageRequest(pageIndex - 1, pageSize);
+        if (name == null || name == "") {
+            Page<SkiingProductEntity> page = skiingProductDAO.findByState(DataState.Ava, pageable);
+            return new ResponseModel(DataState.Ava, "成功！", page);
         }
-        Page<SkiingProductEntity> page= skiingProductDAO.findByStateAndName(DataState.Ava,pageable,name);
-        return new ResponseModel(DataState.Ava,"成功！",page);
+        Page<SkiingProductEntity> page = skiingProductDAO.findByStateAndName(DataState.Ava, pageable, name);
+        return new ResponseModel(DataState.Ava, "成功！", page);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class SkiingProductServiceImpl implements SkiingProductService {
         skiingProductEntity.setState(DataState.Ava);
         skiingProductEntity.setCreateTime(DateUtil.getTime());
         skiingProductDAO.save(skiingProductEntity);
-        return new ResponseModel(DataState.Ava,"成功！",skiingProductEntity);
+        return new ResponseModel(DataState.Ava, "成功！", skiingProductEntity);
 
     }
 
@@ -47,7 +47,7 @@ public class SkiingProductServiceImpl implements SkiingProductService {
         finder.setState(DataState.NAva);
         finder.setUpdateTime(DateUtil.getTime());
         skiingProductDAO.save(finder);
-        return new ResponseModel(DataState.Ava,"成功！",finder);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
     }
 
     @Override
@@ -65,18 +65,18 @@ public class SkiingProductServiceImpl implements SkiingProductService {
         finder.setDefectstr(skiingProductEntity.getDefectstr());
         finder.setUpdateTime(DateUtil.getTime());
         skiingProductDAO.save(finder);
-        return new ResponseModel(DataState.Ava,"成功！",finder);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
     }
 
     @Override
     public ResponseModel find(Long id) {
         SkiingProductEntity finder = skiingProductDAO.findOne(id);
-        return new ResponseModel(DataState.Ava,"成功！",finder);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
     }
 
     @Override
     public ResponseModel findByType(String type) {
-        List<SkiingProductEntity> clothes = skiingProductDAO.findByType(type);
-        return new ResponseModel(DataState.Ava,"成功！",clothes);
+        List<SkiingProductEntity> skiingProductEntityList = skiingProductDAO.findByTypeAndStateAndIsuse(type, DataState.Ava, 0);
+        return new ResponseModel(DataState.Ava, "成功！", skiingProductEntityList);
     }
 }

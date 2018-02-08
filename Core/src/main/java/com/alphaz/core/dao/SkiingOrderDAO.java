@@ -42,5 +42,6 @@ public interface SkiingOrderDAO extends BaseRepo<SkiingOrderEntity, Long> {
             countQuery = "select  count(*) from SkiingOrderEntity where state=?1 and position = ?2")
     Page findByStateAndPosition(DataState state, Pageable pageable, Integer position);
 
+    List<SkiingOrderEntity> findByCustomIdAndStateAndPositionIn(long customId, DataState state, List<Integer> position);
 
 }

@@ -62,7 +62,7 @@
 <body>
 <div class="container">
     <div><input name="loginId" type="hidden" id="loginId" th:value="${session.loginId}"></div>
-    <div><input name="productId" type="text" id="productId" th:value="${session.productId}"></div>
+    <div><input name="productId" type="hidden" id="productId" th:value="${session.productId}"></div>
     <div class="diyibu">
         <div><a href="index">首页</a></div>
         <div><a href="toshopcar">购物车</a></div>
@@ -78,31 +78,23 @@
     </div>
     <div class="sngl-top">
         <div class="col-md-5 single-top-left div_left">
+            <img src="" id="image">
         </div>
         <div class="col-md-7 single-top-right div_right">
             <div class="single-para simpleCart_shelfItem">
-                <h1 id="name">name</h1>
-                <div>
-                    <div style="color:chocolate; font-size: 19px;">
-                        库存：<span id="" style="color:chocolate">1</span>&nbsp;&nbsp;剩余
-                    </div>
-                </div>
-                <div class="div_deposit" id="deposit">$ 95.00</div>
-                <div class="div_content">
-                    <p>测试内容：Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod
-                        tincidunt ut
-                        laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci
-                        tation
-                        ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+                <h1 id="name"></h1>
+                <div class="div_deposit"><span id="deposit"></span>元</div>
+                <div class="div_content" id="content">
                 </div>
                 <div class="div_price">
-                    租赁单价：&nbsp;&nbsp;&nbsp;<span id="price">100</span>&nbsp;&nbsp;元/天
+                    租赁单价：&nbsp;&nbsp;&nbsp;<span id="price"></span>&nbsp;&nbsp;元/天
                 </div>
-                <div class="div_startTime" id="startTime">
-                    开始时间：&nbsp;&nbsp;&nbsp;<input type="date" class="input_normal" style="width: 200px;"/>
+                <div class="div_startTime">
+                    开始时间：&nbsp;&nbsp;&nbsp;<input id="startTime" type="date" class="input_normal"
+                                                  style="width: 200px;"/>
                 </div>
-                <div class="div_day" id="day">
-                    租赁天数：&nbsp;&nbsp;&nbsp;<input type="text" class="input_normal" style="width: 80px;"/>&nbsp;&nbsp;天
+                <div class="div_day">
+                    租赁天数：&nbsp;&nbsp;&nbsp;<input id="day" type="text" class="input_normal" style="width: 80px;"/>&nbsp;&nbsp;天
                 </div>
                 <button class="btn btn-primary" style="margin-top:30px;" onclick="addToCart()">加入购物车</button>
             </div>
@@ -116,10 +108,36 @@
 <script>
     $(function () {
         getInfo();
+        getProductInfo();
     });
 
     function addToCart() {
-        alert("加入购物车");
+        var loginId = $("#loginId").val();
+        var productId = $("#productId").val();
+        var startTime = $("#startTime").val();
+        var day = $("#day").val();
+        console.log(startTime);
+        if ("" == loginId) {
+            alert("请先登录！");
+            return;
+        }
+        order = {
+            customId: loginId,
+            productId: productId,
+            startTime: startTime + " 00:00:01",
+            day: day
+        };
+        $.ajax({
+            url: "../order/add",
+            type: "post",
+            data: JSON.stringify(order),
+            contentType: "application/json;chrset=UTF-8",
+            success: function (data) {
+                if (1 == data.state) {
+                    alert("已加入购物车！")
+                }
+            }
+        });
     }
 
     function getInfo() {
@@ -148,14 +166,22 @@
             $.ajax({
                 url: "../product/find",
                 type: "post",
-                data: {loginId: loginId},
+                data: {id: productId},
                 dataType: "json",
                 success: function (data) {
                     if (1 == data.state) {
-                        // console.log(data);
+                        console.log(data);
                         $("#web_div").hide();
-                        var loginName = data.data.name;
-                        $("#login_div").html("<div><a href='#' onclick='webLoginOut(" + loginId + ")'>退出</a></div><div><a href='topersonalcenter'>" + loginName + "</a></div>")
+                        var name = data.data.name;
+                        var deposit = data.data.deposit;
+                        var content = data.data.content;
+                        var price = data.data.price;
+                        var src = data.data.src;
+                        $("#name").html(name);
+                        $("#deposit").html(deposit);
+                        $("#content").html(content);
+                        $("#price").html(price);
+                        $("#image").attr("src", "../file/showimg/" + src);
                     }
                 }
             });

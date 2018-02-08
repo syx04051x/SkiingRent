@@ -22,7 +22,7 @@ public interface SkiingProductDAO extends BaseRepo<SkiingProductEntity, Long> {
 
     Page findByStateAndName(DataState state, Pageable pageable, String name);
 
-    List<SkiingProductEntity> findByType(String type);
+    List<SkiingProductEntity> findByTypeAndStateAndIsuse(String type, DataState state, Integer isuse);
 
 
 }
