@@ -35,6 +35,51 @@
             line-height: 100px;
         }
 
+        .div_code {
+            position: absolute;
+            top: 30%;
+            right: 5%;
+            border: 1px solid lightblue;
+            border-radius: 3px;
+            background-color: beige;
+            height: 307px;
+            width: 254px;
+        }
+
+        .div_img {
+            height: 250px;
+            width: 250px;
+            margin-top: 1px;
+        }
+
+        .img_code {
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+        }
+
+        .div_operation {
+            position: relative;
+            height: 48px;
+            margin: 7px 0 0 3px;
+        }
+
+        .div_pay_left, .div_pay_right {
+            border: 1px solid lightblue;
+            border-radius: 3px;
+            float: left;
+            width: 110px;
+            height: 40px;
+            margin-left: 8px;
+            font-size: 21px;
+            line-height: 40px;
+            text-align: center;
+            color: #FFF;
+            background-color: #375F8E;
+            border-color: #2e6da4;
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -69,8 +114,19 @@
             <div class='col-md-1'>120元</div>
             <div class='col-md-2'>200元</div>
             <div class='col-md-2'>2018-1-6</div>
-            <div class='col-md-2'><a href='#'>去付款</a>&nbsp;|&nbsp;<a href='#'>取消订单</a></div>
+            <div class='col-md-2'><a href='#' onclick='showPayCode()'>去付款</a>&nbsp;|&nbsp;<a href='#'
+                                                                                             onclick='cancelOrder()'>取消订单</a>
+            </div>
         </div>
+    </div>
+</div>
+<div class="div_code" id="payCode" style="display:none;">
+    <div class="div_img">
+        <img src='qrCode.jpg' class="img_code"/>
+    </div>
+    <div class="div_operation" id="payButton">
+        <div class="div_pay_left" onclick="bePaied(this,'id')">已付款</div>
+        <div class="div_pay_right" onclick="cancelPay()">取消</div>
     </div>
 </div>
 <script>
@@ -78,6 +134,32 @@
         getInfo();
         getOrder();
     });
+
+    function showPayCode(obj, id) {
+        // $("#payButton").html();
+        $("#payCode").show();
+    }
+
+    function cancelOrder() {
+
+    }
+
+    function payForMoney(obj, id) {
+    }
+
+    function bePaied() {
+        alert("完成付款！");
+        //传入后台将订单状态改为2
+
+        //将订单列表信息重新加载一遍
+        // $(".div_order").remove();
+        // getOrder();
+        $("#payCode").hide();
+    }
+
+    function cancelPay() {
+        $("#payCode").hide();
+    }
 
     function getInfo() {
         var loginId = $("#loginId").val();
@@ -99,6 +181,39 @@
         }
     }
 
+    function getOrder() {
+        var loginId = $("#loginId").val();
+        $.ajax({
+            url: "../order/findbyloginIdandposition",
+            type: "post",
+            data: {
+                loginId: loginId,
+                position: 1
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (1 == data.state) {
+                    var orders = data.data;
+                    var html = "";
+                    for (var i = 0; i < orders.length; i++) {
+                        html += "<div class='div_order'>" +
+                            "       <div class='col-md-2'>滑雪外套</div>" +
+                            "       <div class='col-md-2'>100元/天</div>" +
+                            "       <div class='col-md-1'>2天</div>" +
+                            "       <div class='col-md-1'>120元</div>" +
+                            "       <div class='col-md-2'>200元</div>" +
+                            "       <div class='col-md-2'>2018-1-6</div>" +
+                            "       <div class='col-md-2'><a href='#' onclick='showPayCode()'>去付款</a>&nbsp;|&nbsp;<a href='#' onclick='cancelOrder()'>取消订单</a></div>" +
+                            "   </div>"
+                    }
+                    $("#orderHead").after(html)
+                }
+            }
+
+        });
+    }
+
     function webLoginOut(obj) {
         $.ajax({
             url: "/custom/loginout",
@@ -118,24 +233,6 @@
         })
     }
 
-    function getOrder() {
-        var loginId = $("#loginId").val();
-        $.ajax({
-            url: "../order/findbyloginIdandposition",
-            type: "post",
-            data: {
-                loginId: loginId,
-                position: 1
-            },
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                var html = "";
-                $("#orderHead").after(html)
-            }
-
-        });
-    }
 </script>
 </body>
 </html>
