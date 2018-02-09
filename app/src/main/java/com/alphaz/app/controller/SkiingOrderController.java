@@ -23,58 +23,79 @@ public class SkiingOrderController {
     @Resource
     private SkiingOrderService skiingOrderService;
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseModel addEntity(@RequestBody SkiingOrderEntity skiingOrderEntity){
+    public ResponseModel addEntity(@RequestBody SkiingOrderEntity skiingOrderEntity) {
         ResponseModel responseModel = skiingOrderService.add(skiingOrderEntity);
         return responseModel;
     }
+
     @RequestMapping(value = "/find", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseModel findEntity(Long id){
+    public ResponseModel findEntity(Long id) {
         ResponseModel responseModel = skiingOrderService.find(id);
         return responseModel;
     }
-    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json",consumes="application/json")
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     @ResponseBody
-    public ResponseModel updateEntity(@RequestBody SkiingOrderEntity skiingOrderEntity){
+    public ResponseModel updateEntity(@RequestBody SkiingOrderEntity skiingOrderEntity) {
         ResponseModel responseModel = skiingOrderService.update(skiingOrderEntity);
         return responseModel;
     }
+
     @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseModel deleteEntity(Long id){
+    public ResponseModel deleteEntity(Long id) {
         ResponseModel responseModel = skiingOrderService.delete(id);
         return responseModel;
     }
-    @RequestMapping(value = "/changeposition", method = RequestMethod.POST, produces = "application/json")
+
+    @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ResponseModel changePosition(Long id,Integer position){
-        ResponseModel responseModel = skiingOrderService.changePosition(id,position);
+    public ResponseModel cancelOrder(Long id) {
+        ResponseModel responseModel = skiingOrderService.cancelOrder(id);
         return responseModel;
     }
+
+    @RequestMapping(value = "/changeposition", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public ResponseModel changePosition(Long id, Integer position) {
+        ResponseModel responseModel = skiingOrderService.changePosition(id, position);
+        return responseModel;
+    }
+
     @RequestMapping("/search")
     @ResponseBody
-    public ResponseModel search(Integer pageIndex,Integer pageSize,Integer position) {
-        return skiingOrderService.search(pageIndex,pageSize,position);
+    public ResponseModel search(Integer pageIndex, Integer pageSize, Integer position) {
+        return skiingOrderService.search(pageIndex, pageSize, position);
     }
+
     @RequestMapping("/findbyloginIdandposition")
     @ResponseBody
     public ResponseModel findByLoginIdAndPosition(long loginId, int position) {
         return skiingOrderService.findByLoginIdAndPosition(loginId, position);
     }
 
+    @RequestMapping("/findbyloginIdandpositionin")
+    @ResponseBody
+    public ResponseModel findByLoginIdAndPositionIn(long loginId) {
+        return skiingOrderService.findByLoginIdAndPositionIn(loginId);
+    }
+
     @GetMapping("/toorderlist")
-    public ModelAndView toOrderList(){
+    public ModelAndView toOrderList() {
         return new ModelAndView("order/orderlist");
     }
+
     @GetMapping("/tocreateorder")
-    public ModelAndView toCreateOrder(){
+    public ModelAndView toCreateOrder() {
         return new ModelAndView("order/createorder");
     }
+
     @GetMapping("/toupdateorder")
-    public ModelAndView toUpdateOrder(Long id , HttpSession session){
-        session.setAttribute("orderid",id);
+    public ModelAndView toUpdateOrder(Long id, HttpSession session) {
+        session.setAttribute("orderid", id);
         return new ModelAndView("order/updateorder");
     }
 

@@ -65,6 +65,21 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
     }
 
     @Override
+    public ResponseModel cancelOrder(Long id) {
+        SkiingOrderEntity finder = skiingOrderDAO.findOne(id);
+        finder.setState(DataState.NAva);
+        finder.setUpdateTime(DateUtil.getTime());
+        skiingOrderDAO.save(finder);
+        //将订单的产品状态修改为未使用
+        SkiingProductEntity skiingProductEntity = skiingProductDAO.findOne(finder.getProductId());
+        skiingProductEntity.setIsuse(0);
+        skiingProductEntity.setState(DataState.Ava);
+        skiingProductEntity.setCreateTime(DateUtil.getTime());
+        skiingProductDAO.save(skiingProductEntity);
+        return new ResponseModel(DataState.Ava, "成功！", finder);
+    }
+
+    @Override
     public ResponseModel update(SkiingOrderEntity skiingOrderEntity) {
         SkiingOrderEntity finder = skiingOrderDAO.findOne(skiingOrderEntity.getId());
         finder.setCustomId(skiingOrderEntity.getCustomId());
@@ -93,6 +108,7 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
     @Override
     public ResponseModel findByLoginIdAndPositionIn(long loginId) {
         List<Integer> position = new ArrayList();
+        position.add(2);
         position.add(3);
         position.add(4);
         List<SkiingOrderEntity> finder = skiingOrderDAO.findByCustomIdAndStateAndPositionIn(loginId, DataState.Ava, position);
@@ -102,6 +118,12 @@ public class SkiingOrderServiceImpl implements SkiingOrderService {
     @Override
     public ResponseModel changePosition(Long id, Integer position) {
         SkiingOrderEntity finder = skiingOrderDAO.findOne(id);
+        //该状态为购物车，到达下个状态为已付款
+        if (position == 1) {
+            finder.setPosition(2);
+            skiingOrderDAO.save(finder);
+            return new ResponseModel(DataState.Ava, "成功！", finder);
+        }
         //该状态为已付款，到达下个状态为在使用
         if (position == 2) {
             finder.setPosition(3);

@@ -114,6 +114,9 @@
     function addToCart() {
         var loginId = $("#loginId").val();
         var productId = $("#productId").val();
+        var name = $("#name").html();
+        var deposit = $("#deposit").html();
+        var price = $("#price").html();
         var startTime = $("#startTime").val();
         var day = $("#day").val();
         console.log(startTime);
@@ -121,9 +124,24 @@
             alert("请先登录！");
             return;
         }
+        if ("" == productId) {
+            alert("请先选择商品！");
+            return;
+        }
+        if ("" == startTime) {
+            alert("请先添加开始时间！");
+            return;
+        }
+        if ("" == day) {
+            alert("请先添加天数！");
+            return;
+        }
         order = {
             customId: loginId,
             productId: productId,
+            productName: name,
+            deposit: deposit,
+            price: price,
             startTime: startTime + " 00:00:01",
             day: day
         };

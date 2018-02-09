@@ -55,6 +55,14 @@
             background-color: beige;
         }
 
+        #myScrollspy {
+            width: 15%;
+        }
+
+        #content_div {
+            width: 85%;
+        }
+
         .div_head {
             font-weight: 600;
             height: 50px;
@@ -66,7 +74,54 @@
             line-height: 100px;
         }
 
+        .div_code {
+            position: absolute;
+            top: 30%;
+            right: 5%;
+            border: 1px solid lightblue;
+            border-radius: 3px;
+            background-color: beige;
+            height: 257px;
+            width: 204px;
+        }
 
+        .div_img {
+            height: 198px;
+            width: 198px;
+            margin: 2px 0 0 2px;
+        }
+
+        .img_code {
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+        }
+
+        .div_operation {
+            position: relative;
+            height: 48px;
+            margin: 7px 0 0 3px;
+        }
+
+        .div_pay_left, .div_pay_right {
+            border: 1px solid lightblue;
+            border-radius: 3px;
+            float: left;
+            width: 85px;
+            height: 40px;
+            margin-left: 8px;
+            font-size: 21px;
+            line-height: 40px;
+            text-align: center;
+            color: #FFF;
+            background-color: #375F8E;
+            border-color: #2e6da4;
+            cursor: pointer;
+        }
+
+        .col-md-1 {
+            width: 10%;
+        }
     </style>
 </head>
 <body>
@@ -93,9 +148,16 @@
                 <li><a href="#" onclick="toBought()">购买的宝具</a></li>
             </ul>
         </div>
-        <div class="col-xs-9" id="content_div" style="height:500px;width:70%;">
+        <div class="col-xs-9" id="content_div" style="height:600px;width:80%;">
 
         </div>
+    </div>
+</div>
+<div class="div_code" id="payCode" style="display:none;">
+    <div class="div_img">
+        <img src="resources/web/images/qrCode.jpg" class="img_code"/>
+    </div>
+    <div class="div_operation" id="payButton">
     </div>
 </div>
 <script>
@@ -139,30 +201,21 @@
         "            </div>";
     var shopCarHtml = "<div id='orderHead' class='div_head'>\n" +
         "               <div class='col-md-2'>名称</div>\n" +
-        "               <div class='col-md-2'>单价</div>\n" +
+        "               <div class='col-md-1'>单价/天</div>\n" +
         "               <div class='col-md-1'>天数</div>\n" +
         "               <div class='col-md-1'>押金</div>\n" +
         "               <div class='col-md-2'>总价</div>\n" +
         "               <div class='col-md-2'>开始时间</div>\n" +
         "               <div class='col-md-2'>操作</div>\n" +
         "             </div>";
-    var boughtHtml = "<div id='shopCar'>\n" +
-        "                <table id='tableShop' class='table table-bordered table-hover'>\n" +
-        "                    <thead>\n" +
-        "                    <tr>\n" +
-        "                        <th width='15%'>订单编号</th>\n" +
-        "                        <th width='20%'>名称</th>\n" +
-        "                        <th width='12%'>价格</th>\n" +
-        "                        <th width='12%'>押金</th>\n" +
-        "                        <th width='12%'>状态</th>\n" +
-        "                        <th width='12%'>创建时间</th>\n" +
-        "                        <th>操作</th>\n" +
-        "                    </tr>\n" +
-        "                    </thead>\n" +
-        "                    <tbody>\n" +
-        "                    </tbody>\n" +
-        "                </table>\n" +
-        "            </div>";
+    var boughtHtml = "<div id='orderHead' class='div_head'>\n" +
+        "               <div class='col-md-2'>名称</div>\n" +
+        "               <div class='col-md-1'>单价/天</div>\n" +
+        "               <div class='col-md-1'>天数</div>\n" +
+        "               <div class='col-md-2'>押金</div>\n" +
+        "               <div class='col-md-2'>总价</div>\n" +
+        "               <div class='col-md-2'>开始时间</div>\n" +
+        "             </div>";
     $(function () {
         toPersonal();
         getInfo();
@@ -210,24 +263,8 @@
     }
 
     function toShopCar() {
-        console.log(shopCarHtml);
         $("#content_div").html(shopCarHtml);
-        var loginId = $("#loginId").val();
-        $.ajax({
-            url: "../order/findbyloginIdandposition",
-            type: "post",
-            data: {
-                loginId: loginId,
-                position: 1
-            },
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-                var html = "";
-                $("#orderHead").after(html)
-            }
-
-        });
+        getOrder();
     }
 
 
@@ -235,15 +272,87 @@
         $("#content_div").html(boughtHtml);
         var loginId = $("#loginId").val();
         $.ajax({
-            url: "",
+            url: "/order/findbyloginIdandpositionin",
             type: "post",
-            data: {loginId: loginId},
+            data: {
+                loginId: loginId
+            },
             dataType: "json",
             success: function (data) {
-                var html = "";
-                // $("#content_div").html(html);
+                if (1 == data.state) {
+                    var orders = data.data;
+                    var html = "";
+                    for (var i = 0; i < orders.length; i++) {
+                        var startTimeStr = orders[i].startTime;
+                        var startTime = startTimeStr.split(" ");
+                        html += "<div class='div_order'>" +
+                            "       <div class='col-md-2'>" + orders[i].productName + "</div>" +
+                            "       <div class='col-md-1'>" + orders[i].price + "元</div>" +
+                            "       <div class='col-md-1'>" + orders[i].day + "天</div>" +
+                            "       <div class='col-md-2'>" + orders[i].deposit + "元</div>" +
+                            "       <div class='col-md-2'>" + orders[i].price * orders[i].day + "</div>" +
+                            "       <div class='col-md-2'>" + ("" == startTime[0] ? "" : startTime[0]) + "</div>" +
+                            "   </div>"
+                    }
+                    $("#orderHead").after(html)
+                }
             }
 
+        });
+    }
+
+
+    function showPayCode(id, position) {
+        if ("" == id) {
+            alert("未获取到订单编号！");
+            return
+        }
+        var buttonHtml = "<div class='div_pay_left' onclick='bePaied(" + id + "," + position + ")'>已付款</div><div class='div_pay_right' onclick='cancelPay()'>取消</div>";
+        $("#payButton").html(buttonHtml);
+        $("#payCode").show();
+    }
+
+    function bePaied(id, position) {
+        if ("" == id) {
+            alert("未获取到订单编号！");
+            return
+        }
+        //传入后台将订单状态改为2
+        $.ajax({
+            url: "/order/changeposition",
+            type: "post",
+            data: {
+                id: id,
+                position: position
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            }
+        });
+        alert("已付款成功！");
+        //将订单列表信息重新加载一遍
+        $(".div_order").remove();
+        $("#payCode").hide();
+        // location.reload();
+        getOrder();
+    }
+
+    function cancelOrder(id) {
+        //传入后台将商品状态改为未使用
+        $.ajax({
+            url: "/order/cancelOrder",
+            type: "post",
+            data: {
+                id: id
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                alert("已删除订单")
+                $(".div_order").remove();
+                getOrder();
+            }
         });
     }
 
@@ -267,34 +376,40 @@
         }
     }
 
-    function changeContent(obj, id) {
-//        $.ajax({
-//            type: "post",
-//            url: "${changeTicketURL}",
-//            data: {
-//                '<portlet:namespace/>projectId': id
-//            },
-//            error: function (err) {
-//                alert("提交失败!");
-//            },
-//            success: function (data) {
-//                var list = eval('(' + data + ')');
-//                var table = '';
-//                $.each(list, function (i, e) {
-//                    console.log(i);
-//                    table += '<table class="contentDiv_table" border="1"><tr>';
-//                    table += '<td colspan="2" class="table_title"><a class="table_a" href="#" onclick="jump(' + e['tollStationId'] + ',\'' + e['stationName'] + '\')">' + e['stationName'] + '</a></td></tr>';
-//                    table += '<tr><td colspan="2" class="table_next">当前通行卡存量：<span class="table_span"  style="color: ' + e['curColor'] + '">' + e['curNum'] + '</span></td></tr>';
-//                    table += '<tr><td class="table_td">上个班发：<span class="td_span">' + e['curOut'] + '</span></td>' +
-//                        '<td class="table_td">上个班收：<span class="td_span">' + e['curRecycle'] + '</span></td></tr>';
-//                    table += '<tr><td class="table_td">当月发：<span class="td_span">' + e['monthOut'] + '</span></td>' +
-//                        '<td class="table_td">当月收：<span class="td_span">' + e['monthRecycle'] + '</span></td></tr>';
-//                    table += '</table>';
-//                })
-//                document.getElementById("contentDiv").innerHTML = table;
-//            }
-//        });
+    function getOrder() {
+        var loginId = $("#loginId").val();
+        $.ajax({
+            url: "/order/findbyloginIdandposition",
+            type: "post",
+            data: {
+                loginId: loginId,
+                position: 1
+            },
+            dataType: "json",
+            success: function (data) {
+                if (1 == data.state) {
+                    var orders = data.data;
+                    var html = "";
+                    for (var i = 0; i < orders.length; i++) {
+                        var startTimeStr = orders[i].startTime;
+                        var startTime = startTimeStr.split(" ");
+                        html += "<div class='div_order'>" +
+                            "       <div class='col-md-2'>" + orders[i].productName + "</div>" +
+                            "       <div class='col-md-1'>" + orders[i].price + "元</div>" +
+                            "       <div class='col-md-1'>" + orders[i].day + "天</div>" +
+                            "       <div class='col-md-1'>" + orders[i].deposit + "元</div>" +
+                            "       <div class='col-md-2'>" + orders[i].price * orders[i].day + "</div>" +
+                            "       <div class='col-md-2'>" + ("" == startTime[0] ? "" : startTime[0]) + "</div>" +
+                            "       <div class='col-md-2'><a href='#' onclick='showPayCode(" + orders[i].id + "," + orders[i].position + ")'>去付款</a>&nbsp;|&nbsp;<a href='#' onclick='cancelOrder(" + orders[i].id + ")'>删除</a></div>" +
+                            "   </div>"
+                    }
+                    $("#orderHead").after(html)
+                }
+            }
+
+        });
     }
+
 </script>
 </body>
 </html>

@@ -19,6 +19,8 @@ public interface SkiingOrderService {
 
     ResponseModel delete(Long id);
 
+    ResponseModel cancelOrder(Long id);
+
     ResponseModel update(SkiingOrderEntity skiingOrderEntity);
 
     ResponseModel find(Long id);

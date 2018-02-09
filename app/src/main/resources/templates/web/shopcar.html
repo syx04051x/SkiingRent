@@ -80,6 +80,10 @@
             cursor: pointer;
         }
 
+        .col-md-1 {
+            width: 10%;
+        }
+
     </style>
 </head>
 <body>
@@ -98,35 +102,22 @@
         <h3>购物车</h3>
     </div>
     <div class="sngl-top" class="div_main">
-        <div class="div_head">
+        <div class="div_head" id="orderHead">
             <div class="col-md-2">名称</div>
-            <div class="col-md-2">单价</div>
+            <div class="col-md-1">单价</div>
             <div class="col-md-1">天数</div>
             <div class="col-md-1">押金</div>
             <div class="col-md-2">总价</div>
             <div class="col-md-2">开始时间</div>
             <div class="col-md-2">操作</div>
         </div>
-        <div class='div_order'>
-            <div class='col-md-2'>滑雪外套</div>
-            <div class='col-md-2'>100元/天</div>
-            <div class='col-md-1'>2天</div>
-            <div class='col-md-1'>120元</div>
-            <div class='col-md-2'>200元</div>
-            <div class='col-md-2'>2018-1-6</div>
-            <div class='col-md-2'><a href='#' onclick='showPayCode()'>去付款</a>&nbsp;|&nbsp;<a href='#'
-                                                                                             onclick='cancelOrder()'>取消订单</a>
-            </div>
-        </div>
     </div>
 </div>
 <div class="div_code" id="payCode" style="display:none;">
     <div class="div_img">
-        <img src='qrCode.jpg' class="img_code"/>
+        <img src="resources/web/images/qrCode.jpg" class="img_code"/>
     </div>
     <div class="div_operation" id="payButton">
-        <div class="div_pay_left" onclick="bePaied(this,'id')">已付款</div>
-        <div class="div_pay_right" onclick="cancelPay()">取消</div>
     </div>
 </div>
 <script>
@@ -135,37 +126,67 @@
         getOrder();
     });
 
-    function showPayCode(obj, id) {
-        // $("#payButton").html();
-        $("#payCode").show();
+    function cancelOrder(id) {
+        //传入后台将商品状态改为未使用
+        $.ajax({
+            url: "/order/cancelOrder",
+            type: "post",
+            data: {
+                id: id
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                alert("已删除订单")
+                location.reload();
+            }
+        });
     }
 
-    function cancelOrder() {
-
-    }
-
-    function payForMoney(obj, id) {
-    }
-
-    function bePaied() {
-        alert("完成付款！");
+    function bePaied(id, position) {
+        if ("" == id) {
+            alert("未获取到订单编号！");
+            return
+        }
         //传入后台将订单状态改为2
-
+        $.ajax({
+            url: "/order/changeposition",
+            type: "post",
+            data: {
+                id: id,
+                position: position
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            }
+        });
+        alert("已付款成功！");
         //将订单列表信息重新加载一遍
-        // $(".div_order").remove();
-        // getOrder();
+        $(".div_order").remove();
         $("#payCode").hide();
+        location.reload();
     }
 
     function cancelPay() {
         $("#payCode").hide();
     }
 
+    function showPayCode(id, position) {
+        if ("" == id) {
+            alert("未获取到订单编号！");
+            return
+        }
+        var buttonHtml = "<div class='div_pay_left' onclick='bePaied(" + id + "," + position + ")'>已付款</div><div class='div_pay_right' onclick='cancelPay()'>取消</div>";
+        $("#payButton").html(buttonHtml);
+        $("#payCode").show();
+    }
+
     function getInfo() {
         var loginId = $("#loginId").val();
         if ("" != loginId) {
             $.ajax({
-                url: "../custom/find",
+                url: "/custom/find",
                 type: "post",
                 data: {loginId: loginId},
                 dataType: "json",
@@ -184,7 +205,7 @@
     function getOrder() {
         var loginId = $("#loginId").val();
         $.ajax({
-            url: "../order/findbyloginIdandposition",
+            url: "/order/findbyloginIdandposition",
             type: "post",
             data: {
                 loginId: loginId,
@@ -192,19 +213,20 @@
             },
             dataType: "json",
             success: function (data) {
-                console.log(data);
                 if (1 == data.state) {
                     var orders = data.data;
                     var html = "";
                     for (var i = 0; i < orders.length; i++) {
+                        var startTimeStr = orders[i].startTime;
+                        var startTime = startTimeStr.split(" ");
                         html += "<div class='div_order'>" +
-                            "       <div class='col-md-2'>滑雪外套</div>" +
-                            "       <div class='col-md-2'>100元/天</div>" +
-                            "       <div class='col-md-1'>2天</div>" +
-                            "       <div class='col-md-1'>120元</div>" +
-                            "       <div class='col-md-2'>200元</div>" +
-                            "       <div class='col-md-2'>2018-1-6</div>" +
-                            "       <div class='col-md-2'><a href='#' onclick='showPayCode()'>去付款</a>&nbsp;|&nbsp;<a href='#' onclick='cancelOrder()'>取消订单</a></div>" +
+                            "       <div class='col-md-2'>" + orders[i].productName + "</div>" +
+                            "       <div class='col-md-1'>" + orders[i].price + "元/天</div>" +
+                            "       <div class='col-md-1'>" + orders[i].day + "天</div>" +
+                            "       <div class='col-md-1'>" + orders[i].deposit + "元</div>" +
+                            "       <div class='col-md-2'>" + orders[i].price * orders[i].day + "</div>" +
+                            "       <div class='col-md-2'>" + ("" == startTime[0] ? "" : startTime[0]) + "</div>" +
+                            "       <div class='col-md-2'><a href='#' onclick='showPayCode(" + orders[i].id + "," + orders[i].position + ")'>去付款</a>&nbsp;|&nbsp;<a href='#' onclick='cancelOrder(" + orders[i].id + ")'>删除</a></div>" +
                             "   </div>"
                     }
                     $("#orderHead").after(html)

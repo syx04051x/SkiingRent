@@ -19,6 +19,7 @@ import java.sql.Timestamp;
 public class SkiingOrderEntity extends BaseDO {
     private Long customId;
     private Long productId;
+    private String productName;
     private Integer position;
     private Integer day;
     private Integer price;
@@ -46,6 +47,16 @@ public class SkiingOrderEntity extends BaseDO {
     }
 
     @Basic
+    @Column(name = "productName")
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    @Basic
     @Column(name = "position")
     public Integer getPosition() {
         return position;
@@ -54,8 +65,6 @@ public class SkiingOrderEntity extends BaseDO {
     public void setPosition(Integer position) {
         this.position = position;
     }
-
-
 
 
     @Basic
